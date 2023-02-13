@@ -6,7 +6,7 @@ const Home = () =>{
 
 
     return(
-        <div>{`Empezando con nuestro proyecto <3 `}</div>
+        <h1 class="home">{`Empezando con nuestro proyecto <3`}</h1>
     )
 }
 
