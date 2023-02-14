@@ -1,16 +1,30 @@
-import { useState } from 'react';
-import Home from './pages/Home/Home';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home";
+import SignIn from "./components/SignIn-Up/SignIn";
+import SignUp from "./components/SignIn-Up/SignUp";
+
+/** root routes */
+const router = createBrowserRouter([
+  {
+    path: "/",
+    exact: true,
+    element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <SignIn />,
+  },
+  {
+    path: "/register",
+    element: <SignUp />,
+  },
+]);
 
 function App() {
-
-  const [count, setCount] = useState(0);
-
   return (
-    <div className='App'>
-      <div className='App-header'>
-        <Home />
-      </div>
-    </div>
+    <main>
+      <RouterProvider router={router}></RouterProvider>
+    </main>
   );
 }
 
