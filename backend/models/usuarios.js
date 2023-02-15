@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const usuariosSchema = mongoose.Schema({
-  nombre: {
-    type: String,
-    required: true,
-  },
   contraseña: {
     type: String,
     required: true,
@@ -13,6 +9,16 @@ const usuariosSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  token: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  tipo: {
+    type: String,
+    enum: ["super admin", "admin", "teacher", "student"],
+    default: "student",
   },
 });
 
