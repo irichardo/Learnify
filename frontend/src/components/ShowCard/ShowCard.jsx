@@ -1,9 +1,10 @@
 import React from "react";
 import style from "./ShowCard.module.css";
+import Language from "./Language";
 
 const ShowCard = ({ name, description, image, rating, networks, language }) => {
   return (
-    <div className="w-1/2 bg-green-300">
+    <div className="inline-block h-screen bg-green-300">
       <div className="flex">
         <img
           src="https://img.freepik.com/foto-gratis/profesor-haciendo-leccion-ingles-linea-sus-alumnos_23-2148963017.jpg"
@@ -22,7 +23,7 @@ const ShowCard = ({ name, description, image, rating, networks, language }) => {
           <p className="items-end">Lenguaje</p>
         </div>
       </div>
-      <div className="columns-2">
+      <div className="flex">
         <p>rating</p>
         <p>networks</p>
       </div>
