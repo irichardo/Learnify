@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-function Networks(networks) {
+function Networks() {
   return (
     <div>
       <p>aqui va todas la redes sociales</p>
