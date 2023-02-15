@@ -2,9 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const server = express();
+const routes = require("./routes/index.js");
 
 // variables de entorno
 const { PORT, MONGO_URL } = process.env;
+
+// middleware
+server.use(express.json());
+server.use("/", routes);
 
 // coneccion con mongoDB
 mongoose
