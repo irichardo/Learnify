@@ -11,8 +11,9 @@ interface FormValues {
 }
 
 const SignUp = () => {
-  const handle_submit = (values: any) => {
-    console.log(values);
+  const handle_submit = (values: FormValues) => {
+    console.log({ values });
+    alert(JSON.stringify(values, null, 2));
   };
 
   const initial_values = {
@@ -246,18 +247,8 @@ const SignUp = () => {
               </div>
             </div>
             <Formik
-              initialValues={{
-                name: '',
-                lastName: '',
-                email: '',
-                password: '',
-                confirmPassword: '',
-              }}
-              onSubmit={(values, actions) => {
-                console.log({ values, actions });
-                alert(JSON.stringify(values, null, 2));
-                actions.setSubmitting(false);
-              }}
+              initialValues={initial_values}
+              onSubmit={handle_submit}
               validate={valSignUp}
             >
               <Form>
