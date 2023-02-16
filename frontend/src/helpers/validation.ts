@@ -83,13 +83,9 @@ export const valSignUp = ({
   verifyName(name) && (errors.name = verifyName(name));
   verifyName(lastName) && (errors.lastName = verifyName(lastName));
   verifyEmail(email) && (errors.email = verifyEmail(email));
-  errors.password = !password
-    ? 'password is required'
-    : verifyPassword(password);
-  errors.confirmPassword = !confirmPassword
-    ? 'confirm password is required'
-    : password === confirmPassword
-    ? ''
-    : 'passwords do not match';
+  if (password !== confirmPassword) {
+    errors.confirmPassword = 'passwords do not match';
+  }
+  verifyPassword(password) && (errors.password = verifyPassword(password));
   return errors;
 };
