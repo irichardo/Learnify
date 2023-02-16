@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import SignIn from './components/SignIn-Up/SignIn';
 import SignUp from './components/SignIn-Up/SignUp';
+import Mentors from './pages/Mentors/Mentors';
 
 /** root routes
  * en react router v6
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <SignUp />,
+  },
+  {
+    path: '/mentors',
+    element: <Mentors />,
   },
 ]);
 
