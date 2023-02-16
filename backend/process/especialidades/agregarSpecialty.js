@@ -2,8 +2,8 @@ const {
   conAgregarSpecialty,
 } = require("../../controllers/especialidades.controller");
 
-const agregarSpecialty = async (info) => {
-  const resp = await conAgregarSpecialty(info);
+const agregarSpecialty = (info) => {
+  const resp = conAgregarSpecialty(info);
   return resp;
 };
 

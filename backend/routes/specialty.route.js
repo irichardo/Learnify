@@ -3,9 +3,17 @@ const router = Router();
 const {
   agregarSpecialty,
 } = require("../process/especialidades/agregarSpecialty");
+const {
+  buscarSpecialty,
+} = require("../process/especialidades/buscarSpecialty");
 
 router.get("/", async (req, res) => {
-  res.status(200).send("holis");
+  try {
+    const todas = await buscarSpecialty();
+    res.status(200).json(todas);
+  } catch (error) {
+    res.status(400).json(error);
+  }
 });
 
 router.post("/", async (req, res) => {

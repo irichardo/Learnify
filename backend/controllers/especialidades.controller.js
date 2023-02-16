@@ -10,4 +10,13 @@ const conAgregarSpecialty = async (specialty) => {
   }
 };
 
-module.exports = { conAgregarSpecialty };
+const conBuscarSpecialty = async () => {
+  try {
+    const resp = await specialtySchema.find();
+    return resp;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { conAgregarSpecialty, conBuscarSpecialty };
