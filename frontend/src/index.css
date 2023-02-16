@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: Montserrat-Medium;
+  src: url(./assets/font/Montserrat-Medium.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Regular;
+  src: url(./assets/font/Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: OverpassMono-Bold;
+  src: url(./assets/font/OverpassMono-Bold.ttf);
+}
+
+@font-face {
+  font-family: OverpassMono-Light;
+  src: url(./assets/font/OverpassMono-Light.ttf);
+}
