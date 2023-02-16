@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import seeMore from '../../assets/icons/see_more.png';
 
 export default function Lading() {
+  // solution
   return (
     <section className='containerLanding'>
       <Navbar />

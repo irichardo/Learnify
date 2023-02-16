@@ -55,8 +55,8 @@
   text-align: right;
 }
 
-h1,
-p {
+.containerInfo h1,
+.containerInfo p {
   color: white;
 }
 
