@@ -7,6 +7,8 @@ import Landing from './pages/Landing/Landing';
 import SignIn from './components/SignIn-Up/SignIn';
 import SignUp from './components/SignIn-Up/SignUp';
 import Mentors from './pages/Mentors/Mentors';
+import NotFound from './pages/others/NotFound';
+import Profile from './pages/Profile/Profile';
 
 /** root routes
  * en react router v6
@@ -35,7 +37,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/profile',
-    element: <div>profile</div>,
+    element: <Profile />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 
