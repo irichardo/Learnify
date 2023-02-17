@@ -7,6 +7,8 @@ import Landing from './pages/Landing/Landing';
 import SignIn from './components/SignIn-Up/SignIn';
 import SignUp from './components/SignIn-Up/SignUp';
 import Mentors from './pages/Mentors/Mentors';
+import Buckets from './pages/Buckets/Buckets';
+import Navbar from './components/Navbar/Navbar';
 
 /** root routes
  * en react router v6
@@ -15,7 +17,21 @@ import Mentors from './pages/Mentors/Mentors';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Landing />,
+    element: <Navbar />,
+    children: [
+      {
+        path: '',
+        element: <Landing />,
+      },
+      {
+        path: 'mentors',
+        element: <Mentors />,
+      },
+      {
+        path: 'buckets',
+        element: <Buckets />,
+      },
+    ],
   },
   {
     path: '/login',
@@ -24,10 +40,6 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <SignUp />,
-  },
-  {
-    path: '/mentors',
-    element: <Mentors />,
   },
 ]);
 
