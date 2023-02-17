@@ -2,12 +2,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // ~ Element Pages
 import Landing from './pages/Landing/Landing';
+import Mentors from './pages/Mentors/Mentors';
+import Buckets from './pages/Buckets/Buckets';
+import NotFound from './pages/others/NotFound';
+import Profile from './pages/Profile/Profile';
 
 // & Element Components
 import SignIn from './components/SignIn-Up/SignIn';
 import SignUp from './components/SignIn-Up/SignUp';
-import Mentors from './pages/Mentors/Mentors';
-import Buckets from './pages/Buckets/Buckets';
 import Navbar from './components/Navbar/Navbar';
 
 /** root routes
@@ -31,8 +33,16 @@ const router = createBrowserRouter([
         path: 'buckets',
         element: <Buckets />,
       },
-    ],
-  },
+      {
+        path: '/profile',
+        element: <Profile />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+      ],
+    },
   {
     path: '/login',
     element: <SignIn />,
@@ -40,7 +50,7 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <SignUp />,
-  },
+  }
 ]);
 
 function App() {
