@@ -40,14 +40,14 @@
   bottom: 0px;
 }
 
-h1 {
+.containerInfo h1 {
   font-family: OverpassMono-Bold;
   font-style: normal;
   font-weight: 700;
-  font-size: 2.5rem;
+  font-size: 3.5rem;
 }
 
-p {
+.containerInfo p {
   font-family: OverpassMono-Light;
   font-style: normal;
   font-weight: 300;
@@ -55,8 +55,8 @@ p {
   text-align: right;
 }
 
-h1,
-p {
+.containerInfo h1,
+.containerInfo p {
   color: white;
 }
 

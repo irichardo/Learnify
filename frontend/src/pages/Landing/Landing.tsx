@@ -2,10 +2,10 @@ import './Landing.css';
 
 import Navbar from '../../components/Navbar/Navbar';
 
-import presentation from '../../assets/imgs/presentation.png';
 import seeMore from '../../assets/icons/see_more.png';
 
 export default function Lading() {
+  // solution
   return (
     <section className='containerLanding'>
       <Navbar />
