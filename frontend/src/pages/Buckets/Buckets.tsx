@@ -10,7 +10,6 @@ import luna from '../../assets/imgs/luna.png';
 
 // ^ Hooks
 import { useState } from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 type Bucket = {
   img: string;
