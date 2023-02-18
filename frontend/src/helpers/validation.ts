@@ -5,10 +5,9 @@ const nameRgx = /^(?=.{1,50}$)[\p{L}' \-]+$/u;
 const emailRgx =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordRgx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
-const phoneRgx = 'Regular Expressions for phone';
-const addressRgx = 'Regular Expressions for address';
-const urlRgx = 'Regular Expressions for url';
-const imageRgx = 'Regular Expressions for image';
+const addressRgx = /^[a-zA-Z0-9\s\-\#\.]+$/;
+const urlRgx = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+const imageRgx = /\.(png|PNG|jpg|JPG|jpeg|JPEG)$/;
 
 /** Interfaces for validations */
 interface valuesSignIn {
@@ -22,6 +21,16 @@ interface valuesSignUp {
   email: string;
   password: string;
   confirmPassword: string;
+}
+
+interface valuesForm {
+  name: string;
+  lastName: string;
+  email: string;
+  address: string;
+  city: string;
+  country: string;
+  state: string;
 }
 
 /** Validation by properties */
@@ -53,13 +62,33 @@ const verifyPassword = (password: string): string => {
     : 'Password must be at least 8 characters';
 };
 
-const verifyPhone = (phone: number) => {};
+const verifyAddress = (address: string) => {
+  return address.length > 4
+    ? address.length < 35
+      ? addressRgx.test(address)
+        ? ''
+        : 'Invalid address, enter a valid address'
+      : 'Invalid address, too long address try to put a shorter one'
+    : 'Invalid address, the address should be longer';
+};
 
-const verifyAddress = (address: string) => {};
+const verifyUrl = (url: string) => {
+  return url.length > 5
+    ? url.length < 65
+      ? urlRgx.test(url)
+        ? ''
+        : 'invalid url, try again later'
+      : 'the email entered is too long'
+    : 'too short url address that you provided';
+};
 
-const verifyUrl = (url: string) => {};
-
-const verifyImage = (img: string) => {};
+const verifyImage = (img: string) => {
+  return img.length === 0
+    ? imageRgx.test(img)
+      ? ''
+      : 'the registered image is not compatible, please enter a valid image'
+    : 'the field cannot be empty';
+};
 
 /** Validation functions */
 export const valSignIn = ({
@@ -78,7 +107,7 @@ export const valSignUp = ({
   email,
   password,
   confirmPassword,
-}: valuesSignUp): FormikErrors<valuesSignIn> => {
+}: valuesSignUp): FormikErrors<valuesSignUp> => {
   const errors: FormikErrors<valuesSignUp> = {};
   verifyName(name) && (errors.name = verifyName(name));
   verifyName(lastName) && (errors.lastName = verifyName(lastName));
@@ -87,5 +116,27 @@ export const valSignUp = ({
     errors.confirmPassword = 'passwords do not match';
   }
   verifyPassword(password) && (errors.password = verifyPassword(password));
+  return errors;
+};
+
+export const valProfile = ({
+  name,
+  lastName,
+  email,
+  address,
+  city,
+  country,
+  state,
+}: valuesForm): FormikErrors<valuesForm> => {
+  const errors: FormikErrors<valuesForm> = {};
+  console.log(name, lastName, email, address, city, country, state);
+
+  verifyName(name) && (errors.name = verifyName(name));
+  verifyName(lastName) && (errors.lastName = verifyName(lastName));
+  verifyEmail(email) && (errors.email = verifyEmail(email));
+  verifyAddress(address) && (errors.address = verifyAddress(address));
+  verifyAddress(city) && (errors.city = verifyAddress(city));
+  verifyAddress(country) && (errors.country = verifyAddress(country));
+  verifyAddress(state) && (errors.state = verifyAddress(state));
   return errors;
 };

@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // ~ Element Pages
 import Landing from './pages/Landing/Landing';
 import Mentors from './pages/Mentors/Mentors';
-import Buckets from './pages/Buckets/Buckets';
+//import Buckets from './pages/Buckets/Buckets';
 import NotFound from './pages/others/NotFound';
 import Profile from './pages/Profile/Profile';
 
@@ -13,8 +13,7 @@ import SignUp from './components/SignIn-Up/SignUp';
 import Navbar from './components/Navbar/Navbar';
 
 /** root routes
- * en react router v6
- * todas las rutas son exactas y en RouteObject ya no existe esa propiedad
+ * version react router v6
  */
 const router = createBrowserRouter([
   {
@@ -30,10 +29,6 @@ const router = createBrowserRouter([
         element: <Mentors />,
       },
       {
-        path: 'buckets',
-        element: <Buckets />,
-      },
-      {
         path: '/profile',
         element: <Profile />,
       },
@@ -41,8 +36,8 @@ const router = createBrowserRouter([
         path: '*',
         element: <NotFound />,
       },
-      ],
-    },
+    ],
+  },
   {
     path: '/login',
     element: <SignIn />,
@@ -50,7 +45,7 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <SignUp />,
-  }
+  },
 ]);
 
 function App() {

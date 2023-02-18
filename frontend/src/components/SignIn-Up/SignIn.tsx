@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { valSignIn } from '../../helpers/validation';
-import logo from '../../assets/images/logo-learnify.svg';
+import logo from '../../assets/imgs/profile-img-default.png';
 
 // Shape of form values
 interface FormValues {
@@ -11,6 +11,11 @@ interface FormValues {
 }
 
 const SignIn = () => {
+  const initial_values = {
+    email: '',
+    password: '',
+  };
+
   const handle_submit = (values: FormValues) => {
     console.log(values);
   };
@@ -28,21 +33,13 @@ const SignIn = () => {
                 <img src={logo} alt='logo learnify' className='w-24' />
               </div>
               <h1 className='font-bold text-3xl text-gray-900'>Sign In</h1>
-              <div className='justify-center pt-2 '>
-                <span className='mdi mdi-google  text-4xl  cursor-pointer hover:text-gray-900'></span>
-                <span className='mdi mdi-github  text-4xl  cursor-pointer hover:text-gray-900'></span>
-              </div>
             </div>
             <Formik
-              initialValues={{ email: '', password: '' }}
+              initialValues={initial_values}
               onSubmit={handle_submit}
               validate={valSignIn}
             >
               <Form>
-                <div className='flex justify-center'>
-                  <p className='text-base'>or fill out the form to log in</p>
-                </div>
-
                 <div className='flex -mx-3'>
                   <div className='w-full px-3 mb-5'>
                     <label htmlFor='' className='text-sm font-semibold px-1'>
@@ -80,6 +77,13 @@ const SignIn = () => {
                     </div>
                     <ErrorMessage name='password' />
                   </div>
+                </div>
+                <div className='flex justify-center'>
+                  <p className='text-base'>or sign in with</p>
+                </div>
+                <div className='flex items-center justify-center pb-3'>
+                  <span className='mdi mdi-google  text-4xl  cursor-pointer hover:text-gray-900'></span>
+                  <span className='mdi mdi-github  text-4xl  cursor-pointer hover:text-gray-900'></span>
                 </div>
                 <div className='flex -mx-3'>
                   <div className='w-full px-3 mb-5'>
