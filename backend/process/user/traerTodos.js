@@ -1,6 +1,5 @@
 const { MongoClient } = require("mongodb");
 const { MONGO_URL } = process.env;
-
 const { conTraerTodos } = require("../../controllers/user.controller");
 
 const traerTodos = async () => {

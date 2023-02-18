@@ -6,4 +6,13 @@ const conTraerTodos = async (modelo) => {
   }
 };
 
-module.exports = { conTraerTodos };
+const conTraerUno = async (modelo, query) => {
+  try {
+    const usuario = await modelo.findOne(query);
+    return usuario;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { conTraerTodos, conTraerUno };
