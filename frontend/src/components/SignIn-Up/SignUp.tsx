@@ -241,10 +241,6 @@ const SignUp = () => {
               <h1 className='font-bold text-3xl text-gray-900'>
                 Create Account
               </h1>
-              <div className='justify-center pt-2 '>
-                <span className='mdi mdi-google  text-4xl  cursor-pointer hover:text-gray-900'></span>
-                <span className='mdi mdi-github  text-4xl  cursor-pointer hover:text-gray-900'></span>
-              </div>
             </div>
             <Formik
               initialValues={initial_values}
@@ -252,9 +248,6 @@ const SignUp = () => {
               validate={valSignUp}
             >
               <Form>
-                <div className='flex justify-center'>
-                  <p className='text-base'>or complete the form to register</p>
-                </div>
                 <div className='flex -mx-3'>
                   <div className='w-1/2 px-3 mb-5'>
                     <label htmlFor='' className='text-sm font-semibold px-1'>
@@ -347,6 +340,13 @@ const SignUp = () => {
                     </div>
                     <ErrorMessage name='confirmPassword' />
                   </div>
+                </div>
+                <div className='flex justify-center'>
+                  <p className='text-base'>or sign up with</p>
+                </div>
+                <div className='flex items-center justify-center pb-3'>
+                  <span className='mdi mdi-google  text-4xl  cursor-pointer hover:text-gray-900'></span>
+                  <span className='mdi mdi-github  text-4xl  cursor-pointer hover:text-gray-900'></span>
                 </div>
                 <div className='flex -mx-3'>
                   <div className='w-full px-3 mb-5'>
