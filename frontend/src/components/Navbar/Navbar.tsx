@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 import icon from '../../assets/icons/logo_icon.png';
 import iconSign from '../../assets/icons/signin-up_icon.png';
@@ -15,10 +16,10 @@ export default function Navbar() {
             </div>
           ))}
         </div>
-        <div className='sign'>
+        <Link className='sign' to='/login'>
           <img src={iconSign} alt='icon Sing' />
           Sign In/Up
-        </div>
+        </Link>
       </nav>
 
       <Outlet />

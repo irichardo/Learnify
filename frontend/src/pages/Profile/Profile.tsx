@@ -156,8 +156,8 @@ const Profile = () => {
                               <polyline points='18 15 12 9 6 15'></polyline>
                             </svg>
                           </button>
-                          <ErrorMessage name='country' />
                         </div>
+                        <ErrorMessage name='country' />
                       </div>
 
                       <div className='md:col-span-2'>
@@ -204,8 +204,8 @@ const Profile = () => {
                               <polyline points='18 15 12 9 6 15'></polyline>
                             </svg>
                           </button>
-                          <ErrorMessage name='state' />
                         </div>
+                        <ErrorMessage name='state' />
                       </div>
 
                       <div className='md:col-span-5 text-right pt-5'>

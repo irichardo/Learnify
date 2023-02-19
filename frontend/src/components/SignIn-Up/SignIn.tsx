@@ -11,7 +11,7 @@ interface FormValues {
 }
 
 const SignIn = () => {
-  const initial_values = {
+  const initial_values: FormValues = {
     email: '',
     password: '',
   };
