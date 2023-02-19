@@ -29,12 +29,16 @@ const router = createBrowserRouter([
         element: <Mentors />,
       },
       {
-        path: '/profile',
+        path: 'profile',
         element: <Profile />,
       },
       {
-        path: '/buckets',
+        path: 'Buckets',
         element: <Buckets />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },
