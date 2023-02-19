@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // ~ Element Pages
 import Landing from './pages/Landing/Landing';
 import Mentors from './pages/Mentors/Mentors';
-//import Buckets from './pages/Buckets/Buckets';
+import Buckets from './pages/Buckets/Buckets';
 import NotFound from './pages/others/NotFound';
 import Profile from './pages/Profile/Profile';
 
@@ -33,10 +33,14 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: '*',
-        element: <NotFound />,
+        path: '/buckets',
+        element: <Buckets />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
   {
     path: '/login',

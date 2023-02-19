@@ -4,24 +4,24 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { valSignUp } from '../../helpers/validation';
 
 interface FormValues {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
 const SignUp = () => {
-  const handle_submit = (values: FormValues) => {
-    console.log({ values });
-    alert(JSON.stringify(values, null, 2));
-  };
-
-  const initial_values = {
-    name: '',
+  const initial_values: FormValues = {
+    firstName: '',
     lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
+  };
+
+  const handle_submit = async (values: FormValues) => {
+    console.log(values);
   };
 
   return (
@@ -258,13 +258,13 @@ const SignUp = () => {
                         <i className='mdi mdi-account-outline text-gray-400 text-lg'></i>
                       </div>
                       <Field
-                        name='name'
+                        name='firstName'
                         type='text'
                         className='w-full -ml-10 pl-10 pr-3 py-2 rounded-3xl border-2 border-gray-200 outline-none focus:border-indigo-500'
                         placeholder='Abdul Rahman'
                       />
                     </div>
-                    <ErrorMessage name='name' />
+                    <ErrorMessage name='firstName' />
                   </div>
                   <div className='w-1/2 px-3 mb-2'>
                     <label htmlFor='' className='text-sm font-semibold px-1'>

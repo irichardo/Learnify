@@ -16,7 +16,7 @@ interface valuesSignIn {
 }
 
 interface valuesSignUp {
-  name: string;
+  firstName: string;
   lastName: string;
   email: string;
   password: string;
@@ -102,14 +102,14 @@ export const valSignIn = ({
 };
 
 export const valSignUp = ({
-  name,
+  firstName,
   lastName,
   email,
   password,
   confirmPassword,
 }: valuesSignUp): FormikErrors<valuesSignUp> => {
   const errors: FormikErrors<valuesSignUp> = {};
-  verifyName(name) && (errors.name = verifyName(name));
+  verifyName(firstName) && (errors.firstName = verifyName(firstName));
   verifyName(lastName) && (errors.lastName = verifyName(lastName));
   verifyEmail(email) && (errors.email = verifyEmail(email));
   if (password !== confirmPassword) {
