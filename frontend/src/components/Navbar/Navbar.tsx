@@ -9,8 +9,10 @@ export default function Navbar() {
       <nav className='containerNavbar'>
         <img id='logo' src={icon} alt='logo Learnify' />
         <div className='containerOptions'>
-          {options.map((option: string) => (
-            <div className='options'>{option}</div>
+          {options.map((option: string, index: number) => (
+            <div key={index * 21} className='options'>
+              {option}
+            </div>
           ))}
         </div>
         <div className='sign'>
