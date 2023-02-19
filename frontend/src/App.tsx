@@ -1,17 +1,42 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home/Home';
+
+// ~ Element Pages
+import Landing from './pages/Landing/Landing';
+import Mentors from './pages/Mentors/Mentors';
+//import Buckets from './pages/Buckets/Buckets';
+import NotFound from './pages/others/NotFound';
+import Profile from './pages/Profile/Profile';
+
+// & Element Components
 import SignIn from './components/SignIn-Up/SignIn';
 import SignUp from './components/SignIn-Up/SignUp';
-import Mentors from './pages/Mentors/Mentors';
+import Navbar from './components/Navbar/Navbar';
 
 /** root routes
- * en react router v6
- * todas las rutas son exactas y en RouteObject ya no existe esa propiedad
+ * version react router v6
  */
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <Navbar />,
+    children: [
+      {
+        path: '',
+        element: <Landing />,
+      },
+      {
+        path: 'mentors',
+        element: <Mentors />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+    ],
   },
   {
     path: '/login',
@@ -20,10 +45,6 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <SignUp />,
-  },
-  {
-    path: '/mentors',
-    element: <Mentors />,
   },
 ]);
 

@@ -1,13 +1,18 @@
-const usuariosSchema = require("../models/usuarios");
-
-const conCrearUsuario = async (user) => {
+const conTraerTodos = async (modelo) => {
   try {
-    const resp = usuariosSchema(user);
-    await resp.save();
-    return resp;
+    return await modelo.find();
   } catch (error) {
     return error;
   }
 };
 
-module.exports = { conCrearUsuario };
+const conTraerUno = async (modelo, query) => {
+  try {
+    const usuario = await modelo.findOne(query);
+    return usuario;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { conTraerTodos, conTraerUno };
