@@ -24,12 +24,25 @@
   height: 100%;
 }
 
-.containerProfile img {
-  width: 200px;
-  position: relative;
-  top: -2%;
+#imgProfile {
+  width: 25%;
+  border-radius: 50%;
+  box-shadow: inset 1px -18px 20px 20px rgb(0 0 0 / 25%);
+  min-width: 100px;
+  max-width: 300px;
+  position: absolute;
+  top: -25%;
   left: 5%;
   z-index: 1;
+}
+
+#Name {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  font-size: 2.5rem;
+  font-family: Poppins-Bold;
+  color: #ffffff;
 }
 
 .containerInfo {
@@ -68,15 +81,6 @@
   height: 100%;
   width: 100%;
   gap: 10px;
-}
-
-#Name {
-  position: absolute;
-  top: 115px;
-  left: 28%;
-  font-size: 2.5rem;
-  font-family: Poppins-Bold;
-  color: #ffffff;
 }
 
 .containerDescription p {

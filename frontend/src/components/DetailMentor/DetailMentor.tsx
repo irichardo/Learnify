@@ -68,9 +68,9 @@ const DetailMentor = () => {
   return (
     <div className='ContainerDetailMentor'>
       <div className='containerProfile'>
-        <img src={imgPrueba} alt='imgPrueba' />
-        <h1 id='Name'>{simulatorApi.nombre}</h1>
         <div className='containerInfo'>
+          <img id='imgProfile' src={imgPrueba} alt='imgPrueba' />
+          <h1 id='Name'>{simulatorApi.nombre}</h1>
           <section className='containerData'>
             <div className='containerExpert'>
               <CardData arrayExpert={simulatorApi.expert} title='Experto en:' />
