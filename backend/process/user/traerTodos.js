@@ -9,7 +9,7 @@ const traerTodos = async () => {
   try {
     await client.connect();
 
-    const modelo = await client.db("db-name").collection("users");
+    const modelo = client.db("db-name").collection("users");
     const datos = await conTraerTodos(modelo);
     await datos.forEach((dato) => respuesta.push(dato));
 
