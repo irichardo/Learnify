@@ -25,7 +25,24 @@ const conTraerUno = async (query) => {
 };
 
 const conModificarTokens = async (query) => {
-  return "holi";
+  return "para modificar los tokens";
 };
 
-module.exports = { conTraerTodos, conTraerUno, conModificarTokens };
+const conModificarType = async (query1, query2) => {
+  const modeloGenerator = obtenerModelo("db-name", "users");
+  try {
+    const modelo = (await modeloGenerator.next()).value;
+    return await modelo.updateOne(query1, query2);
+  } catch (error) {
+    return error;
+  } finally {
+    await modeloGenerator.return?.();
+  }
+};
+
+module.exports = {
+  conTraerTodos,
+  conTraerUno,
+  conModificarTokens,
+  conModificarType,
+};
