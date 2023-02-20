@@ -24,11 +24,7 @@ const conTraerUno = async (query) => {
   }
 };
 
-const conModificarTokens = async (query) => {
-  return "para modificar los tokens";
-};
-
-const conModificarType = async (query1, query2) => {
+const conModificarTypeTock = async (query1, query2) => {
   const modeloGenerator = obtenerModelo("db-name", "users");
   try {
     const modelo = (await modeloGenerator.next()).value;
@@ -43,6 +39,5 @@ const conModificarType = async (query1, query2) => {
 module.exports = {
   conTraerTodos,
   conTraerUno,
-  conModificarTokens,
-  conModificarType,
+  conModificarTypeTock,
 };
