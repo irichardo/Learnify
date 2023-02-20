@@ -1,23 +1,11 @@
-const { MongoClient } = require("mongodb");
-const { MONGO_URL } = process.env;
 const { conTraerTodos } = require("../../controllers/user.controller");
 
 const traerTodos = async () => {
-  const respuesta = [];
-  const client = new MongoClient(MONGO_URL);
-
   try {
-    await client.connect();
-
-    const modelo = client.db("db-name").collection("users");
-    const datos = await conTraerTodos(modelo);
-    await datos.forEach((dato) => respuesta.push(dato));
-
+    const respuesta = await conTraerTodos();
     return respuesta.length ? respuesta : "no se encontraron los datos";
   } catch (error) {
     return error;
-  } finally {
-    await client.close();
   }
 };
 

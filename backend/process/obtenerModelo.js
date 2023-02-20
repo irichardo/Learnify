@@ -11,7 +11,6 @@ async function* obtenerModelo(dbName, schemaName) {
     return error;
   } finally {
     await client.close();
-    console.log("cerramos el cliente");
   }
 }
 

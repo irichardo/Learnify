@@ -1,8 +1,18 @@
-const { MongoClient } = require("mongodb");
-const { MONGO_URL } = process.env;
+const { obtenerModelo } = require("../obtenerModelo");
+const { conModificarTokens } = require("../../controllers/user.controller");
 
 const modificarTokens = async (user, tokens) => {
-  return `me pasaste estos tokens: ${tokens}`;
+  const modeloGenerator = obtenerModelo("db-name", "users");
+  const modelo = (await modeloGenerator.next()).value;
+
+  try {
+    const resp = conModificarTokens();
+    return resp;
+  } catch (error) {
+    return error;
+  } finally {
+    modeloGenerator.return?.();
+  }
 };
 
 module.exports = { modificarTokens };
