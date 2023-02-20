@@ -1,28 +1,38 @@
 const mongoose = require("mongoose");
 
-const bucketsSchema = mongoose.Schema({
-  tokensActuales: {
+const bucketSchema = new mongoose.Schema({
+  nombre: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  "tokens-actuales": {
     type: Number,
     required: true,
-  },
-  meta: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  activo: {
-    type: Boolean,
-    required: true,
-    default: true,
   },
   usuarios: {
     type: [
       {
-        type: String,
+        user: {
+          type: String,
+          required: true,
+        },
+        email: {
+          type: String,
+          required: true,
+        },
+        "tokens-aportados": {
+          type: Number,
+          required: true,
+        },
       },
     ],
     required: true,
   },
+  activo: {
+    type: Boolean,
+    default: true,
+  },
 });
 
-module.exports = mongoose.model("Buckets", bucketsSchema);
+module.exports = mongoose.model("Bucket", bucketSchema);

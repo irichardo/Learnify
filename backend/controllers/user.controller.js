@@ -24,7 +24,7 @@ const conTraerUno = async (query) => {
   }
 };
 
-const conModificarTokens = async (modelo, query) => {
+const conModificarTokens = async (query) => {
   return "holi";
 };
 
