@@ -23,8 +23,8 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    isAuthenticated && navigate('/mentors');
-  }, [isAuthenticated, navigate]);
+    if (isAuthenticated) navigate('/mentors');
+  }, [isAuthenticated]);
 
   return (
     <>
