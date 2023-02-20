@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: 'Buckets',
+        path: 'buckets',
         element: <Buckets />,
       },
       {
@@ -41,10 +41,6 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
     ],
-  },
-  {
-    path: '*',
-    element: <NotFound />,
   },
   {
     path: '/login',
