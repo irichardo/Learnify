@@ -1,4 +1,4 @@
-import './CardData.css'
+import './CardData.css';
 
 type Data = {
   imgs: string;
@@ -18,7 +18,7 @@ export default function CardData({ arrayExpert, title }: PropsExpert) {
       <p>{title}</p>
       <div className='cardData'>
         {arrayExpert.map((Lenguaje: Data) => (
-          <div className='Lenguaje'>
+          <div key={Lenguaje.nombre} className='Lenguaje'>
             <img src={Lenguaje.imgs} alt={Lenguaje.nombre} />
           </div>
         ))}
