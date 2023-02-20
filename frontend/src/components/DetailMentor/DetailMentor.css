@@ -1,38 +1,68 @@
-.containerData {
+.DetailMentor {
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-  height: 100%;
-}
-
-.ContainerDetailMentor {
   width: 60%;
   height: 100%;
   max-width: 1000px;
   max-height: 800px;
   min-width: 700px;
-
-  padding: 40px;
+  padding: 110px 40px 0px 40px;
   font-family: Poppins-Regular;
+  align-items: center;
 }
 
-.containerProfile {
+.mentorProfile {
   width: 100%;
   height: 100%;
+  max-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.containerProfile img {
-  width: 200px;
+.mentorData {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mentorImgName {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+  width: 100%;
+  height: 100px;
+  min-width: 100px;
   position: relative;
-  top: -2%;
-  left: 5%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#imgProfile {
+  position: absolute;
+  top: -100%;
+  left: 15%;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  box-shadow: inset 1px -18px 20px 20px rgb(0 0 0 / 25%);
   z-index: 1;
 }
 
-.containerInfo {
+#Name {
+  width: 300px;
+  max-width: 320px;
+  min-width: 200px;
+  font-size: 2.2rem;
+  font-family: Poppins-Bold;
+  color: #ffffff;
+}
+
+.mentorInfoMentors {
   background-color: rgb(255, 255, 255);
   min-height: 400px;
   width: 100%;
@@ -41,10 +71,11 @@
   padding: 30px 30px;
   display: grid;
   grid-template-columns: 50% 50%;
+  align-items: center;
 }
 
-.containerExpert,
-.containerRedes {
+.mentorExpert,
+.mentorRedes {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
@@ -54,14 +85,14 @@
   justify-content: center;
 }
 
-.containerExpert p,
-.containerRedes p,
-.containerRating p {
+.mentorExpert p,
+.mentorRedes p,
+.mentorRating p {
   font-size: 1rem;
   color: #565656;
 }
 
-.containerDescription {
+.mentorDescription {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
@@ -70,16 +101,7 @@
   gap: 10px;
 }
 
-#Name {
-  position: absolute;
-  top: 115px;
-  left: 28%;
-  font-size: 2.5rem;
-  font-family: Poppins-Bold;
-  color: #ffffff;
-}
-
-.containerDescription p {
+.mentorDescription p {
   color: black;
   text-align: start;
   display: -webkit-box;
@@ -88,19 +110,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 1rem;
-  /* 
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-height: calc(1.1rem * 15); 7 líneas de texto a 1.1rem por línea */
 }
 
-.containerDescription h1 {
+.mentorDescription h1 {
   color: black;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
-.containerRating {
+.mentorRating {
   display: flex;
   font-size: 1rem;
   color: #565656;

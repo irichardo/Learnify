@@ -12,7 +12,7 @@ export default function CardStar({ rating }: PropsStar) {
   return (
     <div className='ratingStar'>
       {calification.map((data: number) => (
-        <img src={start} />
+        <img src={start} alt={String(data)} key={data} />
       ))}
     </div>
   );

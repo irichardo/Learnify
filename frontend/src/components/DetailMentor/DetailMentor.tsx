@@ -66,27 +66,29 @@ const simulatorApi: Mentor = {
 };
 const DetailMentor = () => {
   return (
-    <div className='ContainerDetailMentor'>
-      <div className='containerProfile'>
-        <img src={imgPrueba} alt='imgPrueba' />
-        <h1 id='Name'>{simulatorApi.nombre}</h1>
-        <div className='containerInfo'>
-          <section className='containerData'>
-            <div className='containerExpert'>
+    <div className='DetailMentor'>
+      <div className='mentorProfile'>
+        <div className='mentorImgName'>
+          <img id='imgProfile' src={imgPrueba} alt='imgPrueba' />
+          <h1 id='Name'>{simulatorApi.nombre}</h1>
+        </div>
+        <div className='mentorInfoMentors'>
+          <section className='mentorData'>
+            <div className='mentorExpert'>
               <CardData arrayExpert={simulatorApi.expert} title='Experto en:' />
             </div>
 
-            <div className='containerRedes'>
+            <div className='mentorRedes'>
               <CardData arrayExpert={simulatorApi.redes} title='Redes:' />
             </div>
 
-            <div className='containerRating'>
+            <div className='mentorRating'>
               <p>rating: </p>
               <CardStar rating={simulatorApi.rating} />
             </div>
           </section>
 
-          <div className='containerDescription'>
+          <div className='mentorDescription'>
             <h1>{simulatorApi.cargo}</h1>
             <p>{simulatorApi.description}</p>
           </div>
