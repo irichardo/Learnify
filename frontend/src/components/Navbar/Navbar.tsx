@@ -1,10 +1,31 @@
 import './Navbar.css';
 import icon from '../../assets/icons/logo_icon.png';
 import iconSign from '../../assets/icons/signin-up_icon.png';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import useAuthStore from '../../store/authStore';
+import { useEffect } from 'react';
 
 export default function Navbar() {
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
   const options = ['mentors', 'buckets'];
+
+  const { setIsAuthenticated } = useAuthStore();
+
+  const handleLogin = () => {
+    loginWithRedirect();
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsAuthenticated(false);
+  };
+
+  useEffect(() => {
+    isAuthenticated && navigate('/mentors');
+  }, [isAuthenticated, navigate]);
+
   return (
     <>
       <nav className='containerNavbar'>
@@ -18,14 +39,17 @@ export default function Navbar() {
             </div>
           ))}
         </div>
-        <Link className='sign' to='/login'>
+
+        <button
+          className='sign'
+          onClick={isAuthenticated ? handleLogout : handleLogin}
+        >
           <img src={iconSign} alt='icon Sing' />
-          Sign In/Up
-        </Link>
+          {isAuthenticated ? 'Sign Out' : 'Sign In/Up'}
+        </button>
       </nav>
 
       <Outlet />
-      {/* ^^^^^ aca le digo donde debe renderizar los hijos  */}
     </>
   );
 }
