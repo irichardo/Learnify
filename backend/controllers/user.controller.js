@@ -1,9 +1,9 @@
 const { obtenerModelo } = require("../process/obtenerModelo");
-const modeloGenerator = obtenerModelo("db-name", "users");
 
 const conTraerTodos = async () => {
-  const modelo = (await modeloGenerator.next()).value;
+  const modeloGenerator = obtenerModelo("db-name", "users");
   try {
+    const modelo = (await modeloGenerator.next()).value;
     return await modelo.find().toArray();
   } catch (error) {
     return error;
@@ -12,11 +12,15 @@ const conTraerTodos = async () => {
   }
 };
 
-const conTraerUno = async (modelo, query) => {
+const conTraerUno = async (query) => {
+  const modeloGenerator = obtenerModelo("db-name", "users");
   try {
+    const modelo = (await modeloGenerator.next()).value;
     return await modelo.findOne(query);
   } catch (error) {
     return error;
+  } finally {
+    await modeloGenerator.return?.();
   }
 };
 
