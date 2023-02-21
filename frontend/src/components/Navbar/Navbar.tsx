@@ -1,10 +1,11 @@
 import './Navbar.css';
 import icon from '../../assets/icons/logo_icon.png';
-import iconSign from '../../assets/icons/signin-up_icon.png';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import useAuthStore from '../../store/authStore';
 import { useEffect } from 'react';
+import Login from '../SignIn-Up/Login';
+import Logout from '../SignIn-Up/Logout';
 
 export default function Navbar() {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
@@ -33,20 +34,18 @@ export default function Navbar() {
           <img id='logo' src={icon} alt='logo Learnify' />
         </Link>
         <div className='containerOptions'>
-          {options.map((option: string, index: number) => (
+          {options.map((option: string) => (
             <div key={option} className='options'>
               <Link to={`/${option}`}>{option}</Link>
             </div>
           ))}
         </div>
 
-        <button
-          className='sign'
-          onClick={isAuthenticated ? handleLogout : handleLogin}
-        >
-          <img src={iconSign} alt='icon Sing' />
-          {isAuthenticated ? 'Sign Out' : 'Sign In/Up'}
-        </button>
+        {isAuthenticated ? (
+          <Logout handleLogout={handleLogout} />
+        ) : (
+          <Login handleLogin={handleLogin} />
+        )}
       </nav>
 
       <Outlet />
