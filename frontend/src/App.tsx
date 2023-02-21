@@ -12,6 +12,10 @@ import SignIn from './components/SignIn-Up/SignIn';
 import SignUp from './components/SignIn-Up/SignUp';
 import Navbar from './components/Navbar/Navbar';
 
+// ^ StateGlobal
+import stateGlobal from './store';
+import { useEffect } from 'react';
+
 /** root routes
  * version react router v6
  */
@@ -53,6 +57,15 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const { initialDetail, filterMentorNormal, getSpecialty } = stateGlobal(
+    (state) => state
+  );
+  useEffect(() => {
+    initialDetail();
+    filterMentorNormal();
+    getSpecialty();
+  }, []);
+
   return (
     <main>
       <RouterProvider router={router}></RouterProvider>
