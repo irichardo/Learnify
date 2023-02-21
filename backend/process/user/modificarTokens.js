@@ -4,13 +4,16 @@ const { conTraerUno } = require("../../controllers/user.controller");
 const modificarTokens = async (user, tokens) => {
   const query1 = { user: user };
 
-  if (typeof tokens == "string")
+  if (typeof tokens == "string") {
     throw new Error(`el atributo tokens debe ser un numero entero`);
+  }
 
   const userTokens = (await conTraerUno(query1))?.tokens;
-  if (userTokens == undefined)
+  if (userTokens == undefined) {
     throw new Error(`no se encontro el usuario ${user}`);
-  const aux = userTokens + tokens;
+  }
+
+  const aux = tokens + (userTokens ? userTokens : 0);
 
   const query2 = { $set: { tokens: aux } };
 
@@ -22,7 +25,9 @@ const modificarTokens = async (user, tokens) => {
   const resp = await conModificarTypeTock(query1, query2);
 
   if (resp.modifiedCount)
-    return `el saldo anterior del usuario: ${user} era de ${userTokens} tokens, el saldo actual es de ${aux} tokens`;
+    return `el saldo anterior del usuario: ${user} era de ${
+      userTokens ? userTokens : 0
+    } tokens, el saldo actual es de ${aux} tokens`;
 };
 
 module.exports = { modificarTokens };
