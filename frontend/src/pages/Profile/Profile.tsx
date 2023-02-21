@@ -2,6 +2,8 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { valProfile } from '../../helpers/validation';
 import default_logo from '../../assets/imgs/profile-img-default.png';
+import useUserStore from '../../store/userStore';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface FormValues {
   name: string;
@@ -23,6 +25,12 @@ const Profile = () => {
     country: '',
     state: '',
   };
+
+  const { user } = useAuth0();
+  const { _user } = useUserStore();
+  const { set_User } = useUserStore();
+  console.log(user);
+  console.log(_user);
 
   const handle_submit = (values: FormValues) => {
     console.log(values);
@@ -61,6 +69,7 @@ const Profile = () => {
                           className='h-10 border mt-1 rounded px-4 w-full bg-gray-50'
                           placeholder='ej. Mohammad'
                           autoComplete='off'
+                          value={user?.given_name}
                         />
                         <ErrorMessage name='name' />
                       </div>
@@ -73,6 +82,7 @@ const Profile = () => {
                           className='h-10 border mt-1 rounded px-4 w-full bg-gray-50'
                           placeholder='ej. Hasan Akhund'
                           autoComplete='off'
+                          value={user?.family_name}
                         />
                         <ErrorMessage name='lastName' />
                       </div>
@@ -85,6 +95,7 @@ const Profile = () => {
                           className='h-10 border mt-1 rounded px-4 w-full bg-gray-50'
                           placeholder='email@domain.com'
                           autoComplete='off'
+                          value={user?.email}
                         />
                         <ErrorMessage name='email' />
                       </div>
