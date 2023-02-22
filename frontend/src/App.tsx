@@ -11,7 +11,6 @@ import Profile from './pages/Profile/Profile';
 import SignIn from './components/SignIn-Up/SignIn';
 import SignUp from './components/SignIn-Up/SignUp';
 import Navbar from './components/Navbar/Navbar';
-['super admin', 'admin', 'teacher', 'student'];
 
 /** root routes
  * version react router v6

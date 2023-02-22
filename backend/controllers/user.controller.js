@@ -36,8 +36,21 @@ const conModificarTypeTock = async (query1, query2) => {
   }
 };
 
+const conFiltrarPorQuery = async (query) => {
+  const modeloGenerator = obtenerModelo("db-name", "users");
+  try {
+    const modelo = (await modeloGenerator.next()).value;
+    return await modelo.find(query).toArray();
+  } catch (error) {
+    return error;
+  } finally {
+    await modeloGenerator.return?.();
+  }
+};
+
 module.exports = {
   conTraerTodos,
   conTraerUno,
   conModificarTypeTock,
+  conFiltrarPorQuery,
 };
