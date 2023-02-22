@@ -1,7 +1,8 @@
 import './Selector.css';
 
 import iconArrowMentor from '../../assets/icons/iconArrowMentor.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import stateGlobal from '../../store';
 
 interface PropsSelector {
   title: string;
@@ -10,9 +11,17 @@ interface PropsSelector {
 
 export default function Selector({ title, options }: PropsSelector) {
   const [active, setActive] = useState(false);
+  const { filterMentors, FilterMentors } = stateGlobal((state) => state);
 
   const handleOptionsClick = () => setActive(!active);
-  const handleOptionsSelection = () => setActive(false);
+  const handleOptionsSelection = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    filterMentors(title, event.currentTarget.value);
+    console.log(FilterMentors);
+
+    setActive(false);
+  };
 
   return (
     <div className='SelectorRating'>

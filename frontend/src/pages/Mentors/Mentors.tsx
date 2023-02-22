@@ -2,11 +2,27 @@ import './Mentors.css';
 import DetailMentor from '../../components/DetailMentor/DetailMentor';
 import CardsListMentors from '../../components/CardsListMentors/CardsListMentors';
 
+import { useEffect, useState } from 'react';
+
+import stateGlobal from '../../store';
+
+import NotFound from '../others/NotFound';
+
+
 const Mentors = () => {
+  const { detail, FilterMentors, getSpecialty } = stateGlobal((state) => state);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (FilterMentors?.length > 0) setIsLoading(false);
+  }, [detail, getSpecialty, FilterMentors]);
+
+  if (isLoading) return <NotFound />;
+
   return (
     <section className='containerMentors'>
-      <DetailMentor />
-      <CardsListMentors />
+      <DetailMentor firstPosition={detail} />
+      <CardsListMentors Mentors={FilterMentors} />
     </section>
   );
 };

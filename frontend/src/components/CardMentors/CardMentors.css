@@ -6,6 +6,7 @@
   flex-wrap: nowrap;
   gap: 20px;
   overflow-y: scroll;
+
 }
 
 .CardsMentors::-webkit-scrollbar {
@@ -25,8 +26,8 @@
   display: flex;
   background-image: url(../../assets/imgs/cardMentors.png);
   background-size: cover;
-  background-color: blue;
   border-radius: 13px;
+  cursor: pointer;
 }
 
 .cardMentor img {
