@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { valProfile } from '../../helpers/validation';
 import default_logo from '../../assets/imgs/profile-img-default.png';
@@ -27,14 +27,16 @@ const Profile = () => {
   };
 
   const { user } = useAuth0();
-  const { _user } = useUserStore();
-  const { set_User } = useUserStore();
+  const setUser = useUserStore((state) => state.setUser);
   console.log(user);
-  console.log(_user);
 
   const handle_submit = (values: FormValues) => {
     console.log(values);
   };
+
+  useEffect(() => {
+    setUser(user);
+  }, [user]);
 
   return (
     <div className='min-h-screen p-6 bg-gray-700 flex items-center justify-center'>
