@@ -28,9 +28,7 @@ const conModificarTypeTock = async (query1, query2) => {
   const modeloGenerator = obtenerModelo("db-name", "users");
   try {
     const modelo = (await modeloGenerator.next()).value;
-    const r = await modelo.updateOne(query1, query2);
-    console.log(r);
-    return r;
+    return await modelo.updateOne(query1, query2);
   } catch (error) {
     return error;
   } finally {

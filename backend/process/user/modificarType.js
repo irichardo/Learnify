@@ -1,4 +1,5 @@
 const { conModificarTypeTock } = require("../../controllers/user.controller");
+const objectId = require("mongodb").ObjectId;
 
 const modificarType = async (id, type) => {
   const arr = ["super admin", "admin", "teacher", "student"];
@@ -8,9 +9,9 @@ const modificarType = async (id, type) => {
     );
   }
 
-  const query1 = { _id: id };
+  const otroId = new objectId(id);
+  const query1 = { _id: otroId };
   const query2 = { $set: { type } };
-  console.log(query1, query2);
   const resp = await conModificarTypeTock(query1, query2);
   if (!resp.matchedCount) throw new Error(`no se encontro el usuario ${id}`);
 
