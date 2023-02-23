@@ -12,11 +12,11 @@ const conTraerTodos = async () => {
   }
 };
 
-const conTraerUno = async (id) => {
+const conTraerUno = async (query) => {
   const modeloGenerator = obtenerModelo("db-name", "users");
   try {
     const modelo = (await modeloGenerator.next()).value;
-    return await modelo.findById(id);
+    return await modelo.findOne(query);
   } catch (error) {
     return error;
   } finally {
@@ -28,7 +28,9 @@ const conModificarTypeTock = async (query1, query2) => {
   const modeloGenerator = obtenerModelo("db-name", "users");
   try {
     const modelo = (await modeloGenerator.next()).value;
-    return await modelo.updateOne(query1, query2);
+    const r = await modelo.updateOne(query1, query2);
+    console.log(r);
+    return r;
   } catch (error) {
     return error;
   } finally {

@@ -1,14 +1,15 @@
 const { conModificarTypeTock } = require("../../controllers/user.controller");
 const { conTraerUno } = require("../../controllers/user.controller");
 
-const modificarTokens = async (user, tokens) => {
-  const query1 = { user: user };
+const modificarTokens = async (id, tokens) => {
+  const query1 = { _id: id };
 
   if (typeof tokens == "string") {
     throw new Error(`el atributo tokens debe ser un numero entero`);
   }
 
   const userTokens = (await conTraerUno(query1))?.tokens;
+
   if (userTokens == undefined) {
     throw new Error(`no se encontro el usuario ${user}`);
   }
