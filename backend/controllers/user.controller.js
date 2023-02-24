@@ -12,11 +12,11 @@ const conTraerTodos = async () => {
   }
 };
 
-const conTraerUno = async (query) => {
+const conTraerUno = async (id) => {
   const modeloGenerator = obtenerModelo("db-name", "users");
   try {
     const modelo = (await modeloGenerator.next()).value;
-    return await modelo.findOne(query);
+    return await modelo.findById(id);
   } catch (error) {
     return error;
   } finally {

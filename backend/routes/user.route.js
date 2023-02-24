@@ -7,12 +7,11 @@ const { modificarTokens } = require("../process/user/modificarTokens");
 const { traerPorType } = require("../process/user/traerPorType");
 
 router.get("/", async (req, res) => {
-  const { students, teachers } = req.query;
-  const { user } = req.body;
+  const { _id } = req.body;
   let respuesta;
   try {
-    if (!user) respuesta = await traerTodos();
-    else respuesta = await traerUno(user);
+    if (!_id) respuesta = await traerTodos();
+    else respuesta = await traerUno(_id);
     res.status(200).json(respuesta);
   } catch (error) {
     res.status(400).json(error.message);
