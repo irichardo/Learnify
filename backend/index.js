@@ -12,9 +12,8 @@ server.use(express.json())
 server.use('/', routes)
 
 // StricMode
-mongoose.set('strictQuery', false)
+mongoose.set("strictQuery", false)
 
-mongoose.set("strictQuery", false);
 // coneccion con mongoDB
 mongoose
   .connect(MONGO_URL)
