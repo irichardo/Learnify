@@ -23,8 +23,10 @@ export default function Navbar() {
     setIsAuthenticated(false);
   };
 
+  console.log('💻 -> useEffect -> isAuthenticated:', isAuthenticated);
   useEffect(() => {
     if (isAuthenticated) navigate('/mentors');
+
     console.log(user);
   }, [isAuthenticated]);
 
