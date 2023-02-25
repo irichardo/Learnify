@@ -1,7 +1,7 @@
 import './DetailMentor.css';
 
 import { Mentor } from '../../helpers/Types/Cards';
-import imagenPredeterminate from '../../assets/imgsPrueba/icon_perfil2.png';
+import imagenPredeterminate from '../../assets/imgsPrueba/icon_perfil2.png'
 
 import CardData from '../CardData/CardData';
 import CardStar from '../CardStar/CardStar';
