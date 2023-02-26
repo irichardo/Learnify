@@ -1,17 +1,17 @@
-const { MongoClient } = require("mongodb");
-const { MONGO_URL } = process.env;
+const { MongoClient } = require('mongodb')
+const { MONGO_URL } = process.env
 
-async function* obtenerModelo(dbName, schemaName) {
-  const client = new MongoClient(MONGO_URL);
+async function* obtenerModelo(dbName,schemaName) {
+  const client = new MongoClient(MONGO_URL)
   try {
-    await client.connect();
-    const modelo = client.db(dbName).collection(schemaName);
-    yield modelo;
+    await client.connect()
+    const modelo = client.db(dbName).collection(schemaName)
+    yield modelo
   } catch (error) {
-    return error;
+    return error
   } finally {
-    await client.close();
+    await client.close()
   }
 }
 
-module.exports = { obtenerModelo };
+module.exports = { obtenerModelo }
