@@ -12,7 +12,6 @@ const agregarBucket = async ({ nombre, usuario }) => {
   const query = { _id: id };
   const user = await conTraerUno(query);
   if (!user) throw new Error(`no se encontro al user: ${id}`);
-  console.log("buckets antes de agregar uno nuevo:", user.buckets);
 
   const bucket = {
     nombre: nombre,
@@ -22,8 +21,6 @@ const agregarBucket = async ({ nombre, usuario }) => {
   };
   const nuevoB = await conAgregarBucket(bucket);
   if (!nuevoB._id) throw new Error(`el nombre del bucket: ${nombre} ya existe`);
-
-  console.log("nuevo bucket agregado:", nuevoB);
 
   const userTokens = user.tokens;
   const aux = (userTokens ? userTokens : 0) - usuario.aportes;
@@ -43,15 +40,8 @@ const agregarBucket = async ({ nombre, usuario }) => {
     },
   };
 
-  console.log("query para actualizar usuario:", query2);
-
   const resp = await conModificarTypeTock(query, query2);
-
-  console.log("usuario actualizado:", resp);
-
-  const updatedUser = await conTraerUno(query);
-
-  console.log("buckets despues de agregar uno nuevo:", updatedUser);
+  if (resp.modifiedCount) return `se creo con exito el bucket: ${nombre}`;
 };
 
 module.exports = { agregarBucket };

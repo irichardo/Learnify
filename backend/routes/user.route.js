@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     else respuesta = await traerUno(_id);
     res.status(200).json(respuesta);
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json(error.message ? error.message : error);
   }
 });
 
@@ -24,7 +24,7 @@ router.get("/:type", async (req, res) => {
     const respuesta = await traerPorType(type);
     res.status(200).json(respuesta);
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json(error.message ? error.message : error);
   }
 });
 
@@ -32,12 +32,14 @@ router.put("/", async (req, res) => {
   const { _id, tokens, type } = req.body;
   let respuesta;
   try {
+    if (_id && tokens && type)
+      throw Error("solo puede cambiar un parametro a las vez");
     if (tokens && _id) respuesta = await modificarTokens(_id, tokens);
     else if (type && _id) respuesta = await modificarType(_id, type);
     else throw Error("faltan parametros");
     res.status(200).json(respuesta);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json(error.message ? error.message : error);
   }
 });
 
