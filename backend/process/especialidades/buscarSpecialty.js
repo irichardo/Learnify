@@ -2,9 +2,6 @@ const {
   conBuscarSpecialty,
 } = require("../../controllers/especialidades.controller");
 
-const buscarSpecialty = () => {
-  const resp = conBuscarSpecialty();
-  return resp;
-};
+const buscarSpecialty = () => conBuscarSpecialty();
 
 module.exports = { buscarSpecialty };

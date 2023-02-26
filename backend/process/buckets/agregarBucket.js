@@ -6,6 +6,8 @@ const objectId = require("mongodb").ObjectId;
 const agregarBucket = async ({ nombre, usuario }) => {
   if (typeof usuario.aportes == "string") {
     throw new Error(`el atributo tokens debe ser un numero entero`);
+  } else if (usuario.aportes < 10) {
+    throw new Error(`el monto minimo debe ser de 10 tokens`);
   }
 
   const id = new objectId(usuario._id);
