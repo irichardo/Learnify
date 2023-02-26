@@ -6,6 +6,7 @@ import Mentors from './pages/Mentors/Mentors';
 import Buckets from './pages/Buckets/Buckets';
 import NotFound from './pages/others/NotFound';
 import Profile from './pages/Profile/Profile';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 // & Element Components
 import SignIn from './components/SignIn-Up/SignIn';
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: 'buckets',
         element: <Buckets />,
+      },
+      {
+        path: 'dashboard',
+        element: <Dashboard />,
       },
       {
         path: '*',
