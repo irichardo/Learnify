@@ -1,17 +1,31 @@
 const express = require('express')
 const mongoose = require('mongoose')
 require('dotenv').config()
-const server = express()
+const bodyParser = require('body-parser')
 const routes = require('./routes/index.js')
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const server = express()
 
 // variables de entorno
 const { PORT, MONGO_URL } = process.env
 
-// middleware
+// configuracion de middleware
+server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
+server.use(bodyParser.json({ limit: '50mb' }))
+server.use(cookieParser())
 server.use(express.json())
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*') // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Credentials', 'true')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+  next()
+})
+server.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030'] }))
+
+// introducciendo las routes
 server.use('/', routes)
-server.use(cors())
 
 // StricMode
 mongoose.set('strictQuery', false)
