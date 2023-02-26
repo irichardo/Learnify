@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist, PersistOptions } from 'zustand/middleware';
 import { Mentor, Api, Specialty } from '../helpers/Types/Cards';
 import axios from 'axios';
 
@@ -31,180 +30,164 @@ interface Actions {
   filterMentorNormal: () => void;
 }
 
-interface CustomPersistOptions<T> extends PersistOptions<T> {
-  whitelist?: Array<keyof T>;
-}
-
-const stateGlobal = create(
-  persist<State & Actions>(
-    (set) => ({
-      // ~ State Global
-      detail: {},
-      ArrayMentors: [
-        {
-          img: imgPrueba,
-          cargo: 'Web Developer',
-          nombre: 'Cristian Velarde',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-          expert: [
-            { imgs: iconReact, nombre: 'React' },
-            { imgs: iconNodeJs, nombre: 'NodeJs' },
-            { imgs: iconSequelize, nombre: 'Sequelize' },
-          ],
-          redes: [
-            { imgs: iconLinkedin, nombre: 'Github' },
-            { imgs: iconTwitter, nombre: 'Linkedin' },
-            { imgs: iconGithub, nombre: 'Twitter' },
-          ],
-          rating: 5,
-        },
-        {
-          img: imgDuvan,
-          cargo: 'Web Developer',
-          nombre: 'Duvan Rozo',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-          expert: [
-            { imgs: iconReact, nombre: 'React' },
-            { imgs: iconNodeJs, nombre: 'NodeJs' },
-            { imgs: iconSequelize, nombre: 'Sequelize' },
-          ],
-          redes: [
-            { imgs: iconLinkedin, nombre: 'Github' },
-            { imgs: iconTwitter, nombre: 'Linkedin' },
-            { imgs: iconGithub, nombre: 'Twitter' },
-          ],
-          rating: 4,
-        },
-        {
-          img: undefined,
-          cargo: 'Web Developer',
-          nombre: 'Isaias Romero',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-          expert: [
-            { imgs: iconReact, nombre: 'React' },
-            { imgs: iconNodeJs, nombre: 'NodeJs' },
-            { imgs: iconSequelize, nombre: 'Sequelize' },
-          ],
-          redes: [
-            { imgs: iconLinkedin, nombre: 'Github' },
-            { imgs: iconTwitter, nombre: 'Linkedin' },
-            { imgs: iconGithub, nombre: 'Twitter' },
-          ],
-          rating: 3,
-        },
-        {
-          img: undefined,
-          cargo: 'Web Developer',
-          nombre: 'Richard Diaz',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-          expert: [
-            { imgs: iconReact, nombre: 'React' },
-            { imgs: iconNodeJs, nombre: 'NodeJs' },
-            { imgs: iconSequelize, nombre: 'Sequelize' },
-          ],
-          redes: [
-            { imgs: iconLinkedin, nombre: 'Github' },
-            { imgs: iconTwitter, nombre: 'Linkedin' },
-            { imgs: iconGithub, nombre: 'Twitter' },
-          ],
-          rating: 2,
-        },
-        {
-          img: undefined,
-          cargo: 'Web Developer',
-          nombre: 'Nasari Ladino',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-          expert: [
-            { imgs: iconReact, nombre: 'React' },
-            { imgs: iconNodeJs, nombre: 'NodeJs' },
-            { imgs: iconSequelize, nombre: 'Sequelize' },
-          ],
-          redes: [
-            { imgs: iconLinkedin, nombre: 'Github' },
-            { imgs: iconTwitter, nombre: 'Linkedin' },
-            { imgs: iconGithub, nombre: 'Twitter' },
-          ],
-          rating: 1,
-        },
-        {
-          img: undefined,
-          cargo: 'Web Developer',
-          nombre: 'David Gallego',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-          expert: [
-            { imgs: iconReact, nombre: 'React' },
-            { imgs: iconNodeJs, nombre: 'NodeJs' },
-            { imgs: iconSequelize, nombre: 'Sequelize' },
-          ],
-          redes: [
-            { imgs: iconLinkedin, nombre: 'Github' },
-            { imgs: iconTwitter, nombre: 'Linkedin' },
-            { imgs: iconGithub, nombre: 'Twitter' },
-          ],
-          rating: 4,
-        },
-      ],
-      FilterMentors: [],
-      specialty: [],
-
-      // * Actions
-      getSpecialty: async () => {
-        const specialtyData = await axios.get(
-          'http://localhost:3030/specialty'
-        );
-        const specialties = specialtyData.data as Specialty[];
-
-        set({ specialty: specialties });
-      },
-
-      upgradeDetail: (Data: Mentor) => set({ detail: Data }),
-
-      filterMentors: (type: string, option: string) => {
-        if (type === 'Rating') {
-          if (option === 'Mayor a menor') {
-            console.log(type, option);
-
-            set((state) => ({
-              FilterMentors: [...state.ArrayMentors].sort(
-                (mentorA, mentorB) => mentorB.rating - mentorA.rating
-              ),
-            }));
-          } else if (option === 'Menor a mayor') {
-            console.log(type, option);
-
-            set((state) => ({
-              FilterMentors: [...state.ArrayMentors].sort(
-                (mentorA, mentorB) => mentorA.rating - mentorB.rating
-              ),
-            }));
-          }
-        }
-
-        if (type === 'Lenguaje') {
-          set((state) => ({
-            FilterMentors: [...state.ArrayMentors].filter((mentor) =>
-              mentor.expert.some((expert) => expert.nombre === option)
-            ),
-          }));
-        }
-      },
-      filterMentorNormal: () =>
-        set((state) => ({ FilterMentors: state.ArrayMentors })),
-      initialDetail: () => set((state) => ({ detail: state.ArrayMentors[0] })),
-    }),
+const stateGlobal = create<State & Actions>((set) => ({
+  // ~ State Global
+  detail: {},
+  ArrayMentors: [
     {
-      name: 'stateGlobal',
-      getStorage: () => localStorage,
-      whitelist: ['detail'],
-      version: 1,
-    } as CustomPersistOptions<State & Actions>
-  )
-);
+      img: imgPrueba,
+      cargo: 'Web Developer',
+      nombre: 'Cristian Velarde',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      expert: [
+        { imgs: iconReact, nombre: 'React' },
+        { imgs: iconNodeJs, nombre: 'NodeJs' },
+        { imgs: iconSequelize, nombre: 'Sequelize' },
+      ],
+      redes: [
+        { imgs: iconLinkedin, nombre: 'Github' },
+        { imgs: iconTwitter, nombre: 'Linkedin' },
+        { imgs: iconGithub, nombre: 'Twitter' },
+      ],
+      rating: 5,
+    },
+    {
+      img: imgDuvan,
+      cargo: 'Web Developer',
+      nombre: 'Duvan Rozo',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      expert: [
+        { imgs: iconReact, nombre: 'React' },
+        { imgs: iconNodeJs, nombre: 'NodeJs' },
+        { imgs: iconSequelize, nombre: 'Sequelize' },
+      ],
+      redes: [
+        { imgs: iconLinkedin, nombre: 'Github' },
+        { imgs: iconTwitter, nombre: 'Linkedin' },
+        { imgs: iconGithub, nombre: 'Twitter' },
+      ],
+      rating: 4,
+    },
+    {
+      img: undefined,
+      cargo: 'Web Developer',
+      nombre: 'Isaias Romero',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      expert: [
+        { imgs: iconReact, nombre: 'React' },
+        { imgs: iconNodeJs, nombre: 'NodeJs' },
+        { imgs: iconSequelize, nombre: 'Sequelize' },
+      ],
+      redes: [
+        { imgs: iconLinkedin, nombre: 'Github' },
+        { imgs: iconTwitter, nombre: 'Linkedin' },
+        { imgs: iconGithub, nombre: 'Twitter' },
+      ],
+      rating: 3,
+    },
+    {
+      img: undefined,
+      cargo: 'Web Developer',
+      nombre: 'Richard Diaz',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      expert: [
+        { imgs: iconReact, nombre: 'React' },
+        { imgs: iconNodeJs, nombre: 'NodeJs' },
+        { imgs: iconSequelize, nombre: 'Sequelize' },
+      ],
+      redes: [
+        { imgs: iconLinkedin, nombre: 'Github' },
+        { imgs: iconTwitter, nombre: 'Linkedin' },
+        { imgs: iconGithub, nombre: 'Twitter' },
+      ],
+      rating: 2,
+    },
+    {
+      img: undefined,
+      cargo: 'Web Developer',
+      nombre: 'Nasari Ladino',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      expert: [
+        { imgs: iconReact, nombre: 'React' },
+        { imgs: iconNodeJs, nombre: 'NodeJs' },
+        { imgs: iconSequelize, nombre: 'Sequelize' },
+      ],
+      redes: [
+        { imgs: iconLinkedin, nombre: 'Github' },
+        { imgs: iconTwitter, nombre: 'Linkedin' },
+        { imgs: iconGithub, nombre: 'Twitter' },
+      ],
+      rating: 1,
+    },
+    {
+      img: undefined,
+      cargo: 'Web Developer',
+      nombre: 'David Gallego',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      expert: [
+        { imgs: iconReact, nombre: 'React' },
+        { imgs: iconNodeJs, nombre: 'NodeJs' },
+        { imgs: iconSequelize, nombre: 'Sequelize' },
+      ],
+      redes: [
+        { imgs: iconLinkedin, nombre: 'Github' },
+        { imgs: iconTwitter, nombre: 'Linkedin' },
+        { imgs: iconGithub, nombre: 'Twitter' },
+      ],
+      rating: 4,
+    },
+  ],
+  FilterMentors: [],
+  specialty: [],
+
+  // * Actions
+  getSpecialty: async () => {
+    const specialtyData = await axios.get('http://localhost:3030/specialty');
+    const specialties = specialtyData.data as Specialty[];
+
+    set({ specialty: specialties });
+  },
+
+  upgradeDetail: (Data: Mentor) => set({ detail: Data }),
+
+  filterMentors: (type: string, option: string) => {
+    if (type === 'Rating') {
+      if (option === 'Mayor a menor') {
+        console.log(type, option);
+
+        set((state) => ({
+          FilterMentors: [...state.ArrayMentors].sort(
+            (mentorA, mentorB) => mentorB.rating - mentorA.rating
+          ),
+        }));
+      } else if (option === 'Menor a mayor') {
+        console.log(type, option);
+
+        set((state) => ({
+          FilterMentors: [...state.ArrayMentors].sort(
+            (mentorA, mentorB) => mentorA.rating - mentorB.rating
+          ),
+        }));
+      }
+    }
+
+    if (type === 'Lenguaje') {
+      set((state) => ({
+        FilterMentors: [...state.ArrayMentors].filter((mentor) =>
+          mentor.expert.some((expert) => expert.nombre === option)
+        ),
+      }));
+    }
+  },
+  filterMentorNormal: () =>
+    set((state) => ({ FilterMentors: state.ArrayMentors })),
+  initialDetail: () => set((state) => ({ detail: state.ArrayMentors[0] })),
+}));
 
 export default stateGlobal;

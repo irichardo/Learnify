@@ -8,7 +8,7 @@ import NotFound from '../others/NotFound';
 
 const Mentors = () => {
   const { detail, FilterMentors } = stateGlobal((state) => state);
-  const [ isLoading, setIsLoading ] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (FilterMentors?.length > 0) setIsLoading(false);
