@@ -13,6 +13,17 @@ import iconLinkedin from '../assets/imgsPrueba/icon_Linkedin.png';
 import iconTwitter from '../assets/imgsPrueba/icon_Twitter.png';
 import iconGithub from '../assets/imgsPrueba/icon_github.png';
 
+// * config axios
+const request = axios.create({
+  baseURL: 'http://localhost:3030',
+  withCredentials: true,
+});
+const config = {
+  headers: {
+    'Access-Control-Allow-Origin': 'http://localhost:3000'
+  }
+};
+
 // ! obligatorio tipar el estado global
 interface State {
   detail: Mentor | any;
@@ -23,7 +34,7 @@ interface State {
 
 // ! obligatorio tipar los Actions
 interface Actions {
-  getSpecialty: () => void;
+  getSpecialty: () => Promise<void>;
   upgradeDetail: (Data: Mentor) => void;
   initialDetail: () => void;
   filterMentors: (type: string, option: string) => void;
@@ -148,10 +159,10 @@ const stateGlobal = create<State & Actions>((set) => ({
 
   // * Actions
   getSpecialty: async () => {
-    const specialtyData = await axios.get('http://localhost:3030/specialty');
-    const specialties = specialtyData.data as Specialty[];
-
-    set({ specialty: specialties });
+    request
+      .get('/users',config)
+      .then((response) => console.log(response.data))
+      .catch((error) => console.error(error));
   },
 
   upgradeDetail: (Data: Mentor) => set({ detail: Data }),

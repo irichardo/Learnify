@@ -7,13 +7,20 @@ import imgPredeterminate from '../../assets/imgsPrueba/icon_perfil2.png';
 import stateGlobal from '../../store';
 import { Mentor } from '../../helpers/Types/Cards';
 
+import axios from 'axios';
+
 function showWindowsSettings(nombre: string) {
   alert('editando: ' + nombre);
 }
 
 const columns: ColumnsType<Mentor> = [
   {
-    title: 'img',
+    title: 'id',
+    key: 'id',
+    render: (value: Mentor[], record: Mentor, index: number) => <a>{index+1}</a>,
+  },
+  {
+    title: 'imagen',
     dataIndex: 'img',
     key: 'img',
     render: (value: Mentor[], record: Mentor, index: number) => (
