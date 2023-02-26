@@ -18,4 +18,12 @@ const traerTodos = async () => {
   }
 };
 
-module.exports = { conAgregarBucket, traerTodos };
+const conBucketsPorQuery = async (query) => {
+  try {
+    return await bucketSchema.find(query);
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { conAgregarBucket, traerTodos, conBucketsPorQuery };

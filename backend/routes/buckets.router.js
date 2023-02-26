@@ -4,6 +4,9 @@ const { agregarBucket } = require("../process/buckets/agregarBucket");
 const {
   traerTodosLosBuckets,
 } = require("../process/buckets/traerTodosLosBuckets");
+const {
+  traerBucketsActivos,
+} = require("../process/buckets/traerBucketsActivos");
 
 router.post("/", async (req, res) => {
   try {
@@ -15,8 +18,10 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
+  let respuesta;
   try {
-    const respuesta = await traerTodosLosBuckets();
+    if (req.body.type) respuesta = await traerBucketsActivos(req.body.type);
+    else respuesta = await traerTodosLosBuckets();
     res.status(200).json(respuesta);
   } catch (error) {
     res.status(400).json(error.message ? error.message : error);
