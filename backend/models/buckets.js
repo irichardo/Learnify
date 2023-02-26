@@ -6,24 +6,21 @@ const bucketSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  "tokens-actuales": {
+  tokensActuales: {
     type: Number,
     required: true,
   },
   usuarios: {
     type: [
       {
-        user: {
+        _id: {
           type: String,
           required: true,
         },
-        email: {
-          type: String,
-          required: true,
-        },
-        "tokens-aportados": {
+        aportes: {
           type: Number,
           required: true,
+          min: 10,
         },
       },
     ],

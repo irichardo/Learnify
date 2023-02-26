@@ -29,11 +29,11 @@ router.get("/:type", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-  const { user, tokens, type } = req.body;
+  const { _id, tokens, type } = req.body;
   let respuesta;
   try {
-    if (tokens && user) respuesta = await modificarTokens(user, tokens);
-    else if (type && user) respuesta = await modificarType(user, type);
+    if (tokens && _id) respuesta = await modificarTokens(_id, tokens);
+    else if (type && _id) respuesta = await modificarType(_id, type);
     else throw Error("faltan parametros");
     res.status(200).json(respuesta);
   } catch (error) {
