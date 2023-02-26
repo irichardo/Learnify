@@ -1,0 +1,13 @@
+.containerDashboard {
+  width: 100%;
+  height: 100vh;
+  background-image: url(../../assets/imgs/backgroundDashboard.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.imgTable {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}

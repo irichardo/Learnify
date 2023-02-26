@@ -10,7 +10,7 @@ import Logout from '../SignIn-Up/Logout';
 export default function Navbar() {
   const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
-  const options = ['mentors', 'buckets'];
+  const options = ['mentors', 'buckets', 'dashboard'];
 
   const { setIsAuthenticated } = useAuthStore();
 
@@ -23,8 +23,10 @@ export default function Navbar() {
     setIsAuthenticated(false);
   };
 
+  console.log('💻 -> useEffect -> isAuthenticated:', isAuthenticated);
   useEffect(() => {
     if (isAuthenticated) navigate('/mentors');
+
     console.log(user);
   }, [isAuthenticated]);
 

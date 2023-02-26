@@ -5,7 +5,7 @@ const modificarType = async (id, type) => {
   const arr = ["super admin", "admin", "teacher", "student"];
   if (!arr.includes(type)) {
     throw new Error(
-      `el tipo proporcionado no coincide con ninguna de las categorias`
+      "el tipo proporcionado no coincide con ninguna de las categorias"
     );
   }
 
