@@ -17,20 +17,28 @@ const config = {
 
 // ! obligatorio tipar el estado global
 interface State {
+  showWindows: boolean;
   allUser: UserApi[];
   detail: UserApi | {};
   ArrayMentors: UserApi[];
   mentorFilter: UserApi[];
   preview: Preview | {};
-  specialty: any[];
+  specialty: string[];
 }
 
 // ! obligatorio tipar los Actions
 interface Actions {
   initialApp: () => void;
+  setShowWindows: (data: boolean) => void;
   upgradeDetail: (Data: UserApi) => void;
   filterMentors: (type: string, option: string) => void;
-  upgradePreview: (img: string, nombre: string, permisos: string) => void;
+  upgradePreview: (
+    id: string,
+    img: string,
+    nombre: string,
+    permisos: string
+  ) => void;
+  getDetailShowWindows: (id: string, type: string) => void;
 }
 
 const stateGlobal = create<State & Actions>((set) => ({
@@ -41,6 +49,7 @@ const stateGlobal = create<State & Actions>((set) => ({
   specialty: [],
   ArrayMentors: [],
   mentorFilter: [],
+  showWindows: false,
 
   // * Actions
 
@@ -62,18 +71,23 @@ const stateGlobal = create<State & Actions>((set) => ({
       console.log(error);
     }
   },
-
+  setShowWindows: (data: boolean) => set({ showWindows: data }),
   upgradeDetail: (Data: UserApi) => set({ detail: Data }),
-  upgradePreview: (img: string, nombre: string, permisos: string) => {
+  upgradePreview: (
+    id: string,
+    img: string,
+    nombre: string,
+    permisos: string
+  ) => {
     set({
       preview: {
+        id,
         img,
         nombre,
         permisos,
       },
     });
   },
-
   filterMentors: (type: string, option: string) => {
     // if (type === 'Rating') {
     //   if (option === 'Mayor a menor') {
@@ -90,7 +104,6 @@ const stateGlobal = create<State & Actions>((set) => ({
     //     }));
     //   }
     // }
-
     // if (type === 'Lenguaje') {
     //   set((state) => ({
     //     mentorFilter: [...state.ArrayMentors].filter((mentor) =>
@@ -98,6 +111,20 @@ const stateGlobal = create<State & Actions>((set) => ({
     //     ),
     //   }));
     // }
+  },
+  getDetailShowWindows: async (id: string, type: string) => {
+    const data = {
+      _id: id,
+      type: type,
+    };
+    const putUser = await request.put('/users', data, config);
+    const getUser = await request.get('/users', config);
+
+    alert(putUser.data);
+    set({
+      preview: putUser.data,
+      allUser: getUser.data,
+    });
   },
 }));
 
