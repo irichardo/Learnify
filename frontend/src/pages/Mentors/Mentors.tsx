@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import stateGlobal from '../../store';
 import NotFound from '../others/NotFound';
 import { Mentor, Specialty, UserApi } from '../../helpers/Types/Cards';
+console.log('a');
 
 const Mentors = () => {
   const { mentorFilter, specialty, detail } = stateGlobal(
