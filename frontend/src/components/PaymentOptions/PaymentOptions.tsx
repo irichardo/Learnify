@@ -12,8 +12,11 @@ const PaymentOptions = () =>{
 
 
     const {user} = useAuth0();
-
-
+    
+    // console.log(user);
+    
+    const data = user?user.email:null
+    
     const [payAmount, setPayment] = useState<Payment>({
         Amount:0
     })
@@ -25,11 +28,15 @@ const PaymentOptions = () =>{
       setPayment({Amount:Number(Amount)})
     }
 
+
+
     const handlerPayment = async()=>{
+        await Axios.post('http://localhost:3030/getid',{ id:data})
         const res = await Axios.post('http://localhost:3030/create-payment', payAmount);
+        
         window.open(res.data,'Ventana de verificacion');
     }
-
+    
 
     return(
         <div className='paymentOptions'>  
