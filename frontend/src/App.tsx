@@ -62,13 +62,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const { initialDetail, filterMentorNormal, getSpecialty } = stateGlobal(
-    (state) => state
-  );
+  const { initialApp } = stateGlobal((state) => state) as {
+    initialApp: () => void;
+  };
   useEffect(() => {
-    initialDetail();
-    filterMentorNormal();
-    getSpecialty();
+    initialApp();
   }, []);
 
   return (
