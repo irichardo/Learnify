@@ -10,4 +10,20 @@ const conAgregarBucket = async (bucket) => {
   }
 };
 
-module.exports = { conAgregarBucket };
+const traerTodos = async () => {
+  try {
+    return await bucketSchema.find();
+  } catch (error) {
+    return error;
+  }
+};
+
+const conBucketsPorQuery = async (query) => {
+  try {
+    return await bucketSchema.find(query);
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { conAgregarBucket, traerTodos, conBucketsPorQuery };
