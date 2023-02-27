@@ -27,14 +27,6 @@ const conBucketsPorQuery = async (query) => {
   }
 };
 
-const conTraerUnBucket = async (query) => {
-  try {
-    return await bucketSchema.find(query);
-  } catch (error) {
-    return error;
-  }
-};
-
 const conModificarBucket = async (query1, query2) => {
   try {
     return await bucketSchema.updateOne(query1, query2);
@@ -48,6 +40,5 @@ module.exports = {
   traerTodos,
   conBucketsPorQuery,
   conAgregarBucket,
-  conTraerUnBucket,
   conModificarBucket,
 };

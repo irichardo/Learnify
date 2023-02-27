@@ -1,5 +1,5 @@
 const {
-  conTraerUnBucket,
+  conBucketsPorQuery,
   conModificarBucket,
 } = require("../../controllers/buckets.controllers");
 const objectId = require("mongodb").ObjectId;
@@ -9,9 +9,8 @@ const cambiarActividad = async (id, active) => {
 
   const nuevoId = new objectId(id);
   const query1 = { _id: nuevoId };
-  const bucket = await conTraerUnBucket(query1);
+  const bucket = await conBucketsPorQuery(query1);
   if (!bucket) throw new Error(`no se encontro al bucket: ${id}`);
-  console.log(bucket[0].nombre);
 
   const query2 = { $set: { activo: !bucket[0].activo } };
   const resp = await conModificarBucket(query1, query2);
