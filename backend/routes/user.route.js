@@ -30,12 +30,13 @@ router.get("/:type", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-  const { _id, tokens, type, active } = req.body;
+  const { _id, tokens, type, active, mail } = req.body;
+  console.log(mail);
   let respuesta;
   try {
     if (_id && type && active)
       throw Error("solo puede cambiar un parametro a las vez");
-    if (tokens && _id) respuesta = await modificarTokens(_id, tokens);
+    if (tokens && mail) respuesta = await modificarTokens(mail, tokens);
     else if (type && _id) respuesta = await modificarType(_id, type);
     else if (active && _id) respuesta = await modificarActividad(_id, active);
     else throw Error("faltan parametros");
