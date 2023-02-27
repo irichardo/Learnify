@@ -12,7 +12,7 @@ const Mentors = () => {
   const { mentorFilter, specialty, detail } = stateGlobal(
     (state) => state
   ) as unknown as {
-    mentorFilter: UserApi[];
+    mentorFilter: UserApi[ ];
     specialty: Specialty[];
     detail: UserApi;
   };
