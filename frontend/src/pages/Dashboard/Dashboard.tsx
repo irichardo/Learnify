@@ -14,22 +14,24 @@ import WindowsUserEdit from '../../components/WindowsUserEdit/WindowsUserEdit';
 function showWindowsSettings(
   id: string,
   img: string,
+  status: boolean,
   nombre: string,
-  premisos: string
+  permisos: string
 ) {
   const { setShowWindows, upgradePreview } = stateGlobal.getState();
-  upgradePreview(id, img, nombre, premisos);
+  upgradePreview(id, img, status, nombre, permisos);
   setShowWindows(true);
 }
 
 function showPreview(
   id: string,
   img: string,
+  status: boolean,
   nombre: string,
-  premisos: string
+  permisos: string
 ) {
   const { upgradePreview } = stateGlobal.getState();
-  upgradePreview(id, img, nombre, premisos);
+  upgradePreview(id, img, status, nombre, permisos);
 }
 
 const columns: ColumnsType<UserApi> = [
@@ -59,7 +61,7 @@ const columns: ColumnsType<UserApi> = [
     dataIndex: 'active',
     key: 'active',
     sorter: {
-      compare: (a, b) => (a.active < b.active ? 1 : -1),
+      compare: (a, b) => (a.active === b.active ? 0 : a.active ? -1 : 1),
       multiple: 1,
     },
     render: (value: UserApi[], record: UserApi, index: number) => {
@@ -94,7 +96,15 @@ const columns: ColumnsType<UserApi> = [
     dataIndex: 'type',
     key: 'type',
     sorter: {
-      compare: (a, b) => (a.type < b.type ? 1 : -1),
+      compare:(a, b) => {
+        const categorias = ['super admin', 'admin', 'teacher', 'student'];
+        const categoriaA = categorias.indexOf(a.type);
+        const categoriaB = categorias.indexOf(b.type);
+        if (categoriaA !== categoriaB) {
+          return categoriaA - categoriaB;
+        }
+        return 0;
+      },
       multiple: 1,
     },
     render: (value: UserApi[], record: UserApi, index: number) => {
@@ -129,6 +139,7 @@ const columns: ColumnsType<UserApi> = [
               showWindowsSettings(
                 record._id,
                 record.picture,
+                record.active,
                 record.name,
                 record.type
               );
@@ -139,7 +150,13 @@ const columns: ColumnsType<UserApi> = [
           </button>
           <button
             onClick={() => {
-              showPreview(record._id, record.picture, record.name, record.type);
+              showPreview(
+                record._id,
+                record.picture,
+                record.active,
+                record.name,
+                record.type
+              );
             }}
             className='Preview'
           >
@@ -208,6 +225,7 @@ export default function Dashboard() {
 
       {showWindows ? (
         <WindowsUserEdit
+          status={preview.status}
           id={preview.id}
           img={preview.img}
           nombre={preview.nombre}

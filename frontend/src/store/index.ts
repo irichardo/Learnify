@@ -35,10 +35,12 @@ interface Actions {
   upgradePreview: (
     id: string,
     img: string,
+    status: boolean,
     nombre: string,
     permisos: string
   ) => void;
-  getDetailShowWindows: (id: string, type: string, active?: string) => void;
+  getDetailShowWindows: (id: string, type: string) => void;
+  putStateUserShow: (id: string) => void;
 }
 
 const stateGlobal = create<State & Actions>((set) => ({
@@ -76,12 +78,14 @@ const stateGlobal = create<State & Actions>((set) => ({
   upgradePreview: (
     id: string,
     img: string,
+    status: boolean,
     nombre: string,
     permisos: string
   ) => {
     set({
       preview: {
         id,
+        status,
         img,
         nombre,
         permisos,
@@ -119,11 +123,24 @@ const stateGlobal = create<State & Actions>((set) => ({
     };
     const putUser = await request.put('/users', data, config);
     const getUser = await request.get('/users', config);
-    let putUserEstatu;
-    if (active === 'activar') putUserEstatu = await request.put('')
+
     alert(putUser.data);
     set({
       preview: putUser.data,
+      allUser: getUser.data,
+    });
+  },
+  putStateUserShow: async (id: string) => {
+    const data = {
+      _id: id,
+      active: 'change',
+    };
+    const putUserState = await request.put('/users', data, config);
+    const getUser = await request.get('/users', config);
+
+    alert(putUserState.data);
+    set({
+      preview: putUserState.data,
       allUser: getUser.data,
     });
   },

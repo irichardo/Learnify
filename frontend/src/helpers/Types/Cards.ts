@@ -48,6 +48,7 @@ export interface Specialty {
 
 export interface Preview {
   id: string;
+  status: boolean;
   img: string;
   nombre: string;
   permisos: string;
