@@ -6,7 +6,8 @@ import { Preview, UserApi } from '../helpers/Types/Cards';
 
 // * config axios
 const request = axios.create({
-  baseURL: 'http://localhost:3030',
+  baseURL: 'https://learnify-blue.vercel.app',
+  //https://learnify-blue.vercel.app/users
   withCredentials: true,
 });
 const config = {
