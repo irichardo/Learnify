@@ -7,6 +7,7 @@ const {
 const {
   traerBucketsActivos,
 } = require("../process/buckets/traerBucketsActivos");
+const { cambiarActividad } = require("../process/buckets/cambiarActividad");
 
 router.post("/", async (req, res) => {
   try {
@@ -22,6 +23,17 @@ router.get("/", async (req, res) => {
   try {
     if (req.body.type) respuesta = await traerBucketsActivos(req.body.type);
     else respuesta = await traerTodosLosBuckets();
+    res.status(200).json(respuesta);
+  } catch (error) {
+    res.status(400).json(error.message ? error.message : error);
+  }
+});
+
+router.put("/", async (req, res) => {
+  const { _id, active } = req.body;
+  try {
+    if (!_id || !active) throw Error(`faltan datos`);
+    const respuesta = await cambiarActividad(_id, active);
     res.status(200).json(respuesta);
   } catch (error) {
     res.status(400).json(error.message ? error.message : error);
