@@ -1,17 +1,8 @@
 import { create } from 'zustand';
-import { Mentor, Api, Specialty } from '../helpers/Types/Cards';
 import axios from 'axios';
-
-import imgDuvan from '../assets/imgsPrueba/icon_perfil3.png';
-
-import imgPrueba from '../assets/imgsPrueba/perfil-Prueba.png';
-import iconReact from '../assets/imgsPrueba/icon_react.png';
-import iconNodeJs from '../assets/imgsPrueba/icon_nodejs.png';
-import iconSequelize from '../assets/imgsPrueba/icon_sequelize.png';
-
-import iconLinkedin from '../assets/imgsPrueba/icon_Linkedin.png';
-import iconTwitter from '../assets/imgsPrueba/icon_Twitter.png';
-import iconGithub from '../assets/imgsPrueba/icon_github.png';
+import { ArrayGetKeysEspecific } from '../helpers/functionReactives';
+import { User } from '@auth0/auth0-react';
+import { Preview, UserApi } from '../helpers/Types/Cards';
 
 // * config axios
 const request = axios.create({
@@ -20,185 +11,94 @@ const request = axios.create({
 });
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': 'http://localhost:3000'
-  }
+    'Access-Control-Allow-Origin': 'http://localhost:3000',
+  },
 };
 
 // ! obligatorio tipar el estado global
 interface State {
-  detail: Mentor | any;
-  ArrayMentors: Api;
-  FilterMentors: Api;
-  specialty: Specialty[];
+  allUser: UserApi[];
+  detail: UserApi | {};
+  ArrayMentors: UserApi[];
+  mentorFilter: UserApi[];
+  preview: Preview | {};
+  specialty: any[];
 }
 
 // ! obligatorio tipar los Actions
 interface Actions {
-  getSpecialty: () => Promise<void>;
-  upgradeDetail: (Data: Mentor) => void;
-  initialDetail: () => void;
+  initialApp: () => void;
+  upgradeDetail: (Data: UserApi) => void;
   filterMentors: (type: string, option: string) => void;
-  filterMentorNormal: () => void;
+  upgradePreview: (img: string, nombre: string, permisos: string) => void;
 }
 
 const stateGlobal = create<State & Actions>((set) => ({
   // ~ State Global
   detail: {},
-  ArrayMentors: [
-    {
-      img: imgPrueba,
-      cargo: 'Web Developer',
-      nombre: 'Cristian Velarde',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      expert: [
-        { imgs: iconReact, nombre: 'React' },
-        { imgs: iconNodeJs, nombre: 'NodeJs' },
-        { imgs: iconSequelize, nombre: 'Sequelize' },
-      ],
-      redes: [
-        { imgs: iconLinkedin, nombre: 'Github' },
-        { imgs: iconTwitter, nombre: 'Linkedin' },
-        { imgs: iconGithub, nombre: 'Twitter' },
-      ],
-      rating: 5,
-    },
-    {
-      img: imgDuvan,
-      cargo: 'Web Developer',
-      nombre: 'Duvan Rozo',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      expert: [
-        { imgs: iconReact, nombre: 'React' },
-        { imgs: iconNodeJs, nombre: 'NodeJs' },
-        { imgs: iconSequelize, nombre: 'Sequelize' },
-      ],
-      redes: [
-        { imgs: iconLinkedin, nombre: 'Github' },
-        { imgs: iconTwitter, nombre: 'Linkedin' },
-        { imgs: iconGithub, nombre: 'Twitter' },
-      ],
-      rating: 4,
-    },
-    {
-      img: undefined,
-      cargo: 'Web Developer',
-      nombre: 'Isaias Romero',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      expert: [
-        { imgs: iconReact, nombre: 'React' },
-        { imgs: iconNodeJs, nombre: 'NodeJs' },
-        { imgs: iconSequelize, nombre: 'Sequelize' },
-      ],
-      redes: [
-        { imgs: iconLinkedin, nombre: 'Github' },
-        { imgs: iconTwitter, nombre: 'Linkedin' },
-        { imgs: iconGithub, nombre: 'Twitter' },
-      ],
-      rating: 3,
-    },
-    {
-      img: undefined,
-      cargo: 'Web Developer',
-      nombre: 'Richard Diaz',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      expert: [
-        { imgs: iconReact, nombre: 'React' },
-        { imgs: iconNodeJs, nombre: 'NodeJs' },
-        { imgs: iconSequelize, nombre: 'Sequelize' },
-      ],
-      redes: [
-        { imgs: iconLinkedin, nombre: 'Github' },
-        { imgs: iconTwitter, nombre: 'Linkedin' },
-        { imgs: iconGithub, nombre: 'Twitter' },
-      ],
-      rating: 2,
-    },
-    {
-      img: undefined,
-      cargo: 'Web Developer',
-      nombre: 'Nasari Ladino',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      expert: [
-        { imgs: iconReact, nombre: 'React' },
-        { imgs: iconNodeJs, nombre: 'NodeJs' },
-        { imgs: iconSequelize, nombre: 'Sequelize' },
-      ],
-      redes: [
-        { imgs: iconLinkedin, nombre: 'Github' },
-        { imgs: iconTwitter, nombre: 'Linkedin' },
-        { imgs: iconGithub, nombre: 'Twitter' },
-      ],
-      rating: 1,
-    },
-    {
-      img: undefined,
-      cargo: 'Web Developer',
-      nombre: 'David Gallego',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      expert: [
-        { imgs: iconReact, nombre: 'React' },
-        { imgs: iconNodeJs, nombre: 'NodeJs' },
-        { imgs: iconSequelize, nombre: 'Sequelize' },
-      ],
-      redes: [
-        { imgs: iconLinkedin, nombre: 'Github' },
-        { imgs: iconTwitter, nombre: 'Linkedin' },
-        { imgs: iconGithub, nombre: 'Twitter' },
-      ],
-      rating: 4,
-    },
-  ],
-  FilterMentors: [],
+  preview: {},
+  allUser: [],
   specialty: [],
+  ArrayMentors: [],
+  mentorFilter: [],
 
   // * Actions
-  getSpecialty: async () => {
-    request
-      .get('/users',config)
-      .then((response) => console.log(response.data))
-      .catch((error) => console.error(error));
+
+  initialApp: async () => {
+    try {
+      const Specialty = await request.get('/specialty', config);
+      const User = await request.get('/users', config);
+      const Mentors = await request.get('/users/teacher', config);
+      const specialtyName = ArrayGetKeysEspecific(Specialty.data);
+
+      set({
+        allUser: User.data,
+        detail: Mentors.data[0],
+        specialty: specialtyName,
+        ArrayMentors: Mentors.data,
+        mentorFilter: Mentors.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   },
 
-  upgradeDetail: (Data: Mentor) => set({ detail: Data }),
+  upgradeDetail: (Data: UserApi) => set({ detail: Data }),
+  upgradePreview: (img: string, nombre: string, permisos: string) => {
+    set({
+      preview: {
+        img,
+        nombre,
+        permisos,
+      },
+    });
+  },
 
   filterMentors: (type: string, option: string) => {
-    if (type === 'Rating') {
-      if (option === 'Mayor a menor') {
-        console.log(type, option);
+    // if (type === 'Rating') {
+    //   if (option === 'Mayor a menor') {
+    //     set((state) => ({
+    //       mentorFilter: [...state.ArrayMentors].sort(
+    //         (mentorA, mentorB) => mentorB.rating - mentorA.rating
+    //       ),
+    //     }));
+    //   } else if (option === 'Menor a mayor') {
+    //     set((state) => ({
+    //       mentorFilter: [...state.ArrayMentors].sort(
+    //         (mentorA, mentorB) => mentorA.rating - mentorB.rating
+    //       ),
+    //     }));
+    //   }
+    // }
 
-        set((state) => ({
-          FilterMentors: [...state.ArrayMentors].sort(
-            (mentorA, mentorB) => mentorB.rating - mentorA.rating
-          ),
-        }));
-      } else if (option === 'Menor a mayor') {
-        console.log(type, option);
-
-        set((state) => ({
-          FilterMentors: [...state.ArrayMentors].sort(
-            (mentorA, mentorB) => mentorA.rating - mentorB.rating
-          ),
-        }));
-      }
-    }
-
-    if (type === 'Lenguaje') {
-      set((state) => ({
-        FilterMentors: [...state.ArrayMentors].filter((mentor) =>
-          mentor.expert.some((expert) => expert.nombre === option)
-        ),
-      }));
-    }
+    // if (type === 'Lenguaje') {
+    //   set((state) => ({
+    //     mentorFilter: [...state.ArrayMentors].filter((mentor) =>
+    //       mentor.expert.some((expert) => expert.nombre === option)
+    //     ),
+    //   }));
+    // }
   },
-  filterMentorNormal: () =>
-    set((state) => ({ FilterMentors: state.ArrayMentors })),
-  initialDetail: () => set((state) => ({ detail: state.ArrayMentors[0] })),
 }));
 
 export default stateGlobal;
