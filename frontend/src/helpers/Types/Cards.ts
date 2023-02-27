@@ -47,6 +47,7 @@ export interface Specialty {
 }
 
 export interface Preview {
+  id: string;
   img: string;
   nombre: string;
   permisos: string;
