@@ -20,7 +20,7 @@ export default function WindowsUserEdit({
   const { getDetailShowWindows, setShowWindows } = stateGlobal(
     (state) => state
   ) as {
-    getDetailShowWindows: (id: string, type: string) => void;
+    getDetailShowWindows: (id: string, type: string, active?: string) => void;
     setShowWindows: (data: boolean) => void;
   };
 
@@ -51,6 +51,12 @@ export default function WindowsUserEdit({
                 <option value={permiso}>{permiso}</option>
               )
             )}
+          </select>
+          <select ref={selectRef} className='selectPermisos'>
+            <option value='activar' selected>
+              activar
+            </option>
+            <option value='desactivar'>desactivar</option>
           </select>
           <button className='buttonPostPermissSave' onClick={handlePost}>
             Save Change

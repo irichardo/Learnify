@@ -55,6 +55,32 @@ const columns: ColumnsType<UserApi> = [
     ),
   },
   {
+    title: 'status',
+    dataIndex: 'active',
+    key: 'active',
+    sorter: {
+      compare: (a, b) => (a.active < b.active ? 1 : -1),
+      multiple: 1,
+    },
+    render: (value: UserApi[], record: UserApi, index: number) => {
+      let color: string = '';
+      switch (record.active) {
+        case true:
+          color = 'green';
+          break;
+        default:
+          color = 'gray';
+          break;
+      }
+
+      return (
+        <Tag color={color} key={record.email}>
+          {record.active ? 'Active' : 'Desactive'}
+        </Tag>
+      );
+    },
+  },
+  {
     title: 'name',
     dataIndex: 'name',
     key: 'name',

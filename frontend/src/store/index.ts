@@ -38,7 +38,7 @@ interface Actions {
     nombre: string,
     permisos: string
   ) => void;
-  getDetailShowWindows: (id: string, type: string) => void;
+  getDetailShowWindows: (id: string, type: string, active?: string) => void;
 }
 
 const stateGlobal = create<State & Actions>((set) => ({
@@ -112,14 +112,15 @@ const stateGlobal = create<State & Actions>((set) => ({
     //   }));
     // }
   },
-  getDetailShowWindows: async (id: string, type: string) => {
+  getDetailShowWindows: async (id: string, type: string, active?: string) => {
     const data = {
       _id: id,
       type: type,
     };
     const putUser = await request.put('/users', data, config);
     const getUser = await request.get('/users', config);
-
+    let putUserEstatu;
+    if (active === 'activar') putUserEstatu = await request.put('')
     alert(putUser.data);
     set({
       preview: putUser.data,
