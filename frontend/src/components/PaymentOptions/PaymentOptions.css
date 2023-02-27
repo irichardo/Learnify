@@ -1,0 +1,16 @@
+.paymentOptions{
+    display: inline-flex;
+    width: 50%;
+    height: 50vh;
+    background-color: aquamarine;
+    justify-content: center;
+}
+
+.AmountTokens{
+    margin: 30px;
+    width: 100px;
+    height: 40px;
+    border: 2px solid black;
+    background-color:rgb(152, 195, 247);
+
+}

@@ -16,6 +16,7 @@ import Navbar from './components/Navbar/Navbar';
 // ^ StateGlobal
 import stateGlobal from './store';
 import { useEffect } from 'react';
+import Payment from './pages/PaymentMethod/PaymentMethod';
 
 /** root routes
  * version react router v6
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <Dashboard />,
+      },
+      {
+        path:'payments',
+        element:<Payment/>
       },
       {
         path: '*',

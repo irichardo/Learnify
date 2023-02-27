@@ -10,7 +10,7 @@ import Logout from '../SignIn-Up/Logout';
 export default function Navbar() {
   const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
-  const options = ['mentors', 'buckets', 'dashboard'];
+  const options = ['mentors', 'buckets', 'dashboard', 'payments'];
 
   const { setIsAuthenticated } = useAuthStore();
 
