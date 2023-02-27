@@ -39,7 +39,9 @@ const PaymentOptions = () =>{
     
 
     return(
-        <div className='paymentOptions'>  
+        <div className='contenedor'>  
+        <div className='grid'>
+
     <div>
     <label>
     <button className='AmountTokens' value={'5'} onClick={(value)=>handlerValue(value)}> 200 tokens</button> 
@@ -50,7 +52,8 @@ const PaymentOptions = () =>{
     <label>
     <button className='AmountTokens' value={'20'} onClick={(value)=>handlerValue(value)}>1200 tokens</button>
     </label><br/>
-    <button className='PayButton' onClick={handlerPayment} >pagar</button>
+    <button className='PayButton' onClick={handlerPayment} >PAGAR</button>
+        </div>
     
   </div> 
     </div>

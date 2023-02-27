@@ -10,7 +10,7 @@ import { Mentor, Specialty, UserApi } from '../../helpers/Types/Cards';
 const Mentors = () => {
   const { mentorFilter, specialty, detail } = stateGlobal(
     (state) => state
-  ) as {
+  ) as unknown as {
     mentorFilter: UserApi[];
     specialty: Specialty[];
     detail: UserApi;
