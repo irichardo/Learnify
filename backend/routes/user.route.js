@@ -5,6 +5,7 @@ const { traerUno } = require("../process/user/traerUno");
 const { modificarType } = require("../process/user/modificarType");
 const { modificarTokens } = require("../process/user/modificarTokens");
 const { traerPorType } = require("../process/user/traerPorType");
+const { modificarActividad } = require("../process/user/modificarActividad");
 
 router.get("/", async (req, res) => {
   const { _id } = req.body;
@@ -29,13 +30,14 @@ router.get("/:type", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-  const { _id, tokens, type } = req.body;
+  const { _id, tokens, type, active } = req.body;
   let respuesta;
   try {
-    if (_id && tokens && type)
+    if (_id && type && active)
       throw Error("solo puede cambiar un parametro a las vez");
     if (tokens && _id) respuesta = await modificarTokens(_id, tokens);
     else if (type && _id) respuesta = await modificarType(_id, type);
+    else if (active && _id) respuesta = await modificarActividad(_id, active);
     else throw Error("faltan parametros");
     res.status(200).json(respuesta);
   } catch (error) {
