@@ -9,15 +9,27 @@ import { useRef, useState } from 'react';
 import { Tag } from 'antd';
 import { Space, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import WindowsUserEdit from '../../components/WindowsUserEdit/WindowsUserEdit';
 
-function showWindowsSettings(img: string, nombre: string, premisos: string) {
-  const setState = stateGlobal.getState();
-  setState.upgradePreview(img, nombre, premisos);
+function showWindowsSettings(
+  id: string,
+  img: string,
+  nombre: string,
+  premisos: string
+) {
+  const { setShowWindows, upgradePreview } = stateGlobal.getState();
+  upgradePreview(id, img, nombre, premisos);
+  setShowWindows(true);
 }
 
-function showPreview(img: string, nombre: string, premisos: string) {
+function showPreview(
+  id: string,
+  img: string,
+  nombre: string,
+  premisos: string
+) {
   const { upgradePreview } = stateGlobal.getState();
-  upgradePreview(img, nombre, premisos);
+  upgradePreview(id, img, nombre, premisos);
 }
 
 const columns: ColumnsType<UserApi> = [
@@ -88,7 +100,12 @@ const columns: ColumnsType<UserApi> = [
         <Space size='middle'>
           <button
             onClick={() => {
-              showWindowsSettings(record.picture, record.name, record.type);
+              showWindowsSettings(
+                record._id,
+                record.picture,
+                record.name,
+                record.type
+              );
             }}
             className='Edit'
           >
@@ -96,7 +113,7 @@ const columns: ColumnsType<UserApi> = [
           </button>
           <button
             onClick={() => {
-              showPreview(record.picture, record.name, record.type);
+              showPreview(record._id, record.picture, record.name, record.type);
             }}
             className='Preview'
           >
@@ -111,9 +128,10 @@ const columns: ColumnsType<UserApi> = [
 export default function Dashboard() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dataTable, setDataTable] = useState<UserApi[] | []>([]);
-  const { allUser, preview } = stateGlobal((state) => state) as {
+  const { allUser, preview, showWindows } = stateGlobal((state) => state) as {
     allUser: UserApi[];
     preview: Preview;
+    showWindows: boolean;
   };
 
   const filterUsers = (value: string): UserApi[] =>
@@ -161,6 +179,17 @@ export default function Dashboard() {
           <p>Permisos: {preview.permisos}</p>
         </div>
       </section>
+
+      {showWindows ? (
+        <WindowsUserEdit
+          id={preview.id}
+          img={preview.img}
+          nombre={preview.nombre}
+          permisos={preview.permisos}
+        />
+      ) : (
+        ''
+      )}
     </section>
   );
 }
