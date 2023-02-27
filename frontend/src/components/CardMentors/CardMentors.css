@@ -6,7 +6,6 @@
   flex-wrap: nowrap;
   gap: 20px;
   overflow-y: scroll;
-
 }
 
 .CardsMentors::-webkit-scrollbar {
@@ -31,7 +30,9 @@
 }
 
 .cardMentor img {
-  width: 120px;
+  width: 120;
+  height: 120px;
+  border-radius: 13px;
 }
 
 .CardInfo {
@@ -40,14 +41,19 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 0px 0px;
 }
 
 .cardName {
+  padding: 0px 0px;
   font-family: Poppins-Bold;
   font-size: 2rem;
+  text-align: center;
+  color: white;
 }
 
 .cardCargo {
+  color: white;
   font-family: Poppins-Regular;
   font-size: 1rem;
 }

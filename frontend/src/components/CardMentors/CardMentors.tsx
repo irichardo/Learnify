@@ -2,13 +2,13 @@ import './CardMentors.css';
 
 import imgPredeterminate from '../../assets/imgsPrueba/icon_perfil2.png';
 
-import { Api, CardsList, Mentor } from '../../helpers/Types/Cards';
+import { CardsList, UserApi } from '../../helpers/Types/Cards';
 
 // ~ state Global
 import stateGlobal from '../../store';
 
 interface PropsCardsMentors {
-  ArrayMentors: Api;
+  ArrayMentors: UserApi[];
 }
 
 function CardMentor({ img, cargo, nombre }: CardsList) {
@@ -25,18 +25,18 @@ function CardMentor({ img, cargo, nombre }: CardsList) {
 
 export default function CardMentors({ ArrayMentors }: PropsCardsMentors) {
   const { upgradeDetail } = stateGlobal((state) => state);
-  const handleCardClick = (value: Mentor) => upgradeDetail(value);
+  const handleCardClick = (value: UserApi) => upgradeDetail(value);
 
   return (
     <div className='CardsMentors'>
-      {ArrayMentors.map((element: Mentor) => {
-        const { img, cargo, nombre } = element;
+      {ArrayMentors.map((element: UserApi) => {
+        const { picture, type, name } = element;
         return (
-          <div key={nombre} onClick={() => handleCardClick(element)}>
+          <div key={name} onClick={() => handleCardClick(element)}>
             <CardMentor
-              img={typeof img === 'string' ? img : imgPredeterminate}
-              cargo={cargo}
-              nombre={nombre}
+              img={typeof picture === 'string' ? picture : imgPredeterminate}
+              cargo='Web Developer'
+              nombre={name}
             />
           </div>
         );
