@@ -1,0 +1,35 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: Montserrat-Medium;
+  src: url(./assets/font/Montserrat-Medium.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Regular;
+  src: url(./assets/font/Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: OverpassMono-Bold;
+  src: url(./assets/font/OverpassMono-Bold.ttf);
+}
+
+@font-face {
+  font-family: OverpassMono-Light;
+  src: url(./assets/font/OverpassMono-Light.ttf);
+}
+
+@font-face {
+  font-family: Poppins-Bold;
+  src: url(./assets/font/Poppins-Bold.ttf);
+}
+
+@font-face {
+  font-family: Poppins-Regular;
+  src: url(./assets/font/Poppins-Regular.ttf);
+}

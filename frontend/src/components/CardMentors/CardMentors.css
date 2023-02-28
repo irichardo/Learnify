@@ -1,0 +1,59 @@
+.CardsMentors {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-y: scroll;
+}
+
+.CardsMentors::-webkit-scrollbar {
+  width: 10px;
+}
+
+.CardsMentors::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: linear-gradient(
+    173.41deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0) 101.59%
+  );
+}
+
+.cardMentor {
+  display: flex;
+  background-image: url(../../assets/imgs/cardMentors.png);
+  background-size: cover;
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.cardMentor img {
+  width: 120;
+  height: 120px;
+  border-radius: 13px;
+}
+
+.CardInfo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0px 0px;
+}
+
+.cardName {
+  padding: 0px 0px;
+  font-family: Poppins-Bold;
+  font-size: 2rem;
+  text-align: center;
+  color: white;
+}
+
+.cardCargo {
+  color: white;
+  font-family: Poppins-Regular;
+  font-size: 1rem;
+}

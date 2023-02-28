@@ -1,0 +1,11 @@
+.Payment-Content{
+    width: 100%;
+    height: 100vh;
+    background-color: #232026;
+    background-image: url(../../assets/imgs/Rectangle.png);
+    background-repeat: no-repeat;
+    background-size: 25% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

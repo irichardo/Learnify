@@ -1,0 +1,6 @@
+public
+dist
+package-lock.json
+
+tailwind.config.cjs
+postcss.config.cjs

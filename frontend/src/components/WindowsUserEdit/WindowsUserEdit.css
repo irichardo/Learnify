@@ -1,0 +1,77 @@
+.WindowsUserEdit {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerMenu {
+  padding: 50px;
+  display: flex;
+  width: 50%;
+  height: 50%;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 50px;
+  align-content: center;
+  border-radius: 0px 20px;
+  box-shadow: 0px 4px 16px 7px rgba(0, 0, 0, 0.25);
+}
+
+.containerMenu img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  box-shadow: 0px 4px 16px 7px rgba(0, 0, 0, 0.25);
+}
+
+.infoPreview,
+.postPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+    justify-content: center;
+}
+
+.buttonPostPermissSave {
+  background-color: green;
+  color: white;
+  padding: 5px 5px;
+  width: 120px;
+  border-radius: 5px;
+}
+
+.buttonPostPermissCancel {
+  background-color: rgb(245, 0, 0);
+  color: white;
+  padding: 5px 5px;
+  width: 120px;
+  border-radius: 5px;
+}
+.buttonPostPermissSave,
+.buttonPostPermissCancel {
+  transition: all 100ms;
+}
+
+.buttonPostPermissSave:hover,
+.buttonPostPermissCancel:hover {
+  transform: scale(1.2);
+}
+
+.selectPermisos {
+  background-color: rgba(16, 16, 16, 0.958);
+  color: white;
+  padding: 5px 5px;
+  width: 150px;
+  height: 40px;
+  border-radius: 5px;
+}
