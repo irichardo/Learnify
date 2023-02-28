@@ -24,7 +24,7 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
   next()
 })
-server.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030', 'http://localhost:3000/endPayment', 'http://localhost:3000/users/teacher', 'http://localhost:3000/create-payment'] }))
+server.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030', 'http://localhost:3000/endPayment', 'http://localhost:3000/users/teacher', 'http://localhost:3000/create-payment', 'https://learnify-blue.vercel.app/'] }))
 
 // introducciendo las routes
 server.use('/', routes)
