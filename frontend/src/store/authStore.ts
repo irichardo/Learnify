@@ -1,20 +1,55 @@
 import { create } from 'zustand';
-import { persist, PersistOptions } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
-type AuthState = {
+export interface AuthState {
   isAthenticated: boolean;
-  setIsAuthenticated: (value: boolean) => void;
-};
+  gmail: string;
+  id: string;
+  rol: string;
+  botones: string[];
+}
 
-interface CustomPersistOptions<T> extends PersistOptions<T> {
-  whitelist?: Array<keyof T>;
+export interface ActionsAuthState {
+  setIsAuthenticated: (
+    verify: boolean,
+    gmail?: string,
+    id?: string,
+    rol?: string
+  ) => void;
 }
 
 const useAuthStore = create(
-  persist<AuthState>(
+  persist<AuthState & ActionsAuthState>(
     (set) => ({
+      // * GLOBAL STATE AUTHENTICATION
       isAthenticated: false,
-      setIsAuthenticated: (value: boolean) => set({ isAthenticated: value }),
+      gmail: '',
+      id: '',
+      rol: '',
+      botones: [],
+
+      // * ACTIONS GLOBAL STATE AUTHENTICATION
+      setIsAuthenticated: (
+        verify: boolean,
+        gmail?: string,
+        id?: string,
+        rol?: string
+      ) => {
+        let botones;
+        if (rol === 'super admin' || rol === 'admin')
+          botones = ['mentors', 'buckets', 'dashboard', 'payments'];
+        else botones = ['mentors', 'buckets', 'payments'];
+
+        if (verify) set({ isAthenticated: false, gmail, id, rol, botones });
+        else
+          set({
+            isAthenticated: false,
+            gmail: '',
+            id: '',
+            rol: '',
+            botones: [''],
+          });
+      },
     }),
     {
       name: 'auth',

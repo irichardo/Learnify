@@ -1,25 +1,25 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
 // ~ Element Pages
 import Landing from './pages/Landing/Landing';
 import Mentors from './pages/Mentors/Mentors';
 import Buckets from './pages/Buckets/Buckets';
-import NotFound from './pages/others/NotFound';
 import Profile from './pages/Profile/Profile';
-import Dashboard from './pages/Dashboard/Dashboard';
+import NotFound from './pages/others/NotFound';
 import Loading from './components/Loader/Cargando';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Payment from './pages/PaymentMethod/PaymentMethod';
 
 // & Element Components
-import SignIn from './components/SignIn-Up/SignIn';
-import SignUp from './components/SignIn-Up/SignUp';
 import Navbar from './components/Navbar/Navbar';
+import SignUp from './components/SignIn-Up/SignUp';
+import SignIn from './components/SignIn-Up/SignIn';
+
+// * Hooks
+import { useEffect, useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // ^ StateGlobal
 import stateGlobal from './store';
-import { useEffect, useState } from 'react';
-import Payment from './pages/PaymentMethod/PaymentMethod';
-import { UserApi } from './helpers/Types/Cards';
-import { useStore } from 'zustand';
+import type { State, Actions } from './store/index';
 
 /** root routes
  * version react router v6
@@ -71,9 +71,7 @@ const router = createBrowserRouter([
 
 function App() {
   const [loading, isLoading] = useState(true);
-  const { initialApp } = stateGlobal((state) => state) as {
-    initialApp: () => void;
-  };
+  const { initialApp } = stateGlobal<State & Actions>((state) => state);
 
   useEffect(() => {
     const initializeApp = async () => {
