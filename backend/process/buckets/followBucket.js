@@ -30,6 +30,7 @@ const followBucket = async ({ nombre, usuario }) => {
   const bucket = await conBucketsPorQuery(query2);
 
   if (!bucket.length) throw new Error(`el bucket ${nombre} no existe`);
+  if (!bucket[0].activo) throw new Error(`Error el bucket no esta activo`);
 
   const result = bucket[0].usuarios.find((us) => us._id === usuario._id);
   if (result)
