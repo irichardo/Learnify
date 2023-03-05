@@ -1,24 +1,18 @@
 import './CardsListMentors.css';
 
-import iconDuvan from '../../assets/imgsPrueba/icon_perfil3.png';
-
 import Selector from '../Selector/Selector';
 import CardMentors from '../CardMentors/CardMentors';
 
-import { UserApi } from '../../helpers/Types/Cards';
 import stateGlobal from '../../store';
+import type { State, Actions } from '../../store';
 
-type PropsCardsListMentors = {
-  Mentors: UserApi[];
-};
+export default function CardsListMentors() {
+  const { specialty, mentorFilter } = stateGlobal<State & Actions>(
+    (state) => state
+  );
 
-export default function CardsListMentors({ Mentors }: PropsCardsListMentors) {
-  const { specialty, mentorFilter } = stateGlobal((state) => state) as {
-    specialty: string[];
-    mentorFilter: UserApi[];
-  };
-
-  if (Mentors?.length === 0) return <div className='CardsListMentors'></div>;
+  if (mentorFilter?.length === 0 || specialty?.length === 0)
+    return <div className='CardsListMentors'></div>;
 
   return (
     <section className='CardsListMentors'>

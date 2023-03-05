@@ -3,7 +3,8 @@ import './Dashboard.css';
 import imgPredeterminate from '../../assets/imgsPrueba/icon_perfil2.png';
 
 import stateGlobal from '../../store';
-import { UserApi, Preview } from '../../helpers/Types/Cards';
+import { UserApi } from '../../helpers/Types/Cards';
+import type { State, Actions } from '../../store';
 import { useRef, useState } from 'react';
 
 import { Tag } from 'antd';
@@ -96,7 +97,7 @@ const columns: ColumnsType<UserApi> = [
     dataIndex: 'type',
     key: 'type',
     sorter: {
-      compare:(a, b) => {
+      compare: (a, b) => {
         const categorias = ['super admin', 'admin', 'teacher', 'student'];
         const categoriaA = categorias.indexOf(a.type);
         const categoriaB = categorias.indexOf(b.type);
@@ -171,11 +172,9 @@ const columns: ColumnsType<UserApi> = [
 export default function Dashboard() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dataTable, setDataTable] = useState<UserApi[] | []>([]);
-  const { allUser, preview, showWindows } = stateGlobal((state) => state) as {
-    allUser: UserApi[];
-    preview: Preview;
-    showWindows: boolean;
-  };
+  const { allUser, preview, showWindows } = stateGlobal<State & Actions>(
+    (state) => state
+  );
 
   const filterUsers = (value: string): UserApi[] =>
     allUser.filter((user: UserApi) =>

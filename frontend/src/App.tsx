@@ -50,8 +50,8 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path:'payments',
-        element:<Payment/>
+        path: 'payments',
+        element: <Payment />,
       },
       {
         path: '*',
@@ -70,27 +70,29 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const { initialApp, allUser, specialty } = stateGlobal((state) => state) as {
+  const [loading, isLoading] = useState(true);
+  const { initialApp } = stateGlobal((state) => state) as {
     initialApp: () => void;
-    allUser:UserApi[];
-    specialty:String[]
   };
+
   useEffect(() => {
-    initialApp();
+    const initializeApp = async () => {
+      try {
+        await initialApp();
+      } catch (error) {
+        alert(
+          'no se ah podido conectar con la base de datos, intente en otro momento'
+        );
+      } finally {
+        isLoading(false);
+      }
+    };
+
+    initializeApp();
   }, []);
 
-  const [loading, isLoading] = useState(true);
-  useEffect(()=>{
-    if(allUser.length > 0 && specialty.length > 0){
-      isLoading(false)
-    }
-  },[allUser,specialty])
+  if (loading) return <Loading />;
 
-  if(loading){
-    return(
-      <Loading/>
-    )
-  }
   return (
     <main>
       <RouterProvider router={router}></RouterProvider>

@@ -14,14 +14,12 @@ const useAuthStore = create(
   persist<AuthState>(
     (set) => ({
       isAthenticated: false,
-      setIsAuthenticated: (value) => set({ isAthenticated: value }),
+      setIsAuthenticated: (value: boolean) => set({ isAthenticated: value }),
     }),
     {
       name: 'auth',
-      getStorage: () => sessionStorage,
-      whitelist: ['isAthenticated'], 
-      version: 0,
-    } as CustomPersistOptions<AuthState>
+      version: 1,
+    }
   )
 );
 
