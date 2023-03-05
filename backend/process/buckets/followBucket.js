@@ -1,7 +1,11 @@
-const { conBucketsPorQuery } = require("../../controllers/buckets.controllers");
-const { conTraerUno } = require("../../controllers/user.controller");
-const { conModificarBucket } = require("../../controllers/buckets.controllers");
-const { conModificarTypeTock } = require("../../controllers/user.controller");
+const {
+  conBucketsPorQuery,
+  conModificarBucket,
+} = require("../../controllers/buckets.controllers");
+const {
+  conTraerUno,
+  conModificarTypeTock,
+} = require("../../controllers/user.controller");
 const objectId = require("mongodb").ObjectId;
 
 const followBucket = async ({ nombre, usuario }) => {
