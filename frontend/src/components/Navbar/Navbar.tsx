@@ -13,21 +13,16 @@ export default function Navbar() {
   const options = ['mentors', 'buckets', 'dashboard', 'payments'];
 
   const { setIsAuthenticated } = useAuthStore();
-
-  const handleLogin = () => {
-    loginWithRedirect();
-  };
+  const handleLogin = () => loginWithRedirect();
 
   const handleLogout = () => {
     logout();
     setIsAuthenticated(false);
   };
 
-  console.log('💻 -> useEffect -> isAuthenticated:', isAuthenticated);
   useEffect(() => {
     if (isAuthenticated) navigate('/mentors');
-
-    console.log(user);
+    console.log('💻 -> useEffect -> user:', user);
   }, [isAuthenticated]);
 
   return (

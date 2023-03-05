@@ -16,18 +16,18 @@ const config = {
 };
 
 // ! obligatorio tipar el estado global
-interface State {
+export interface State {
   showWindows: boolean;
   allUser: UserApi[];
   detail: UserApi | {};
   ArrayMentors: UserApi[];
   mentorFilter: UserApi[];
-  preview: Preview | {};
+  preview: Preview;
   specialty: string[];
 }
 
 // ! obligatorio tipar los Actions
-interface Actions {
+export interface Actions {
   initialApp: () => void;
   setShowWindows: (data: boolean) => void;
   upgradeDetail: (Data: UserApi) => void;
@@ -46,7 +46,13 @@ interface Actions {
 const stateGlobal = create<State & Actions>((set) => ({
   // ~ State Global
   detail: {},
-  preview: {},
+  preview: {
+    id: '',
+    status: false,
+    img: '',
+    nombre: '',
+    permisos: '',
+  },
   allUser: [],
   specialty: [],
   ArrayMentors: [],
