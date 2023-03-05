@@ -27,6 +27,12 @@ const followBucket = async ({ nombre, usuario }) => {
 
   if (!bucket.length) throw new Error(`el bucket ${nombre} no existe`);
 
+  const result = bucket[0].usuarios.find((us) => us._id === usuario._id);
+  if (result)
+    throw new Error(
+      `el usuario: ${usuario._id} ya esta suscrito a este bucket`
+    );
+
   const query3 = {
     $set: {
       tokensActuales: bucket[0].tokensActuales + usuario.aportes,

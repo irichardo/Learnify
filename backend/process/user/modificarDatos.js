@@ -1,5 +1,7 @@
-const { conTraerUno } = require("../../controllers/user.controller");
-const { conAgregarInfo } = require("../../controllers/user.controller");
+const {
+  conTraerUno,
+  conAgregarInfo,
+} = require("../../controllers/user.controller");
 const objectId = require("mongodb").ObjectId;
 
 const modificarDatos = async ({
