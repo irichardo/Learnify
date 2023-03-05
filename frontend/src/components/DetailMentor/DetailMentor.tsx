@@ -37,7 +37,7 @@ const DetailMentor = () => {
   // ! Falta expert, redes, rating, cargo, description
   const { picture, name } = detail;
 
-  if (picture.length === 0 || name.length === 0)
+  if (typeof picture === undefined || typeof name === undefined)
     return <div className='DetailMentor'></div>;
 
   return (

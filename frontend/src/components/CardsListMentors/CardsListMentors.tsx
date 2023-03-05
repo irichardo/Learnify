@@ -11,7 +11,7 @@ export default function CardsListMentors() {
     (state) => state
   );
 
-  if (mentorFilter?.length === 0 || specialty?.length === 0)
+  if (typeof mentorFilter === undefined || typeof specialty === undefined)
     return <div className='CardsListMentors'></div>;
 
   return (
