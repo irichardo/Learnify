@@ -9,11 +9,11 @@ const { modificarActividad } = require("../process/user/modificarActividad");
 const { modificarDatos } = require("../process/user/modificarDatos");
 
 router.get("/", async (req, res) => {
-  const { _id } = req.body;
+  const { _id, email } = req.body;
   let respuesta;
   try {
-    if (!_id) respuesta = await traerTodos();
-    else respuesta = await traerUno(_id);
+    if (!_id && !email) respuesta = await traerTodos();
+    else respuesta = await traerUno(_id, email);
     res.status(200).json(respuesta);
   } catch (error) {
     res.status(400).json({ error: error.message ? error.message : error });
