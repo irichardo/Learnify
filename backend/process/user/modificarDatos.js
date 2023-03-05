@@ -6,11 +6,11 @@ const modificarDatos = async ({
   _id,
   FirstName,
   LastName,
-  EmailAddress,
   Address,
   City,
   Country,
   State,
+  social,
 }) => {
   const otroId = new objectId(_id);
   const query1 = { _id: otroId };
@@ -20,11 +20,15 @@ const modificarDatos = async ({
   const nuevaInfo = {
     FirstName: FirstName ? FirstName : user.FirstName,
     LastName: LastName ? LastName : user.LastName,
-    EmailAddress: EmailAddress ? EmailAddress : user.EmailAddress,
     Address: Address ? Address : user.Address,
     City: City ? City : user.City,
     Country: Country ? Country : user.Country,
     State: State ? State : user.State,
+    social: {
+      facebook: social.facebook ? social.facebook : user.social.facebook,
+      instagram: social.instagram ? social.instagram : user.social.instagram,
+      gitHub: social.gitHub ? social.gitHub : user.social.gitHub,
+    },
   };
   const query2 = { $set: nuevaInfo };
   await conAgregarInfo(query1, query2);

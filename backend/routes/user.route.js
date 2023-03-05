@@ -50,7 +50,7 @@ router.put("/profile", async (req, res) => {
   const obj = req.body;
   try {
     for (let inp in obj) {
-      if (typeof obj[inp] !== "string")
+      if (typeof obj[inp] !== "string" && typeof obj.social !== "object")
         throw new Error(`la propiedad ${inp} debe ser un string`);
     }
     const userUpdate = await modificarDatos(obj);
