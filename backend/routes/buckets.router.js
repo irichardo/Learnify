@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   let respuesta;
   try {
-    if (req.body.type) respuesta = await traerBucketsActivos(req.body.type);
+    if (req.query.type) respuesta = await traerBucketsActivos(req.query.type);
     else respuesta = await traerTodosLosBuckets();
     res.status(200).json(respuesta);
   } catch (error) {
