@@ -9,7 +9,7 @@ const { modificarActividad } = require("../process/user/modificarActividad");
 const { modificarDatos } = require("../process/user/modificarDatos");
 
 router.get("/", async (req, res) => {
-  const { _id, email } = req.body;
+  const { _id, email } = req.query;
   let respuesta;
   try {
     if (!_id && !email) respuesta = await traerTodos();

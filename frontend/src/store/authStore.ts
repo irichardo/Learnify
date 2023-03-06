@@ -1,21 +1,27 @@
+import axios from 'axios';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+// * config axios
+export const request = axios.create({
+  baseURL: 'http://localhost:3030',
+  withCredentials: true,
+});
+export const config = {
+  headers: {
+    'Access-Control-Allow-Origin': 'http://localhost:3000',
+  },
+};
+
 export interface AuthState {
   isAthenticated: boolean;
-  gmail: string;
   id: string;
   rol: string;
   botones: string[];
 }
 
 export interface ActionsAuthState {
-  setIsAuthenticated: (
-    verify: boolean,
-    gmail?: string,
-    id?: string,
-    rol?: string
-  ) => void;
+  setIsAuthenticated: (verify: boolean, gmail?: string) => void;
 }
 
 const useAuthStore = create(
@@ -23,28 +29,28 @@ const useAuthStore = create(
     (set) => ({
       // * GLOBAL STATE AUTHENTICATION
       isAthenticated: false,
-      gmail: '',
       id: '',
       rol: '',
       botones: [],
 
       // * ACTIONS GLOBAL STATE AUTHENTICATION
-      setIsAuthenticated: (
-        verify: boolean,
-        gmail?: string,
-        id?: string,
-        rol?: string
-      ) => {
-        let botones;
-        if (rol === 'super admin' || rol === 'admin')
-          botones = ['mentors', 'buckets', 'dashboard', 'payments'];
-        else botones = ['mentors', 'buckets', 'payments'];
+      setIsAuthenticated: async (verify: boolean, gmail?: string) => {
+        if (verify) {
+          const userByGmail = await request.get(
+            `/users?email=${gmail}`,
+            config
+          );
+          const { type, _id, active } = userByGmail.data;
 
-        if (verify) set({ isAthenticated: false, gmail, id, rol, botones });
-        else
+          let botones =
+            type === 'super admin' || type === 'admin'
+              ? ['mentors', 'buckets', 'dashboard', 'payments']
+              : ['mentors', 'buckets', 'payments'];
+
+          set({ isAthenticated: active, id: _id, rol: type, botones });
+        } else
           set({
             isAthenticated: false,
-            gmail: '',
             id: '',
             rol: '',
             botones: [''],

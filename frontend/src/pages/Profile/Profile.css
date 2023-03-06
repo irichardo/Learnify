@@ -1,0 +1,12 @@
+.ContianerProfile {
+  background-color: aqua;
+  width: 100%;
+  height: 100vh;
+  padding-top: 60px;
+}
+
+.profileImg{
+  width: 120px;
+  height: 80px;
+  background-color: brown;
+}

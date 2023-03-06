@@ -17,7 +17,6 @@ import type { AuthState, ActionsAuthState } from '../../store/authStore';
 export default function Navbar() {
   const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
-  const options = ['mentors', 'buckets', 'dashboard', 'payments'];
 
   const { setIsAuthenticated, botones } = useAuthStore();
   const handleLogin = () => loginWithRedirect();
@@ -30,7 +29,7 @@ export default function Navbar() {
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/mentors');
-      setIsAuthenticated(true, user?.email, '', 'admin');
+      setIsAuthenticated(true, user?.email);
     }
   }, [isAuthenticated]);
 
