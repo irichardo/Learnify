@@ -45,5 +45,5 @@ const agregarBucket = async ({ nombre, usuario }) => {
   const resp = await conModificarTypeTock(query, query2);
   if (resp.modifiedCount) return `se creo con exito el bucket: ${nombre}`;
 };
-console.log('para ver si ya funciona');
+
 module.exports = { agregarBucket };

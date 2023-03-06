@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     const todas = await buscarSpecialty();
     res.status(200).json(todas);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({ error: error.message ? error.message : error });
   }
 });
 
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
     const respuesta = await agregarSpecialty(req.body);
     res.status(200).json(respuesta);
   } catch (error) {
-    res.status(400).json(error.message ? error.message : error);
+    res.status(400).json({ error: error.message ? error.message : error });
   }
 });
 

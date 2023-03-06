@@ -11,8 +11,6 @@ const server = express()
 const { PORT, MONGO_URL } = process.env
 
 // configuracion de middleware
-server.set('views', './templates')
-server.set('view engine', 'ejs')
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 server.use(bodyParser.json({ limit: '50mb' }))
 server.use(cookieParser())
@@ -24,7 +22,7 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
   next()
 })
-server.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030', 'http://localhost:3000/endPayment', 'http://localhost:3000/users/teacher', 'http://localhost:3000/create-payment'] }))
+server.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030'] }))
 
 // introducciendo las routes
 server.use('/', routes)
