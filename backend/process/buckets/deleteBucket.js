@@ -10,7 +10,7 @@ const objectId = require("mongodb").ObjectId;
 
 const deleteBucket = async (nombre) => {
   const bucket = await conBucketsPorQuery({ nombre });
-  if (!bucket.length) throw new Error(`el bucket ${nombre} no existe`);
+  if (!bucket.length) throw new Error(`el bucket: -${nombre}- no existe`);
 
   while (bucket[0].usuarios.length) {
     const user = bucket[0].usuarios[0];

@@ -7,7 +7,9 @@ const traerBucketsActivos = (type) => {
     throw new Error(`el type debe ser activo o inactivo`);
 
   const query = type === "activo" ? { activo: true } : { activo: false };
-  return conBucketsPorQuery(query);
+  const resp = conBucketsPorQuery(query);
+  if (!resp.length) throw new Error(`no hay buckets disponibles`);
+  return resp;
 };
 
 module.exports = { traerBucketsActivos };
