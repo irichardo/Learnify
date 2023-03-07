@@ -11,6 +11,8 @@ const server = express()
 const { PORT, MONGO_URL } = process.env
 
 // configuracion de middleware
+server.set('views', './templates')
+server.set('view engine', 'ejs')
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
 server.use(bodyParser.json({ limit: '50mb' }))
 server.use(cookieParser())
