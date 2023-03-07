@@ -2,11 +2,90 @@
   background-color: aqua;
   width: 100%;
   height: 100vh;
-  padding-top: 60px;
+  padding: 60px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(../../assets/imgs/backgroundDashboard.png);
+  background-size: cover;
 }
 
-.profileImg{
-  width: 120px;
-  height: 80px;
-  background-color: brown;
+.ContianerProfile .profileImg {
+  width: 20%;
+  height: 80%;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background: rgb(31, 31, 31);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  color: white;
+  font-family: Poppins-Regular;
+  padding: 10px 30px;
+}
+
+.ContianerProfile .profileImg img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.ContianerProfile .info {
+  width: 50%;
+  height: 80%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background: rgb(219, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+.ContianerProfile .info form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.ContianerProfile .info form input {
+  outline-style: none;
+  border-style: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-family: Poppins-Regular;
+  font-size: 12px;
+  color: rgba(98, 98, 98, 0.689);
+}
+
+.ContianerProfile .info form label {
+  font-family: Poppins-Bold;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+}
+
+.ContianerProfile .info form button {
+  background-color: rgb(14, 191, 14);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: Poppins-Regular;
+  font-size: 12px;
+  color: white;
+}
+
+.ContianerProfile .info form input,
+.ContianerProfile .info form label {
+  width: 220px;
+}
+
+.ContianerProfile .info .buckets{
+  background-color: aqua;
+  width: 100%;
+  height: 100%;
 }
