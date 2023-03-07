@@ -3,7 +3,6 @@ const request = require('request')
 const Axios = require('axios')
 
 const { ACCOUNT_ID_PAYPAL, CLIENT_ID_PAYPAL, PORT } = process.env
-console.log(ACCOUNT_ID_PAYPAL, CLIENT_ID_PAYPAL, PORT)
 
 const PAYPAL_API = 'https://api-m.sandbox.paypal.com'
 
