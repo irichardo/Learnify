@@ -36,7 +36,7 @@ const conModificarBucket = async (query1, query2) => {
 
 const conDeleteBucket = async (query) => {
   try {
-    return await bucketSchema.remove(query);
+    return await bucketSchema.deleteOne(query);
   } catch (error) {
     return error;
   }
