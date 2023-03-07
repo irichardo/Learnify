@@ -1,4 +1,3 @@
-const { query } = require("express");
 const bucketSchema = require("../models/buckets");
 
 const conAgregarBucket = async (bucket) => {
@@ -35,10 +34,19 @@ const conModificarBucket = async (query1, query2) => {
   }
 };
 
+const conDeleteBucket = async (query) => {
+  try {
+    return await bucketSchema.remove(query);
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   conAgregarBucket,
   traerTodos,
   conBucketsPorQuery,
   conAgregarBucket,
   conModificarBucket,
+  conDeleteBucket,
 };

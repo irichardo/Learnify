@@ -10,6 +10,7 @@ const {
 const { cambiarActividad } = require("../process/buckets/cambiarActividad");
 const { followBucket } = require("../process/buckets/followBucket");
 const { unfollowBucket } = require("../process/buckets/unfollowBucket");
+const { deleteBucket } = require("../process/buckets/deleteBucket");
 
 router.post("/", async (req, res) => {
   try {
@@ -51,6 +52,17 @@ router.put("/:comand", async (req, res) => {
 
     if (comand == "follow") resp = await followBucket(req.body);
     else resp = await unfollowBucket(req.body);
+    res.status(200).json(resp);
+  } catch (error) {
+    res.status(400).json({ error: error.message ? error.message : error });
+  }
+});
+
+router.delete("/", async (req, res) => {
+  let { nombre } = req.query;
+  try {
+    if (!nombre) throw new Error(`faltan parametros`);
+    const resp = await deleteBucket(nombre);
     res.status(200).json(resp);
   } catch (error) {
     res.status(400).json({ error: error.message ? error.message : error });
