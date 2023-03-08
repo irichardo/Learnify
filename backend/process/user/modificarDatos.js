@@ -6,8 +6,7 @@ const objectId = require("mongodb").ObjectId;
 
 const modificarDatos = async ({
   _id,
-  FirstName,
-  LastName,
+  name,
   Address,
   City,
   Country,
@@ -20,16 +19,15 @@ const modificarDatos = async ({
   if (!user) throw new Error(`no se encontro al user: ${_id}`);
 
   const nuevaInfo = {
-    FirstName: FirstName ? FirstName : user.FirstName,
-    LastName: LastName ? LastName : user.LastName,
+    name: name ? name : user.name,
     Address: Address ? Address : user.Address,
     City: City ? City : user.City,
     Country: Country ? Country : user.Country,
     State: State ? State : user.State,
     social: {
-      facebook: social.facebook ? social.facebook : user.social.facebook,
-      instagram: social.instagram ? social.instagram : user.social.instagram,
-      gitHub: social.gitHub ? social.gitHub : user.social.gitHub,
+      facebook: social?.facebook ? social.facebook : user.social.facebook,
+      instagram: social?.instagram ? social.instagram : user.social.instagram,
+      gitHub: social?.gitHub ? social.gitHub : user.social.gitHub,
     },
   };
   const query2 = { $set: nuevaInfo };
