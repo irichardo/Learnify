@@ -71,20 +71,21 @@
   justify-content: center;
 }
 
-.ContianerProfile .profileInfo form label{
+.ContianerProfile .profileInfo form label {
   width: 80%;
   font-family: Poppins-Regular;
   color: white;
 }
 
-.ContianerProfile .profileInfo form input{
+.ContianerProfile .profileInfo form input {
   outline-style: none;
   border-style: none;
   border-radius: 5px;
   padding: 5px 10px;
 }
 
-.ContianerProfile .profileInfo form button{
+.ContianerProfile .profileInfo form button,
+.ContianerProfile .profileBuckets form button {
   outline-style: none;
   border-style: none;
   background-color: rgb(64, 203, 22);
@@ -93,6 +94,18 @@
   font-family: Poppins-Regular;
   color: white;
   font-size: 15px;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.ContianerProfile .profileInfo form button:hover,
+.ContianerProfile .profileBuckets form button:hover {
+  background-color: rgb(184, 255, 149);
+  border: 1px solid rgb(82, 231, 8);
+  color: rgb(58, 224, 8);
+  transform: scale(1.1) translateY(-10px);
+  box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%),
+    0 5px 12px 4px rgb(0 0 0 / 9%);
 }
 
 .ContianerProfile .profileBuckets {
@@ -111,4 +124,24 @@
   box-shadow: 0px 4px 16px 7px rgba(0, 0, 0, 0.25);
 }
 
+.deleteBucket {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  color: white;
+  border-radius: 50%;
+  background-color: red;
+  font-family: Poppins-Bold;
+  font-size: 12px;
+  opacity: 0;
+  display: none;
+}
 
+.ant-card-grid-hoverable:hover .deleteBucket {
+  opacity: 1;
+  display: inline;
+  box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 12%),
+    0 5px 12px 4px rgb(0 0 0 / 9%);
+}
