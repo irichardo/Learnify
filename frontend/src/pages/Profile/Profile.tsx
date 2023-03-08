@@ -67,6 +67,11 @@ const Profile = () => {
 
       const put = await request.put(`/users/profile`, dataPut, config);
       await getUser(id);
+      inputFormUser.current!.value = '';
+      inputSocial.current?.forEach((input) => {
+        input!.value = '';
+      });
+
       alert(put.data);
     } catch (error: any) {
       alert(error.response.data.error);
@@ -134,7 +139,7 @@ const Profile = () => {
   const handleSliderChange = (value: number) => {
     setValue(value);
   };
-  // TODO: rol === 'teacher' &&
+
   return (
     <section className='ContianerProfile'>
       <section className='profileInfo'>
@@ -155,19 +160,20 @@ const Profile = () => {
             ref={inputFormUser}
             placeholder='Ingrese su nuevo nombre de usuario'
           />
-          {Object.keys(social).map((redSocial, index) => {
-            return (
-              <section key={index}>
-                <label>{redSocial}:</label>
-                <input
-                  type='text'
-                  name={redSocial}
-                  ref={(ref) => (inputSocial.current[index] = ref)}
-                  placeholder={`ingrese la Url de ${redSocial}`}
-                />
-              </section>
-            );
-          })}
+          {rol === 'teacher' &&
+            Object.keys(social).map((redSocial, index) => {
+              return (
+                <section key={index}>
+                  <label>{redSocial}:</label>
+                  <input
+                    type='text'
+                    name={redSocial}
+                    ref={(ref) => (inputSocial.current[index] = ref)}
+                    placeholder={`ingrese la Url de ${redSocial}`}
+                  />
+                </section>
+              );
+            })}
 
           <button type='submit'>Actualizar Datos</button>
         </form>

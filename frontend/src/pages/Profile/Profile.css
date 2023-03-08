@@ -72,7 +72,7 @@
 }
 
 .ContianerProfile .profileInfo form label {
-  width: 80%;
+  width: 100%;
   font-family: Poppins-Regular;
   color: white;
 }
@@ -82,6 +82,7 @@
   border-style: none;
   border-radius: 5px;
   padding: 5px 10px;
+  width: 100%;
 }
 
 .ContianerProfile .profileInfo form button,
