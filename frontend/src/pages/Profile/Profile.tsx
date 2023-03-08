@@ -1,18 +1,23 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { valProfile } from '../../helpers/validation';
-import default_logo from '../../assets/imgs/profile-img-default.png';
-
 import useAuthStore from '../../store/authStore';
 import { request, config } from '../../store/authStore';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 
 import './Profile.css';
 import Loading from '../../components/Loader/Cargando';
-import { Slider } from 'antd';
-import { AxiosError } from 'axios';
+import { Slider, Card, Input, Space } from 'antd';
+import { InputRef } from 'antd/lib/input/Input';
+
+interface InputsUpdate {
+  [key: string]: string; // Anotación de tipo para el objeto inputsUpdate
+}
+
+const gridStyle: React.CSSProperties = {
+  width: '25%',
+  textAlign: 'center',
+};
 
 const Profile = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = createRef<InputRef>();
   const [value, setValue] = useState<number>(0);
   const [state, setState] = useState({
     img: '',
@@ -21,12 +26,16 @@ const Profile = () => {
     buckets: [],
     tokens: 0,
   });
+  const [inputsUpdate, setInputsUpdate] = useState<InputsUpdate>({});
+
   const { id } = useAuthStore((state) => state);
+
   useEffect(() => {
     const detailUser = async () => {
       const user = await request.get(`/users?id=${id}`);
-      const { picture, name, email, buckets, tokens } = user.data;
-
+      const { picture, name, email, buckets, tokens, social } = user.data;
+      console.log('💻 -> detailUser -> social:', social);
+      setInputsUpdate(social);
       setState({
         img: picture,
         name,
@@ -37,7 +46,7 @@ const Profile = () => {
     };
 
     id?.length && detailUser();
-  }, [id]);
+  }, []);
 
   if (state?.email?.length === 0) return <Loading />;
 
@@ -47,7 +56,7 @@ const Profile = () => {
 
   const handleSubmitBuckets = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const nombre = inputRef.current?.value;
+    const nombre = inputRef.current?.input?.value;
 
     request
       .post(
@@ -77,20 +86,29 @@ const Profile = () => {
     });
   };
 
+  const handleChangeInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputsUpdate({
+      ...inputsUpdate,
+      [event.target.name]: event.currentTarget.value,
+    });
+  };
+
   const handleSliderChange = (value: number) => {
     setValue(value);
   };
 
   return (
     <section className='ContianerProfile'>
-      <div className='profileImg'>
-        <img src={state.img} alt={state.name} />
-        <label>Nombre: {state.name}</label>
-        <label>Correo: {state.email}</label>
-        <label>Tokens: {state.tokens}</label>
-        <label>Cant. Buckets: {state.buckets?.length}</label>
-      </div>
-      <div className='info'>
+      <section className='profileInfo'>
+        <div className='profileImg'>
+          <img src={state.img} alt={state.name} />
+          <label>Nombre: </label>
+          <p>{state.name}</p>
+          <label>Correo: </label>
+          <p>{state.email}</p>
+          <label>Tokens: </label>
+          <p>{state.tokens}</p>
+        </div>
         <form onSubmit={handleSubmit}>
           <label>Nombre:</label>
           <input
@@ -100,48 +118,55 @@ const Profile = () => {
             onChange={handleChange}
             placeholder='Ingrese su nuevo nombre de usuario'
           />
-          <label>Correo:</label>
-          <input
-            type='text'
-            value={state.email}
-            placeholder='No se puede cambiar el correo'
-          />
+          {Object.keys(inputsUpdate).map((redSocial) => {
+            return (
+              <>
+                <label>{redSocial}:</label>
+                <input
+                  type='text'
+                  name={redSocial}
+                  value={inputsUpdate[redSocial]}
+                  onChange={handleChangeInputs}
+                  placeholder={`ingrese la Url de ${redSocial}`}
+                />
+              </>
+            );
+          })}
+
           <button type='submit'>Actualizar Datos</button>
         </form>
+      </section>
+
+      <div className='profileBuckets'>
         <div className='buckets'>
-          {state.buckets.length &&
-            state.buckets.map((element) => {
-              const { bucketName, aportes } = element;
-              return (
-                <div>
-                  <h1>Nombre: {bucketName}</h1>
-                  <h1>aporte: {aportes}</h1>
-                </div>
-              );
-            })}
+          <Card
+            style={{ width: '400px', height: '200px' }}
+            title={`Buckets registrados. Cant.${state.buckets?.length}`}
+          >
+            {state.buckets.length &&
+              state.buckets.map((element) => {
+                const { bucketName, aportes } = element;
+                return (
+                  <Card.Grid style={gridStyle}>
+                    {bucketName} - {aportes}
+                  </Card.Grid>
+                );
+              })}
+          </Card>
         </div>
-        <section className='containerBucketsProfile'>
-          <form onSubmit={handleSubmitBuckets}>
-            <h1>Buckets</h1>
-            <label>nombre</label>
-            <input
-              ref={inputRef}
-              name='nameBucket'
-              type='text'
-              placeholder='Nombre del buckets'
-            />
-            <label>Aporte:</label>
-            <Slider
-              defaultValue={0}
-              value={value}
-              onChange={handleSliderChange}
-              tooltip={{ open: true }}
-              min={0}
-              max={state.tokens}
-            />
-            <button type='submit'>Peticion para nuevo bucket</button>
-          </form>
-        </section>
+        <form onSubmit={handleSubmitBuckets}>
+          <label>nombre</label>
+          <Space direction='vertical' style={{ width: '100%' }}>
+            <Input status='' placeholder='Error' ref={inputRef} />
+          </Space>
+          <Slider
+            defaultValue={0}
+            onChange={handleSliderChange}
+            min={0}
+            max={state.tokens}
+          />
+          <button type='submit'>Peticion para nuevo bucket</button>
+        </form>
       </div>
     </section>
   );

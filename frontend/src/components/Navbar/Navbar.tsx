@@ -28,7 +28,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/mentors');
+      navigate('/profile');// mentors
       setIsAuthenticated(true, user?.email);
     }
   }, [isAuthenticated]);
