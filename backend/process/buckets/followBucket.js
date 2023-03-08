@@ -9,7 +9,7 @@ const {
 const objectId = require("mongodb").ObjectId;
 
 const followBucket = async ({ nombre, usuario }) => {
-  if (typeof usuario.aportes == "string")
+  if (typeof usuario.aportes !== "number")
     throw new Error(`el atributo tokens debe ser un numero entero`);
   else if (usuario.aportes < 10)
     throw new Error(`el monto minimo debe ser de 10 tokens`);
