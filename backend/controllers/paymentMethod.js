@@ -1,6 +1,7 @@
 require('dotenv').config()
 const request = require('request')
 const Axios = require('axios')
+const { createMsjPayment } = require('../process/nodeMailler/nodeMailler.controllers')
 
 const { ACCOUNT_ID_PAYPAL, CLIENT_ID_PAYPAL, PORT } = process.env
 
@@ -53,7 +54,6 @@ const createPayment = (req, res) => {
 // Un file extra para metodos de pago.js.
 
 const executePayment = async (req, res) => {
-  console.log(req.body)
   const email = await Axios.get(`http://localhost:${PORT}/getid`)
   const mail = email.data
 
@@ -64,10 +64,10 @@ const executePayment = async (req, res) => {
     json: true
   }, async (err, response) => {
     if (err)console.log(err)
-
     res.render('template', { redirect: 'http://localhost:3030/endPayment' })// Esto de aqui puede usarse para agradecer el pago.
     if (response.body.status === 'COMPLETED') {
-      let backLog = await Axios.put(`http://localhost:${PORT}/users/`, { mail: mail, tokens: 100 })// Una vez termine de enviar este post paso a regresarlo a la pagina de usuario donde estaba logeado.
+      const backLog = await Axios.put(`http://localhost:${PORT}/users/`, { mail: mail, tokens: 100 })// Una vez termine de enviar este post paso a regresarlo a la pagina de usuario donde estaba logeado.
+      createMsjPayment(email)
       console.log(backLog.data)
     }
   })

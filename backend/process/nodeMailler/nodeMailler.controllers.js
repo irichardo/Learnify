@@ -1,10 +1,9 @@
-import { Module } from 'module'
-import { pdfMaker } from '../process/NodePdf/pdfkit'
+const { pdfMaker } = require('../NodePdf/pdfkit')
 const fs = require('fs')
 const nodemailer = require('nodemailer')
 const path = require('path')
 
-const createMsjPayment = async(userName, message, precio, igv) => {
+const createMsjPayment = async (userName, message, precio, igv) => {
   const fechaActual = new Date()
   const date = fechaActual.toLocaleDateString().split('/').join('-')
   const name = `${userName}-BOLETA DE PAGO-${date}`
@@ -46,6 +45,7 @@ const createMsjPayment = async(userName, message, precio, igv) => {
     }
   }
 }
+
 module.exports = {
   createMsjPayment
 }
