@@ -1,6 +1,8 @@
 const { conAgregarBucket } = require("../../controllers/buckets.controllers");
-const { conTraerUno } = require("../../controllers/user.controller");
-const { conModificarTypeTock } = require("../../controllers/user.controller");
+const {
+  conTraerUno,
+  conModificarTypeTock,
+} = require("../../controllers/user.controller");
 const objectId = require("mongodb").ObjectId;
 
 const agregarBucket = async ({ nombre, usuario }) => {
@@ -28,7 +30,7 @@ const agregarBucket = async ({ nombre, usuario }) => {
   }
 
   const bucket = {
-    nombre: nombre,
+    nombre: nombre.trim(),
     tokensActuales: usuario.aportes,
     activo: true,
     usuarios: [{ _id: id, aportes: usuario.aportes }],

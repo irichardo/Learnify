@@ -41,7 +41,7 @@ const deleteBucket = async (nombre) => {
   const resp = await conDeleteBucket({ nombre });
 
   if (!resp.deletedCount)
-    throw new Error(`error al completar el proceso en el bucket ${nombre}`);
+    throw new Error(`error al completar el proceso en el bucket: ${nombre}`);
 
   return `se elimino el bucket: ${nombre} con id: ${bucket[0]._id}`;
 };
