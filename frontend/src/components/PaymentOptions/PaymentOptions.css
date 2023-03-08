@@ -2,7 +2,7 @@
     display: grid;
     width: 50%;
     height: 50vh;
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     justify-content: center;
 }
 
@@ -95,7 +95,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 80vh;
     width: 50vh;
     background-color:#D6D6E7;
     box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;

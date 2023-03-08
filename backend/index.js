@@ -32,6 +32,7 @@ server.use('/', routes)
 // StricMode
 mongoose.set('strictQuery', false)
 // coneccion con mongoDB
+
 mongoose
   .connect(MONGO_URL)
   .then((res) => console.log('conectado a mongoDB atlas'))
