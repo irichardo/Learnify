@@ -13,7 +13,11 @@ const agregarBucket = async ({ nombre, usuario }) => {
   const id = new objectId(usuario._id);
   const query = { _id: id };
   const user = await conTraerUno(query);
-  if (!user) throw new Error(`no se encontro al user: ${id}`);
+  if (!user) throw new Error(`Error: No se encontro al user: ${_id}`);
+  if (!user.active)
+    throw new Error(
+      `Error: La cuenta del usuario: ${user.name} esta desabilitada`
+    );
 
   const userTokens = user.tokens;
   const aux = (userTokens ? userTokens : 0) - usuario.aportes;

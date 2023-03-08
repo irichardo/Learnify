@@ -17,7 +17,11 @@ const followBucket = async ({ nombre, usuario }) => {
   const id = new objectId(usuario._id);
   const query1 = { _id: id };
   const user = await conTraerUno(query1);
-  if (!user) throw new Error(`no se encontro al user: ${id}`);
+  if (!user) throw new Error(`Error: No se encontro al user: ${_id}`);
+  if (!user.active)
+    throw new Error(
+      `Error: La cuenta del usuario: ${user.name} esta desabilitada`
+    );
 
   const aux = (user.tokens ? user.tokens : 0) - usuario.aportes;
   if (aux < 0) {

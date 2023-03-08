@@ -16,7 +16,11 @@ const modificarDatos = async ({
   const otroId = new objectId(_id);
   const query1 = { _id: otroId };
   const user = await conTraerUno(query1);
-  if (!user) throw new Error(`no se encontro al user: ${_id}`);
+  if (!user) throw new Error(`Error: No se encontro al user: ${_id}`);
+  if (!user.active)
+    throw new Error(
+      `Error: La cuenta del usuario: ${user.name} esta desabilitada`
+    );
 
   const nuevaInfo = {
     name: name.length ? name : user.name,
