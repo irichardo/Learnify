@@ -41,6 +41,7 @@ const useAuthStore = create(
             config
           );
           const { type, _id, active } = userByGmail.data;
+          console.log('💻 -> setIsAuthenticated: -> userByGmail.data:', userByGmail.data);
 
           let botones =
             type === 'super admin' || type === 'admin'

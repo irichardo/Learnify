@@ -7,90 +7,133 @@ import Loading from '../../components/Loader/Cargando';
 import { Slider, Card, Input, Space } from 'antd';
 import { InputRef } from 'antd/lib/input/Input';
 
-interface InputsUpdate {
-  [key: string]: string; // Anotación de tipo para el objeto inputsUpdate
-}
+import Progresive from '../../components/Progress/Progresive';
+import UserStore, { UserState } from '../../store/userStore';
 
 const gridStyle: React.CSSProperties = {
   width: '25%',
   textAlign: 'center',
 };
 
-const Profile = () => {
-  const inputRef = createRef<InputRef>();
-  const [value, setValue] = useState<number>(0);
-  const [state, setState] = useState({
-    img: '',
-    name: '',
-    email: '',
-    buckets: [],
-    tokens: 0,
-  });
-  const [inputsUpdate, setInputsUpdate] = useState<InputsUpdate>({});
+interface ObjetoKeys {
+  [propiedad: string]: string | undefined;
+}
 
-  const { id } = useAuthStore((state) => state);
+const Profile = () => {
+  // * REFERENCIAS
+  const inputRef = createRef<InputRef>();
+  const inputFormUser = useRef<HTMLInputElement>(null);
+  const inputSocial = useRef<Array<HTMLInputElement | null>>([]);
+
+  // ~ USESTATE
+  const [value, setValue] = useState<number>(0);
+  const [showProgress, setShowProgress] = useState(false);
+
+  // & STATEGLOBAL
+  const { id, rol } = useAuthStore((state) => state);
+  const { buckets, picture, social, tokens, name, email, getUser } =
+    UserStore<UserState>((state) => state);
 
   useEffect(() => {
-    const detailUser = async () => {
-      const user = await request.get(`/users?id=${id}`);
-      const { picture, name, email, buckets, tokens, social } = user.data;
-      console.log('💻 -> detailUser -> social:', social);
-      setInputsUpdate(social);
-      setState({
-        img: picture,
-        name,
-        email,
-        buckets,
-        tokens,
-      });
-    };
+    getUser(id);
+  }, [id]);
 
-    id?.length && detailUser();
-  }, []);
+  if (email?.length === 0) return <Loading />;
 
-  if (state?.email?.length === 0) return <Loading />;
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  // * UPDATE DATA USER
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    try {
+      const socials = inputSocial.current.map((ref) => ref?.value);
+      const name = inputFormUser.current?.value;
+      const dataSocial: ObjetoKeys = {};
+
+      setShowProgress(true);
+
+      Object.keys(social).forEach((propiedad, indice) => {
+        dataSocial[propiedad] = socials[indice];
+      });
+
+      let dataPut = {
+        _id: id,
+        name: (name?.length ? name.length : 0) > 0 ? name : '',
+        Address: '',
+        City: '',
+        Country: '',
+        State: '',
+        social: Object.values(dataSocial).length > 0 ? dataSocial : '',
+      };
+
+      const put = await request.put(`/users/profile`, dataPut, config);
+      await getUser(id);
+      inputFormUser.current!.value = '';
+      inputSocial.current?.forEach((input) => {
+        input!.value = '';
+      });
+
+      alert(put.data);
+    } catch (error: any) {
+      alert(error.response.data.error);
+    } finally {
+      setShowProgress(false);
+    }
   };
 
-  const handleSubmitBuckets = (event: React.FormEvent<HTMLFormElement>) => {
+  // * CREATE NEW BUCKETS
+  const handleSubmitBuckets = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
-    const nombre = inputRef.current?.input?.value;
+    try {
+      setShowProgress(true);
 
-    request
-      .post(
-        `/buckets`,
-        {
-          nombre,
-          usuario: {
-            _id: id,
-            aportes: value,
-          },
+      const nombre = inputRef.current?.input?.value;
+      const dataPost = {
+        nombre,
+        usuario: {
+          _id: id,
+          aportes: value,
         },
-        config
-      )
-      .then((response) => {
-        alert(response.data);
-      })
-      .catch((error) => {
-        alert(error.response.data.error);
-      });
+      };
+
+      const post = await request.post(`/buckets`, dataPost, config);
+      await getUser(id);
+      alert(post.data);
+    } catch (error: any) {
+      alert(error.response.data.error);
+    } finally {
+      setShowProgress(false);
+    }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setState({
-      ...state,
-      [name]: value,
-    });
-  };
+  // * DESUSCRIB OF A BUCKET
+  const desuscribBucket = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    try {
+      setShowProgress(true);
 
-  const handleChangeInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputsUpdate({
-      ...inputsUpdate,
-      [event.target.name]: event.currentTarget.value,
-    });
+      const data = (event.target as HTMLButtonElement).value.split('-');
+      const nombre = data[0];
+      const tokens = Number(data[1]);
+
+      const dataPut = {
+        nombre,
+        usuario: {
+          _id: id,
+          aportes: tokens,
+        },
+      };
+
+      const put = await request.put(`/buckets/unfollow`, dataPut, config);
+      await getUser(id);
+      alert(put.data);
+    } catch (error: any) {
+      alert(error.response.data.error);
+    } finally {
+      setShowProgress(false);
+    }
   };
 
   const handleSliderChange = (value: number) => {
@@ -101,37 +144,36 @@ const Profile = () => {
     <section className='ContianerProfile'>
       <section className='profileInfo'>
         <div className='profileImg'>
-          <img src={state.img} alt={state.name} />
+          <img src={picture} alt={name} />
           <label>Nombre: </label>
-          <p>{state.name}</p>
+          <p>{name}</p>
           <label>Correo: </label>
-          <p>{state.email}</p>
+          <p>{email}</p>
           <label>Tokens: </label>
-          <p>{state.tokens}</p>
+          <p>{tokens}</p>
         </div>
         <form onSubmit={handleSubmit}>
           <label>Nombre:</label>
           <input
             type='text'
             name='name'
-            value={state.name}
-            onChange={handleChange}
+            ref={inputFormUser}
             placeholder='Ingrese su nuevo nombre de usuario'
           />
-          {Object.keys(inputsUpdate).map((redSocial) => {
-            return (
-              <>
-                <label>{redSocial}:</label>
-                <input
-                  type='text'
-                  name={redSocial}
-                  value={inputsUpdate[redSocial]}
-                  onChange={handleChangeInputs}
-                  placeholder={`ingrese la Url de ${redSocial}`}
-                />
-              </>
-            );
-          })}
+          {rol === 'teacher' &&
+            Object.keys(social).map((redSocial, index) => {
+              return (
+                <section key={index}>
+                  <label>{redSocial}:</label>
+                  <input
+                    type='text'
+                    name={redSocial}
+                    ref={(ref) => (inputSocial.current[index] = ref)}
+                    placeholder={`ingrese la Url de ${redSocial}`}
+                  />
+                </section>
+              );
+            })}
 
           <button type='submit'>Actualizar Datos</button>
         </form>
@@ -140,14 +182,21 @@ const Profile = () => {
       <div className='profileBuckets'>
         <div className='buckets'>
           <Card
-            style={{ width: '400px', height: '200px' }}
-            title={`Buckets registrados. Cant.${state.buckets?.length}`}
+            style={{ width: '400px', height: '200px', overflow: 'auto' }}
+            title={`Buckets registrados. Cant.${buckets?.length}`}
           >
-            {state.buckets.length &&
-              state.buckets.map((element) => {
+            {buckets.length &&
+              buckets.map((element) => {
                 const { bucketName, aportes } = element;
                 return (
-                  <Card.Grid style={gridStyle}>
+                  <Card.Grid key={bucketName} style={gridStyle}>
+                    <button
+                      value={`${bucketName}-${aportes}`}
+                      onClick={desuscribBucket}
+                      className='deleteBucket'
+                    >
+                      X
+                    </button>
                     {bucketName} - {aportes}
                   </Card.Grid>
                 );
@@ -157,17 +206,22 @@ const Profile = () => {
         <form onSubmit={handleSubmitBuckets}>
           <label>nombre</label>
           <Space direction='vertical' style={{ width: '100%' }}>
-            <Input status='' placeholder='Error' ref={inputRef} />
+            <Input
+              status=''
+              placeholder='Ingrese nombre del bucket'
+              ref={inputRef}
+            />
           </Space>
           <Slider
             defaultValue={0}
             onChange={handleSliderChange}
             min={0}
-            max={state.tokens}
+            max={tokens}
           />
           <button type='submit'>Peticion para nuevo bucket</button>
         </form>
       </div>
+      {showProgress && <Progresive />}
     </section>
   );
 };
