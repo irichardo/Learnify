@@ -2,8 +2,10 @@ const { textForSentence, textInRowFirst, textInRowSecond, textInTittle, row } = 
 const PDFDocument = require('pdfkit')
 const fs = require('fs')
 
-const pdfMaker = (name, message, precio, igv) => {
+const pdfMaker = (name, precio, igv) => {
+  console.log(name, precio, igv, 'aaaaaa')
   const doc = new PDFDocument()
+  const message = 'Estimado usuario, por medio del siguiente correo le hacemos entrega de su boleta de pago con los datos de su transacción correspondiente, muchas gracias.'
   const main = 160
   const rows = [
     one = main,

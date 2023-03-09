@@ -63,5 +63,7 @@ const useAuthStore = create(
     }
   )
 );
+console.log(useAuthStore);
+
 
 export default useAuthStore;

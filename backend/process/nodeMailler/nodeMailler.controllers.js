@@ -3,14 +3,19 @@ const fs = require('fs')
 const nodemailer = require('nodemailer')
 const path = require('path')
 
-const createMsjPayment = async (userName, message, precio, igv) => {
+const createMsjPayment = async (userName, email, precio) => {
+    console.log(userName,email,precio,'aaaaaaaaaaaaaaaaaaaaaa');
   const fechaActual = new Date()
+  const igv = precio * 0.2
   const date = fechaActual.toLocaleDateString().split('/').join('-')
-  const name = `${userName}-BOLETA DE PAGO-${date}`
-  const crearPdf = pdfMaker(name, message, precio, igv)
+  const name = `${userName}-BOLETA-DE-PAGO-${date}`
+  const crearPdf = pdfMaker(name, precio, igv)
   if (crearPdf) {
-    const filePath = path.join(__dirname, 'pdf', `${name}.pdf`)
+    const filePath = path.join(process.cwd(), 'pdf', `${name}.pdf`)
+    console.log(filePath)
+
     await crearPdf
+
     if (fs.existsSync(filePath)) {
       const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -21,14 +26,15 @@ const createMsjPayment = async (userName, message, precio, igv) => {
           pass: 'rnqtvhicukqoowgn'
         }
       })
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       const mailOptions = {
         from: 'learnifyPayment@gmail.com',
-        to: 'zerorichardx@gmail.com',
+        to: `${email}`,
         subject: 'Boleta de pago',
         text: 'Por favor, pase a verificar que todos los datos estén en orden',
         attachments: [
           {
-            path: `./pdf/${name}.pdf`,
+            path: filePath,
             content: 'application/pdf'
           }
         ]

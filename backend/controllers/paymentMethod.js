@@ -56,6 +56,9 @@ const createPayment = (req, res) => {
 const executePayment = async (req, res) => {
   const email = await Axios.get(`http://localhost:${PORT}/getid`)
   const mail = email.data
+  const totalTokens = mail.data.price * 100
+  const userName = mail.data.name.split(' ')[0]
+  console.log(userName, 'aaaaaaaa')
 
   const token = req.query.token
   request.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {
@@ -66,8 +69,8 @@ const executePayment = async (req, res) => {
     if (err)console.log(err)
     res.render('template', { redirect: 'http://localhost:3030/endPayment' })// Esto de aqui puede usarse para agradecer el pago.
     if (response.body.status === 'COMPLETED') {
-      const backLog = await Axios.put(`http://localhost:${PORT}/users/`, { mail: mail, tokens: 100 })// Una vez termine de enviar este post paso a regresarlo a la pagina de usuario donde estaba logeado.
-      createMsjPayment(email)
+      const backLog = await Axios.put(`http://localhost:${PORT}/users/`, { mail: mail.data.user, tokens: totalTokens })// Una vez termine de enviar este post paso a regresarlo a la pagina de usuario donde estaba logeado.
+      createMsjPayment(userName, mail.data.user, mail.data.price)
       console.log(backLog.data)
     }
   })
