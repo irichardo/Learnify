@@ -49,7 +49,10 @@ export default function Navbar() {
             </div>
           ))}
         </div>
-        <div className='tokensContainer tokenDiv'>{tokens}<img className='tokenImg' src={token}></img></div>
+        {
+          isAuthenticated?
+          <div className='tokensContainer tokenDiv'>{tokens}<img className='tokenImg' src={token}></img></div>:null
+        }
         {isAuthenticated ? (
           <Logout handleLogout={handleLogout} />
         ) : (
