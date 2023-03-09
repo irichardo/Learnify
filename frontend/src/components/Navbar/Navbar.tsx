@@ -1,5 +1,6 @@
 import './Navbar.css';
 import icon from '../../assets/icons/logo_icon.png';
+import token from '../../assets/icons/tokens-icon.png'
 
 // * Hooks
 import { Outlet, Link, useNavigate } from 'react-router-dom';
@@ -18,7 +19,9 @@ export default function Navbar() {
   const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
 
-  const { setIsAuthenticated, botones } = useAuthStore();
+  const { setIsAuthenticated, botones, tokens } = useAuthStore();
+  console.log(tokens);
+  
   const handleLogin = () => loginWithRedirect();
 
   const handleLogout = () => {
@@ -46,7 +49,7 @@ export default function Navbar() {
             </div>
           ))}
         </div>
-
+        <div className='tokensContainer tokenDiv'>{tokens}<img className='tokenImg' src={token}></img></div>
         {isAuthenticated ? (
           <Logout handleLogout={handleLogout} />
         ) : (

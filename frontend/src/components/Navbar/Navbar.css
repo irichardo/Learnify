@@ -76,3 +76,36 @@
   width: 20px;
   height: 20px;
 }
+
+.tokensContainer{
+  /* display: flex; */
+  position: absolute;
+  right: 7%;
+  
+}
+.tokenImg{
+  width: 15px;
+  height: 15px;
+  padding: 0px;
+  margin: 5px;
+}
+
+.tokenDiv{
+  width: 90px;
+  height: 25px;
+  background: rgba(204, 204, 204, 0.15);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.07);
+  color: #00baaf;
+  font-family: Montserrat-Medium;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.83rem;
+  line-height: 39px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0px 18px;
+  pointer-events: none;
+}
