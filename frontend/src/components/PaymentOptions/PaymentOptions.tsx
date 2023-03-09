@@ -2,6 +2,7 @@ import './PaymentOptions.css'
 import {useState } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import Axios from 'axios'
+import tokens from '../../assets/icons/tokens-icon.png'
 
 interface Payment{
   Amount : number
@@ -13,14 +14,18 @@ const PaymentOptions = () =>{
 
     const {user} = useAuth0();
     
-    // console.log(user);
+    console.log(user);
     
-    const data = user?user.email:null
     
     const [payAmount, setPayment] = useState<Payment>({
-        Amount:0
+      Amount:0
     })
- 
+    
+    const data ={
+      user: user?user.email:null,
+      name: user?user.name:null,
+      price: payAmount.Amount!==0?payAmount.Amount:null
+    }
 
 
     const handlerValue = (event:React.MouseEvent<HTMLButtonElement>) =>{
@@ -31,7 +36,7 @@ const PaymentOptions = () =>{
 
 
     const handlerPayment = async()=>{
-        await Axios.post('http://localhost:3030/getid',{ id:data})
+        await Axios.post('http://localhost:3030/getid', { data:data})
         const res = await Axios.post('http://localhost:3030/create-payment', payAmount);
         
         window.open(res.data,'Ventana de verificacion');
@@ -40,23 +45,15 @@ const PaymentOptions = () =>{
 
     return(
         <div className='contenedor'>  
-        <div className='grid'>
-
-    <div>
-    <label>
-    <button className='AmountTokens' value={'5'} onClick={(value)=>handlerValue(value)}> 200 tokens</button> 
-    </label><br/>
-    <label>
-    <button className='AmountTokens' value={'10'} onClick={(value)=>handlerValue(value)}>500 tokens </button>
-    </label><br/>
-    <label>
-    <button className='AmountTokens' value={'20'} onClick={(value)=>handlerValue(value)}>1200 tokens</button>
-    </label><br/>
-    <button className='PayButton' onClick={handlerPayment} >PAGAR</button>
+            <div className='grid'>
+              <div>
+                 <button className='AmountTokens' value={'5'}  onClick={(value)=>handlerValue(value)}><img className='tokens' src={tokens}></img>200 tokens</button>
+                 <button className='AmountTokens' value={'10'} onClick={(value)=>handlerValue(value)}><img className='tokens' src={tokens}></img>500 tokens </button>
+                 <button className='AmountTokens' value={'20'} onClick={(value)=>handlerValue(value)}><img className='tokens' src={tokens}></img>1200 tokens</button>
+              </div>
+                 <button className='PayButton' onClick={handlerPayment} >PAGAR</button>
+            </div> 
         </div>
-    
-  </div> 
-    </div>
     )
 }
 

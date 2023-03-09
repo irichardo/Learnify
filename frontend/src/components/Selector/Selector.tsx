@@ -12,16 +12,16 @@ interface PropsSelector {
 
 export default function Selector({ title, options }: PropsSelector) {
   const [active, setActive] = useState(false);
-  const { filterMentors } = stateGlobal<State & Actions>((state) => state);
+  // const { filterMentors } = stateGlobal<State & Actions>((state) => state);
 
   const handleOptionsClick = () => setActive(!active);
 
-  const handleOptionsSelection = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    filterMentors(title, event.currentTarget.value);
-    setActive(false);
-  };
+  // const handleOptionsSelection = (
+  //   event: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   filterMentors(title, event.currentTarget.value);
+  //   setActive(false);
+  // };
 
   return (
     <div className='SelectorRating'>
@@ -38,7 +38,7 @@ export default function Selector({ title, options }: PropsSelector) {
         <div className='Options'>
           {options?.map((option: string) => (
             <button
-              onClick={handleOptionsSelection}
+              // onClick={handleOptionsSelection}
               key={option}
               value={option}
             >

@@ -2,13 +2,16 @@
     display: grid;
     width: 50%;
     height: 50vh;
-    background-color: aquamarine;
-    justify-content: center;
+    /* background-color: aquamarine; */
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 
 
 .AmountTokens {
-  background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+  background-image: linear-gradient(92.88deg, #6385ff 9.16%, #735efc 43.89%, #885efa 64.72%);
+  display: inline-flex;
+  align-items: center;
   border-radius: 8px;
   border-style: none;
   padding: 20px;
@@ -91,24 +94,28 @@
 
 
 .contenedor {
-    border-radius: 10%;
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
-    height: 50vh;
-    width: 50vh;
+    justify-content: center;
+    position: relative;
+    border-radius: 10px;
+    height: 40vh;
+    width: 120vh;
     background-color:#D6D6E7;
     box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
 }
-  
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 20px;
-    place-content: center;
-  }
+
   
   .elemento {
     background-color: lightgray;
     padding: 20px;
+  }
+
+  .st1{
+    font-size: 5px;
+  }
+
+  .tokens{
+    margin: 10px;
+    width: 30px;
   }

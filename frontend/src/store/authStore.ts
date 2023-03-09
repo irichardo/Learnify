@@ -18,6 +18,7 @@ export interface AuthState {
   id: string;
   rol: string;
   botones: string[];
+  tokens:number
 }
 
 export interface ActionsAuthState {
@@ -32,6 +33,7 @@ const useAuthStore = create(
       id: '',
       rol: '',
       botones: [],
+      tokens:0,
 
       // * ACTIONS GLOBAL STATE AUTHENTICATION
       setIsAuthenticated: async (verify: boolean, gmail?: string) => {
@@ -40,20 +42,23 @@ const useAuthStore = create(
             `/users?email=${gmail}`,
             config
           );
-          const { type, _id, active } = userByGmail.data;
+
+          const { type, _id, active, tokens } = userByGmail.data;
 
           let botones =
             type === 'super admin' || type === 'admin'
               ? ['mentors', 'buckets', 'dashboard', 'payments']
               : ['mentors', 'buckets', 'payments'];
 
-          set({ isAthenticated: active, id: _id, rol: type, botones });
+
+          set({ isAthenticated: active, id: _id, rol: type, botones, tokens });
         } else
           set({
             isAthenticated: false,
             id: '',
             rol: '',
             botones: [''],
+            tokens:0
           });
       },
     }),
@@ -63,5 +68,7 @@ const useAuthStore = create(
     }
   )
 );
+console.log(useAuthStore);
+
 
 export default useAuthStore;
