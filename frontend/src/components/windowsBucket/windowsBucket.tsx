@@ -3,16 +3,20 @@ import UserStore from '../../store/userStore';
 import { useState } from 'react';
 import stateBucket, { request, config } from '../../store/Buckets';
 import './windowsBucket.css';
+import Progresive from '../Progress/Progresive';
 
 function WindowsBucket() {
   const { tokens } = UserStore((state) => state);
-  console.log('💻 -> WindowsBucket -> tokens:', tokens);
-  const { showWindows, dataBuckets } = stateBucket((state) => state);
-  const { nombre, id } = dataBuckets;
+  const { showWindows, initialGetBuckets, dataBuckets } = stateBucket(
+    (state) => state
+  );
   const [value, setValue] = useState<number>(0);
+  const [show, isShow] = useState<Boolean>(false);
+  const { nombre, id } = dataBuckets;
 
   const PeticionPut = async () => {
     try {
+      isShow(true);
       const followBucket = await request.put(
         '/buckets/follow',
         {
@@ -24,10 +28,13 @@ function WindowsBucket() {
         },
         config
       );
+      await initialGetBuckets();
       alert(followBucket.data);
-      showWindows(false);
     } catch (error: any) {
       alert(error.response.data.error);
+    } finally {
+      isShow(false);
+      showWindows(false);
     }
   };
 
@@ -48,6 +55,7 @@ function WindowsBucket() {
         <button onClick={PeticionPut}>Enviar</button>
         <button onClick={closeWindows}>Cancelar</button>
       </section>
+      {show && <Progresive />}
     </section>
   );
 }

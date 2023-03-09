@@ -29,7 +29,7 @@ export interface UserApi {
   date: string;
   picture: string;
   type: string;
-  tokens: 160;
+  tokens: number;
   active: true;
   buckets: Buckets[];
 }

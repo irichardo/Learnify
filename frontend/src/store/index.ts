@@ -30,6 +30,7 @@ export interface Actions {
   initialApp: () => void;
   setShowWindows: (data: boolean) => void;
   upgradeDetail: (Data: UserApi) => void;
+  upgradeDetailApi: (id: string) => void;
   upgradePreview: (
     id: string,
     img: string,
@@ -73,6 +74,16 @@ const stateGlobal = create<State & Actions>((set) => ({
       });
     } catch (error) {
       console.log(error);
+    }
+  },
+  upgradeDetailApi: async (id: string) => {
+    try {
+      const getUser = await request.get(`users?id=${id}`)
+      set({
+        detail: getUser.data,
+      })
+    } catch (error) {
+      
     }
   },
   setShowWindows: (data: boolean) => set({ showWindows: data }),

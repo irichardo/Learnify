@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 import useAuthStore from '../../store/authStore';
 
 type DataForTable = {
+  id: string;
   img: string;
   title: string;
   cargo?: string;
@@ -34,7 +35,15 @@ function TableData({ arrayData, action }: PropsTableData) {
         <img
           src={record.img}
           alt={record.title}
-          style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+          style={{
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            maxWidth: '50px',
+            minWidth: '50px',
+            maxHeight: '50px',
+            minHeight: '50px',
+          }}
         />
       ),
     },
@@ -111,7 +120,7 @@ function TableData({ arrayData, action }: PropsTableData) {
       : {},
     action
       ? {
-          title: 'Suscribe',
+          title: arrayData[0].points ? 'Suscribe' : 'Preview',
           key: 'title',
           render: (
             value: DataForTable[],
@@ -120,11 +129,13 @@ function TableData({ arrayData, action }: PropsTableData) {
           ) => (
             <button
               onClick={() => {
-                action(record.title, id);
+                arrayData[0].points
+                  ? action(record.title, id)
+                  : action(record.title, record.id);
               }}
               className='unirteAction'
             >
-              unirte
+              {arrayData[0].points ? 'Unirte' : 'Mostrar'}
             </button>
           ),
         }

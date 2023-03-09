@@ -35,6 +35,7 @@ export default function Buckets() {
     stateBucket((state) => state);
 
   const arrayData = bucketsActive.map((bucket: Bucket) => ({
+    id: bucket._id,
     img: predeterminate,
     title: bucket.nombre,
     points: bucket.tokensActuales,
