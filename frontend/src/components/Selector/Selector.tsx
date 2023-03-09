@@ -34,7 +34,7 @@ export default function Selector({ title, options }: PropsSelector) {
         />
       </div>
 
-      {/* <div className={active ? 'OptionsRatingOn' : 'OptionsRatingOff'}>
+      <div className={active ? 'OptionsRatingOn' : 'OptionsRatingOff'}>
         <div className='Options'>
           {options?.map((option: string) => (
             <button
@@ -45,8 +45,8 @@ export default function Selector({ title, options }: PropsSelector) {
               {option}
             </button>
           ))}
-        </div> */}
-      {/* </div> */}
+        </div>
+      </div>
     </div>
   );
 }

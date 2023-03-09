@@ -24,7 +24,7 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
   next()
 })
-server.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030', 'https://learnify-86vs.vercel.app/'] }))
+server.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030'] }))
 
 // introducciendo las routes
 server.use('/', routes)
@@ -32,7 +32,6 @@ server.use('/', routes)
 // StricMode
 mongoose.set('strictQuery', false)
 // coneccion con mongoDB
-
 mongoose
   .connect(MONGO_URL)
   .then((res) => console.log('conectado a mongoDB atlas'))
