@@ -3,6 +3,7 @@ import './Selector.css';
 import iconArrowMentor from '../../assets/icons/iconArrowMentor.png';
 import { useState } from 'react';
 import stateGlobal from '../../store';
+import type { State, Actions } from '../../store';
 
 interface PropsSelector {
   title: string;
@@ -11,7 +12,7 @@ interface PropsSelector {
 
 export default function Selector({ title, options }: PropsSelector) {
   const [active, setActive] = useState(false);
-  const { filterMentors } = stateGlobal((state) => state);
+  const { filterMentors } = stateGlobal<State & Actions>((state) => state);
 
   const handleOptionsClick = () => setActive(!active);
 

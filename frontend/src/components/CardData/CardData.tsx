@@ -5,10 +5,8 @@ type Data = {
   nombre: string;
 };
 
-type Config = Data[];
-
 interface PropsExpert {
-  arrayExpert: Config;
+  arrayExpert: Data[];
   title: string;
 }
 

@@ -16,22 +16,21 @@ const config = {
 };
 
 // ! obligatorio tipar el estado global
-interface State {
+export interface State {
   showWindows: boolean;
   allUser: UserApi[];
   detail: UserApi | {};
   ArrayMentors: UserApi[];
-  mentorFilter: UserApi[];
-  preview: Preview | {};
+  preview: Preview;
   specialty: string[];
 }
 
 // ! obligatorio tipar los Actions
-interface Actions {
+export interface Actions {
   initialApp: () => void;
   setShowWindows: (data: boolean) => void;
   upgradeDetail: (Data: UserApi) => void;
-  filterMentors: (type: string, option: string) => void;
+  upgradeDetailApi: (id: string) => void;
   upgradePreview: (
     id: string,
     img: string,
@@ -46,11 +45,16 @@ interface Actions {
 const stateGlobal = create<State & Actions>((set) => ({
   // ~ State Global
   detail: {},
-  preview: {},
+  preview: {
+    id: '',
+    status: false,
+    img: '',
+    nombre: '',
+    permisos: '',
+  },
   allUser: [],
   specialty: [],
   ArrayMentors: [],
-  mentorFilter: [],
   showWindows: false,
 
   // * Actions
@@ -67,10 +71,19 @@ const stateGlobal = create<State & Actions>((set) => ({
         detail: Mentors.data[0],
         specialty: specialtyName,
         ArrayMentors: Mentors.data,
-        mentorFilter: Mentors.data,
       });
     } catch (error) {
       console.log(error);
+    }
+  },
+  upgradeDetailApi: async (id: string) => {
+    try {
+      const getUser = await request.get(`users?id=${id}`)
+      set({
+        detail: getUser.data,
+      })
+    } catch (error) {
+      
     }
   },
   setShowWindows: (data: boolean) => set({ showWindows: data }),
@@ -91,30 +104,6 @@ const stateGlobal = create<State & Actions>((set) => ({
         permisos,
       },
     });
-  },
-  filterMentors: (type: string, option: string) => {
-    // if (type === 'Rating') {
-    //   if (option === 'Mayor a menor') {
-    //     set((state) => ({
-    //       mentorFilter: [...state.ArrayMentors].sort(
-    //         (mentorA, mentorB) => mentorB.rating - mentorA.rating
-    //       ),
-    //     }));
-    //   } else if (option === 'Menor a mayor') {
-    //     set((state) => ({
-    //       mentorFilter: [...state.ArrayMentors].sort(
-    //         (mentorA, mentorB) => mentorA.rating - mentorB.rating
-    //       ),
-    //     }));
-    //   }
-    // }
-    // if (type === 'Lenguaje') {
-    //   set((state) => ({
-    //     mentorFilter: [...state.ArrayMentors].filter((mentor) =>
-    //       mentor.expert.some((expert) => expert.nombre === option)
-    //     ),
-    //   }));
-    // }
   },
   getDetailShowWindows: async (id: string, type: string, active?: string) => {
     const data = {

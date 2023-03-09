@@ -1,6 +1,8 @@
 const { conAgregarBucket } = require("../../controllers/buckets.controllers");
-const { conTraerUno } = require("../../controllers/user.controller");
-const { conModificarTypeTock } = require("../../controllers/user.controller");
+const {
+  conTraerUno,
+  conModificarTypeTock,
+} = require("../../controllers/user.controller");
 const objectId = require("mongodb").ObjectId;
 
 const agregarBucket = async ({ nombre, usuario }) => {
@@ -13,7 +15,11 @@ const agregarBucket = async ({ nombre, usuario }) => {
   const id = new objectId(usuario._id);
   const query = { _id: id };
   const user = await conTraerUno(query);
-  if (!user) throw new Error(`no se encontro al user: ${id}`);
+  if (!user) throw new Error(`Error: No se encontro al user: ${_id}`);
+  if (!user.active)
+    throw new Error(
+      `Error: La cuenta del usuario: ${user.name} esta desabilitada`
+    );
 
   const userTokens = user.tokens;
   const aux = (userTokens ? userTokens : 0) - usuario.aportes;
@@ -24,7 +30,7 @@ const agregarBucket = async ({ nombre, usuario }) => {
   }
 
   const bucket = {
-    nombre: nombre,
+    nombre: nombre.trim(),
     tokensActuales: usuario.aportes,
     activo: true,
     usuarios: [{ _id: id, aportes: usuario.aportes }],

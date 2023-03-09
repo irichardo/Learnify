@@ -29,7 +29,7 @@ export interface UserApi {
   date: string;
   picture: string;
   type: string;
-  tokens: 160;
+  tokens: number;
   active: true;
   buckets: Buckets[];
 }
@@ -39,12 +39,12 @@ export type CardsList = {
   cargo: string;
   nombre: string;
 };
-export interface Specialty {
-  _id: string;
-  name: string;
-  icon: string;
-  __v: number;
-}
+// export interface Specialty {
+//   _id: string;
+//   name: string;
+//   icon: string;
+//   __v: number;
+// }
 
 export interface Preview {
   id: string;

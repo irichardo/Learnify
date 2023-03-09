@@ -10,7 +10,7 @@ const cambiarActividad = async (id, active) => {
   const nuevoId = new objectId(id);
   const query1 = { _id: nuevoId };
   const bucket = await conBucketsPorQuery(query1);
-  if (!bucket) throw new Error(`no se encontro al bucket: ${id}`);
+  if (!bucket.length) throw new Error(`no se encontro al bucket: ${id}`);
 
   const query2 = { $set: { activo: !bucket[0].activo } };
   const resp = await conModificarBucket(query1, query2);

@@ -1,25 +1,28 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
 // ~ Element Pages
 import Landing from './pages/Landing/Landing';
 import Mentors from './pages/Mentors/Mentors';
 import Buckets from './pages/Buckets/Buckets';
-import NotFound from './pages/others/NotFound';
 import Profile from './pages/Profile/Profile';
-import Dashboard from './pages/Dashboard/Dashboard';
+import NotFound from './pages/others/NotFound';
 import Loading from './components/Loader/Cargando';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Payment from './pages/PaymentMethod/PaymentMethod';
 
 // & Element Components
-import SignIn from './components/SignIn-Up/SignIn';
-import SignUp from './components/SignIn-Up/SignUp';
 import Navbar from './components/Navbar/Navbar';
+import SignUp from './components/SignIn-Up/SignUp';
+import SignIn from './components/SignIn-Up/SignIn';
+
+// * Hooks
+import { useEffect, useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // ^ StateGlobal
 import stateGlobal from './store';
-import { useEffect, useState } from 'react';
-import Payment from './pages/PaymentMethod/PaymentMethod';
-import { UserApi } from './helpers/Types/Cards';
-import { useStore } from 'zustand';
+import type { State, Actions } from './store/index';
+import stateBucket from './store/Buckets';
+import UserStore from './store/userStore';
+import useAuthStore from './store/authStore';
 
 /** root routes
  * version react router v6
@@ -50,8 +53,8 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path:'payments',
-        element:<Payment/>
+        path: 'payments',
+        element: <Payment />,
       },
       {
         path: '*',
@@ -70,27 +73,32 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const { initialApp, allUser, specialty } = stateGlobal((state) => state) as {
-    initialApp: () => void;
-    allUser:UserApi[];
-    specialty:String[]
-  };
+  const [loading, isLoading] = useState(true);
+  const { initialApp } = stateGlobal<State & Actions>((state) => state);
+  const { initialGetBuckets } = stateBucket((state) => state);
+  const { id } = useAuthStore((state) => state);
+  const { getUser } = UserStore((state) => state);
+
   useEffect(() => {
-    initialApp();
+    const initializeApp = async () => {
+      try {
+        await initialApp();
+        await initialGetBuckets();
+        id?.length > 0 ? await getUser(id) : null;
+      } catch (error) {
+        alert(
+          'no se ah podido conectar con la base de datos, intente en otro momento'
+        );
+      } finally {
+        isLoading(false);
+      }
+    };
+
+    initializeApp();
   }, []);
 
-  const [loading, isLoading] = useState(true);
-  useEffect(()=>{
-    if(allUser.length > 0 && specialty.length > 0){
-      isLoading(false)
-    }
-  },[allUser,specialty])
+  if (loading) return <Loading />;
 
-  if(loading){
-    return(
-      <Loading/>
-    )
-  }
   return (
     <main>
       <RouterProvider router={router}></RouterProvider>

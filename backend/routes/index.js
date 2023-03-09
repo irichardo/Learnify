@@ -12,7 +12,7 @@ router.use('/users', users)
 router.use('/specialty', specialty)
 router.use('/buckets', buckets)
 router.use('/create-payment', createPayment)
-router.use('/execute-payment', paymentExecute)// ACA SE ENVIA LA SOLICITUD;
+router.use('/execute-payment', paymentExecute)
 router.use('/endPayment', endPayment)
 router.use('/getId', getId)
 

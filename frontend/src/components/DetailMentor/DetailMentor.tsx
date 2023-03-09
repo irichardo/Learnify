@@ -1,12 +1,11 @@
 import './DetailMentor.css';
 
-import { Mentor, UserApi } from '../../helpers/Types/Cards';
 import imagenPredeterminate from '../../assets/imgsPrueba/icon_perfil2.png';
 
 import CardData from '../CardData/CardData';
 import CardStar from '../CardStar/CardStar';
 import stateGlobal from '../../store';
-import { useEffect, useState } from 'react';
+import { UserApi } from '../../helpers/Types/Cards';
 
 import iconReact from '../../assets/imgsPrueba/icon_react.png';
 import iconNodeJs from '../../assets/imgsPrueba/icon_nodejs.png';
@@ -15,10 +14,6 @@ import iconSequelize from '../../assets/imgsPrueba/icon_sequelize.png';
 import iconLinkedin from '../../assets/imgsPrueba/icon_Linkedin.png';
 import iconTwitter from '../../assets/imgsPrueba/icon_Twitter.png';
 import iconGithub from '../../assets/imgsPrueba/icon_github.png';
-
-type PropsDetailMentor = {
-  dataMentor: UserApi;
-};
 
 const propiedadesData = {
   expert: [
@@ -34,12 +29,17 @@ const propiedadesData = {
   rating: 5,
 };
 
-const DetailMentor = ({ dataMentor }: PropsDetailMentor) => {
-  if (Object.keys(dataMentor).length === 0)
-    return <div className='DetailMentor'></div>;
+const DetailMentor = () => {
+  const { detail } = stateGlobal((state) => state) as {
+    detail: UserApi;
+  };
 
   // ! Falta expert, redes, rating, cargo, description
-  const { picture, name } = dataMentor;
+  const { picture, name } = detail;
+
+  if (typeof picture === undefined || typeof name === undefined)
+    return <div className='DetailMentor'></div>;
+
   return (
     <div className='DetailMentor'>
       <div className='mentorProfile'>

@@ -48,9 +48,24 @@ const conFiltrarPorQuery = async (query) => {
   }
 };
 
+const conAgregarInfo = async (query1, query2) => {
+  const modeloGenerator = obtenerModelo("db-name", "users");
+  try {
+    const modelo = (await modeloGenerator.next()).value;
+    return await modelo.findOneAndUpdate(query1, query2, {
+      returnOriginal: false,
+    });
+  } catch (error) {
+    return error;
+  } finally {
+    await modeloGenerator.return?.();
+  }
+};
+
 module.exports = {
   conTraerTodos,
   conTraerUno,
   conModificarTypeTock,
   conFiltrarPorQuery,
+  conAgregarInfo,
 };

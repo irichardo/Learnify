@@ -29,10 +29,10 @@ export default function CardMentors({ ArrayMentors }: PropsCardsMentors) {
 
   return (
     <div className='CardsMentors'>
-      {ArrayMentors.map((element: UserApi) => {
+      {ArrayMentors.map((element: UserApi, index: number) => {
         const { picture, type, name } = element;
         return (
-          <div key={name} onClick={() => handleCardClick(element)}>
+          <div key={name + index} onClick={() => handleCardClick(element)}>
             <CardMentor
               img={typeof picture === 'string' ? picture : imgPredeterminate}
               cargo='Web Developer'

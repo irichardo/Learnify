@@ -1,248 +1,228 @@
-import React, { useEffect } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { valProfile } from '../../helpers/validation';
-import default_logo from '../../assets/imgs/profile-img-default.png';
-import useUserStore from '../../store/userStore';
-import { useAuth0 } from '@auth0/auth0-react';
+import useAuthStore from '../../store/authStore';
+import { request, config } from '../../store/authStore';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 
-interface FormValues {
-  name: string;
-  lastName: string;
-  email: string;
-  address: string;
-  city: string;
-  country: string;
-  state: string;
+import './Profile.css';
+import Loading from '../../components/Loader/Cargando';
+import { Slider, Card, Input, Space } from 'antd';
+import { InputRef } from 'antd/lib/input/Input';
+
+import Progresive from '../../components/Progress/Progresive';
+import UserStore, { UserState } from '../../store/userStore';
+
+const gridStyle: React.CSSProperties = {
+  width: '25%',
+  textAlign: 'center',
+};
+
+interface ObjetoKeys {
+  [propiedad: string]: string | undefined;
 }
 
 const Profile = () => {
-  const initial_values: FormValues = {
-    name: '',
-    lastName: '',
-    email: '',
-    address: '',
-    city: '',
-    country: '',
-    state: '',
-  };
+  // * REFERENCIAS
+  const inputRef = createRef<InputRef>();
+  const inputFormUser = useRef<HTMLInputElement>(null);
+  const inputSocial = useRef<Array<HTMLInputElement | null>>([]);
 
-  const { user } = useAuth0();
-  const setUser = useUserStore((state) => state.setUser);
-  console.log(user);
+  // ~ USESTATE
+  const [value, setValue] = useState<number>(0);
+  const [showProgress, setShowProgress] = useState(false);
 
-  const handle_submit = (values: FormValues) => {
-    console.log(values);
-  };
+  // & STATEGLOBAL
+  const { id, rol } = useAuthStore((state) => state);
+  const { buckets, picture, social, tokens, name, email, getUser } =
+    UserStore<UserState>((state) => state);
 
   useEffect(() => {
-    setUser(user);
-  }, [user]);
+    getUser(id);
+  }, [id]);
+
+  if (email?.length === 0) return <Loading />;
+
+  // * UPDATE DATA USER
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const socials = inputSocial.current.map((ref) => ref?.value);
+      const name = inputFormUser.current?.value;
+      const dataSocial: ObjetoKeys = {};
+
+      setShowProgress(true);
+
+      Object.keys(social).forEach((propiedad, indice) => {
+        dataSocial[propiedad] = socials[indice];
+      });
+
+      let dataPut = {
+        _id: id,
+        name: (name?.length ? name.length : 0) > 0 ? name : '',
+        Address: '',
+        City: '',
+        Country: '',
+        State: '',
+        social: Object.values(dataSocial).length > 0 ? dataSocial : '',
+      };
+
+      const put = await request.put(`/users/profile`, dataPut, config);
+      await getUser(id);
+      inputFormUser.current!.value = '';
+      inputSocial.current?.forEach((input) => {
+        input!.value = '';
+      });
+
+      alert(put.data);
+    } catch (error: any) {
+      alert(error.response.data.error);
+    } finally {
+      setShowProgress(false);
+    }
+  };
+
+  // * CREATE NEW BUCKETS
+  const handleSubmitBuckets = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    try {
+      setShowProgress(true);
+
+      const nombre = inputRef.current?.input?.value;
+      const dataPost = {
+        nombre,
+        usuario: {
+          _id: id,
+          aportes: value,
+        },
+      };
+
+      const post = await request.post(`/buckets`, dataPost, config);
+      await getUser(id);
+      alert(post.data);
+    } catch (error: any) {
+      alert(error.response.data.error);
+    } finally {
+      setShowProgress(false);
+    }
+  };
+
+  // * DESUSCRIB OF A BUCKET
+  const desuscribBucket = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    try {
+      setShowProgress(true);
+
+      const data = (event.target as HTMLButtonElement).value.split('-');
+      const nombre = data[0];
+      const tokens = Number(data[1]);
+
+      const dataPut = {
+        nombre,
+        usuario: {
+          _id: id,
+          aportes: tokens,
+        },
+      };
+
+      const put = await request.put(`/buckets/unfollow`, dataPut, config);
+      await getUser(id);
+      alert(put.data);
+    } catch (error: any) {
+      alert(error.response.data.error);
+    } finally {
+      setShowProgress(false);
+    }
+  };
+
+  const handleSliderChange = (value: number) => {
+    setValue(value);
+  };
 
   return (
-    <div className='min-h-screen p-6 bg-gray-700 flex items-center justify-center'>
-      <div className='container max-w-screen-lg mx-auto'>
-        <div>
-          <div className='bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6'>
-            <Formik
-              initialValues={initial_values}
-              onSubmit={handle_submit}
-              validate={valProfile}
-            >
-              <Form>
-                <div className='grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3'>
-                  <div className='flex items-center justify-center flex-col text-gray-600'>
-                    <p className='font-medium text-2xl'>Personal Details</p>
-                    <div className='bg-slate-50 w-4/6 h-4/6 rounded-2xl my-5'>
-                      <img src={default_logo} alt='Profile' />
-                    </div>
-                    <button className='flex items-center px-5 py-1 text-gray-500 text-lg bg-gray-300 rounded-3xl group hover:bg-gray-400 hover:text-white'>
-                      <i className='mdi mdi-camera text-gray-400 text-lg group-hover:text-white mr-2'></i>
-                      Select a photo
-                    </button>
-                  </div>
-
-                  <div className='lg:col-span-2'>
-                    <div className='grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5'>
-                      <div className='md:col-span-2'>
-                        <label htmlFor='address'>First Name</label>
-                        <Field
-                          name='name'
-                          type='text'
-                          className='h-10 border mt-1 rounded px-4 w-full bg-gray-50'
-                          placeholder='ej. Mohammad'
-                          autoComplete='off'
-                          value={user?.given_name}
-                        />
-                        <ErrorMessage name='name' />
-                      </div>
-
-                      <div className='md:col-span-3'>
-                        <label htmlFor='city'>Last Name</label>
-                        <Field
-                          type='text'
-                          name='lastName'
-                          className='h-10 border mt-1 rounded px-4 w-full bg-gray-50'
-                          placeholder='ej. Hasan Akhund'
-                          autoComplete='off'
-                          value={user?.family_name}
-                        />
-                        <ErrorMessage name='lastName' />
-                      </div>
-
-                      <div className='md:col-span-5'>
-                        <label htmlFor='email'>Email Address</label>
-                        <Field
-                          name='email'
-                          type='text'
-                          className='h-10 border mt-1 rounded px-4 w-full bg-gray-50'
-                          placeholder='email@domain.com'
-                          autoComplete='off'
-                          value={user?.email}
-                        />
-                        <ErrorMessage name='email' />
-                      </div>
-
-                      <div className='md:col-span-3'>
-                        <label htmlFor='address'>Address</label>
-                        <Field
-                          type='text'
-                          name='address'
-                          className='h-10 border mt-1 rounded px-4 w-full bg-gray-50'
-                          placeholder='Address'
-                          autoComplete='off'
-                        />
-                        <ErrorMessage name='address' />
-                      </div>
-
-                      <div className='md:col-span-2'>
-                        <label htmlFor='city'>City</label>
-                        <Field
-                          type='text'
-                          name='city'
-                          className='h-10 border mt-1 rounded px-4 w-full bg-gray-50'
-                          placeholder='City'
-                          autoComplete='off'
-                        />
-                        <ErrorMessage name='city' />
-                      </div>
-
-                      <div className='md:col-span-3'>
-                        <label htmlFor='country'>Country / region</label>
-                        <div className='h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1'>
-                          <Field
-                            name='country'
-                            type='text'
-                            placeholder='Country'
-                            className='px-4 appearance-none outline-none text-gray-800 w-full bg-transparent'
-                          />
-                          <button
-                            tabIndex={Number('-1')}
-                            className='cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600'
-                          >
-                            <svg
-                              className='w-4 h-4 mx-2 fill-current'
-                              xmlns='http://www.w3.org/2000/svg'
-                              viewBox='0 0 24 24'
-                              stroke='currentColor'
-                              strokeWidth='2'
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                            >
-                              <line x1='18' y1='6' x2='6' y2='18'></line>
-                              <line x1='6' y1='6' x2='18' y2='18'></line>
-                            </svg>
-                          </button>
-                          <button
-                            tabIndex={Number('-1')}
-                            form='show_more'
-                            className='cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600'
-                          >
-                            <svg
-                              className='w-4 h-4 mx-2 fill-current'
-                              xmlns='http://www.w3.org/2000/svg'
-                              viewBox='0 0 24 24'
-                              stroke='currentColor'
-                              strokeWidth='2'
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                            >
-                              <polyline points='18 15 12 9 6 15'></polyline>
-                            </svg>
-                          </button>
-                        </div>
-                        <ErrorMessage name='country' />
-                      </div>
-
-                      <div className='md:col-span-2'>
-                        <label htmlFor='state'>State / province</label>
-                        <div className='h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1'>
-                          <Field
-                            name='state'
-                            type='text'
-                            placeholder='State'
-                            className='px-4 appearance-none outline-none text-gray-800 w-full bg-transparent'
-                            autoComplete='off'
-                          />
-                          <button
-                            tabIndex={Number('-1')}
-                            className='cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600'
-                          >
-                            <svg
-                              className='w-4 h-4 mx-2 fill-current'
-                              xmlns='http://www.w3.org/2000/svg'
-                              viewBox='0 0 24 24'
-                              stroke='currentColor'
-                              strokeWidth='2'
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                            >
-                              <line x1='18' y1='6' x2='6' y2='18'></line>
-                              <line x1='6' y1='6' x2='18' y2='18'></line>
-                            </svg>
-                          </button>
-                          <button
-                            tabIndex={Number('-1')}
-                            form='show_more'
-                            className='cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600'
-                          >
-                            <svg
-                              className='w-4 h-4 mx-2 fill-current'
-                              xmlns='http://www.w3.org/2000/svg'
-                              viewBox='0 0 24 24'
-                              stroke='currentColor'
-                              strokeWidth='2'
-                              strokeLinecap='round'
-                              strokeLinejoin='round'
-                            >
-                              <polyline points='18 15 12 9 6 15'></polyline>
-                            </svg>
-                          </button>
-                        </div>
-                        <ErrorMessage name='state' />
-                      </div>
-
-                      <div className='md:col-span-5 text-right pt-5'>
-                        <div className='inline-flex items-end'>
-                          <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-1'>
-                            Cancel
-                          </button>
-                          <button
-                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1'
-                            type='submit'
-                          >
-                            Save Chnages
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Form>
-            </Formik>
-          </div>
+    <section className='ContianerProfile'>
+      <section className='profileInfo'>
+        <div className='profileImg'>
+          <img src={picture} alt={name} />
+          <label>Nombre: </label>
+          <p>{name}</p>
+          <label>Correo: </label>
+          <p>{email}</p>
+          <label>Tokens: </label>
+          <p>{tokens}</p>
         </div>
+        <form onSubmit={handleSubmit}>
+          <label>Nombre:</label>
+          <input
+            type='text'
+            name='name'
+            ref={inputFormUser}
+            placeholder='Ingrese su nuevo nombre de usuario'
+          />
+          {rol === 'teacher' &&
+            Object.keys(social).map((redSocial, index) => {
+              return (
+                <section key={index}>
+                  <label>{redSocial}:</label>
+                  <input
+                    type='text'
+                    name={redSocial}
+                    ref={(ref) => (inputSocial.current[index] = ref)}
+                    placeholder={`ingrese la Url de ${redSocial}`}
+                  />
+                </section>
+              );
+            })}
+
+          <button type='submit'>Actualizar Datos</button>
+        </form>
+      </section>
+
+      <div className='profileBuckets'>
+        <div className='buckets'>
+          <Card
+            style={{ width: '400px', height: '200px', overflow: 'auto' }}
+            title={`Buckets registrados. Cant.${buckets?.length}`}
+          >
+            {buckets.length &&
+              buckets.map((element) => {
+                const { bucketName, aportes } = element;
+                return (
+                  <Card.Grid key={bucketName} style={gridStyle}>
+                    <button
+                      value={`${bucketName}-${aportes}`}
+                      onClick={desuscribBucket}
+                      className='deleteBucket'
+                    >
+                      X
+                    </button>
+                    {bucketName} - {aportes}
+                  </Card.Grid>
+                );
+              })}
+          </Card>
+        </div>
+        <form onSubmit={handleSubmitBuckets}>
+          <label>nombre</label>
+          <Space direction='vertical' style={{ width: '100%' }}>
+            <Input
+              status=''
+              placeholder='Ingrese nombre del bucket'
+              ref={inputRef}
+            />
+          </Space>
+          <Slider
+            defaultValue={0}
+            onChange={handleSliderChange}
+            min={0}
+            max={tokens}
+          />
+          <button type='submit'>Peticion para nuevo bucket</button>
+        </form>
       </div>
-    </div>
+      {showProgress && <Progresive />}
+    </section>
   );
 };
 

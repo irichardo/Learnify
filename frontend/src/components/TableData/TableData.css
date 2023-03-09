@@ -1,0 +1,18 @@
+.ContainerTableData {
+  background-color: white;
+  max-width: 520px;
+  max-height: 450px;
+  min-width: 520px;
+  min-height: 450px;
+  padding: 10px;
+  border-radius: 10px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.searchBaxTableData {
+  display: flex;
+  justify-content: space-between;
+}

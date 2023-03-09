@@ -1,34 +1,34 @@
 import './CardsListMentors.css';
 
-import iconDuvan from '../../assets/imgsPrueba/icon_perfil3.png';
-
 import Selector from '../Selector/Selector';
 import CardMentors from '../CardMentors/CardMentors';
 
-import { UserApi } from '../../helpers/Types/Cards';
 import stateGlobal from '../../store';
+import type { State, Actions } from '../../store';
+import TableData from '../TableData/TableData';
 
-type PropsCardsListMentors = {
-  Mentors: UserApi[];
-};
+export default function CardsListMentors() {
+  const { specialty, ArrayMentors, upgradeDetailApi } = stateGlobal<
+    State & Actions
+  >((state) => state);
 
-export default function CardsListMentors({ Mentors }: PropsCardsListMentors) {
-  const { specialty, mentorFilter } = stateGlobal((state) => state) as {
-    specialty: string[];
-    mentorFilter: UserApi[];
+  if (typeof ArrayMentors === undefined || typeof specialty === undefined)
+    return <div className='CardsListMentors'></div>;
+
+  const ArrayData = ArrayMentors.map((mentor) => ({
+    id: mentor._id,
+    img: mentor.picture,
+    title: mentor.name,
+    cargo: 'Web Developer',
+  }));
+
+  const actionBucket = (nombre: string, id: string) => {
+    upgradeDetailApi(id);
   };
-
-  if (Mentors?.length === 0) return <div className='CardsListMentors'></div>;
 
   return (
     <section className='CardsListMentors'>
-      <div className='Filter'>
-        <Selector title='Rating' options={['Mayor a menor', 'Menor a mayor']} />
-        <Selector title='Lenguaje' options={specialty} />
-      </div>
-      <div className='Cards'>
-        <CardMentors ArrayMentors={mentorFilter} />
-      </div>
+      <TableData arrayData={ArrayData} action={actionBucket} />
     </section>
   );
 }

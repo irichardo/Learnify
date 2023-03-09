@@ -1,15 +1,26 @@
+// & ASSETS
 import './Dashboard.css';
-
 import imgPredeterminate from '../../assets/imgsPrueba/icon_perfil2.png';
 
-import stateGlobal from '../../store';
-import { UserApi, Preview } from '../../helpers/Types/Cards';
+// * HOOKS
+import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 
+// & TYPES
+import { UserApi } from '../../helpers/Types/Cards';
+
+// * ANT DESING
 import { Tag } from 'antd';
 import { Space, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+
+// ~ COMPONENTS
 import WindowsUserEdit from '../../components/WindowsUserEdit/WindowsUserEdit';
+
+// ^ STATEGLOBAL
+import useAuthStore from '../../store/authStore';
+import stateGlobal from '../../store';
+import type { State, Actions } from '../../store';
 
 function showWindowsSettings(
   id: string,
@@ -19,8 +30,11 @@ function showWindowsSettings(
   permisos: string
 ) {
   const { setShowWindows, upgradePreview } = stateGlobal.getState();
-  upgradePreview(id, img, status, nombre, permisos);
-  setShowWindows(true);
+  const { rol } = useAuthStore.getState();
+  if (rol === 'super admin') {
+    upgradePreview(id, img, status, nombre, permisos);
+    setShowWindows(true);
+  } else alert('no tiene permisos para modificar los usuarios');
 }
 
 function showPreview(
@@ -96,7 +110,7 @@ const columns: ColumnsType<UserApi> = [
     dataIndex: 'type',
     key: 'type',
     sorter: {
-      compare:(a, b) => {
+      compare: (a, b) => {
         const categorias = ['super admin', 'admin', 'teacher', 'student'];
         const categoriaA = categorias.indexOf(a.type);
         const categoriaB = categorias.indexOf(b.type);
@@ -169,13 +183,15 @@ const columns: ColumnsType<UserApi> = [
 ];
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const { rol } = useAuthStore((state) => state);
+  if (rol === 'student' || rol === 'teacher') navigate('/');
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [dataTable, setDataTable] = useState<UserApi[] | []>([]);
-  const { allUser, preview, showWindows } = stateGlobal((state) => state) as {
-    allUser: UserApi[];
-    preview: Preview;
-    showWindows: boolean;
-  };
+  const { allUser, preview, showWindows } = stateGlobal<State & Actions>(
+    (state) => state
+  );
 
   const filterUsers = (value: string): UserApi[] =>
     allUser.filter((user: UserApi) =>

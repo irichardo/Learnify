@@ -25,12 +25,7 @@ interface valuesSignUp {
 
 interface valuesForm {
   name: string;
-  lastName: string;
   email: string;
-  address: string;
-  city: string;
-  country: string;
-  state: string;
 }
 
 /** Validation by properties */
@@ -121,22 +116,12 @@ export const valSignUp = ({
 
 export const valProfile = ({
   name,
-  lastName,
   email,
-  address,
-  city,
-  country,
-  state,
 }: valuesForm): FormikErrors<valuesForm> => {
   const errors: FormikErrors<valuesForm> = {};
-  console.log(name, lastName, email, address, city, country, state);
+  console.log(name, email);
 
   verifyName(name) && (errors.name = verifyName(name));
-  verifyName(lastName) && (errors.lastName = verifyName(lastName));
   verifyEmail(email) && (errors.email = verifyEmail(email));
-  verifyAddress(address) && (errors.address = verifyAddress(address));
-  verifyAddress(city) && (errors.city = verifyAddress(city));
-  verifyAddress(country) && (errors.country = verifyAddress(country));
-  verifyAddress(state) && (errors.state = verifyAddress(state));
   return errors;
 };
