@@ -6,7 +6,7 @@ import { Preview, UserApi } from '../helpers/Types/Cards';
 
 // * config axios
 const request = axios.create({
-  baseURL: 'https://learnify-70tvp9b9q-irichardo.vercel.app',
+  baseURL: 'https://learnify-git-development-irichardo.vercel.app',
   withCredentials: true,
 });
 const config = {
