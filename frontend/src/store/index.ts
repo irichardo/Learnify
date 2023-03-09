@@ -11,7 +11,7 @@ const request = axios.create({
 });
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': 'http://localhost:3000',
+    'Access-Control-Allow-Origin': 'https://learnify-70tvp9b9q-irichardo.vercel.app/',
   },
 };
 

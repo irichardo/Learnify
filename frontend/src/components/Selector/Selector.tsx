@@ -38,7 +38,7 @@ export default function Selector({ title, options }: PropsSelector) {
         <div className='Options'>
           {options?.map((option: string) => (
             <button
-              onClick={handleOptionsSelection}
+              // onClick={handleOptionsSelection}
               key={option}
               value={option}
             >
