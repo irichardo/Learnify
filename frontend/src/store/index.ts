@@ -21,7 +21,6 @@ export interface State {
   allUser: UserApi[];
   detail: UserApi | {};
   ArrayMentors: UserApi[];
-  mentorFilter: UserApi[];
   preview: Preview;
   specialty: string[];
 }
@@ -31,7 +30,6 @@ export interface Actions {
   initialApp: () => void;
   setShowWindows: (data: boolean) => void;
   upgradeDetail: (Data: UserApi) => void;
-  filterMentors: (type: string, option: string) => void;
   upgradePreview: (
     id: string,
     img: string,
@@ -56,7 +54,6 @@ const stateGlobal = create<State & Actions>((set) => ({
   allUser: [],
   specialty: [],
   ArrayMentors: [],
-  mentorFilter: [],
   showWindows: false,
 
   // * Actions
@@ -73,7 +70,6 @@ const stateGlobal = create<State & Actions>((set) => ({
         detail: Mentors.data[0],
         specialty: specialtyName,
         ArrayMentors: Mentors.data,
-        mentorFilter: Mentors.data,
       });
     } catch (error) {
       console.log(error);
@@ -97,30 +93,6 @@ const stateGlobal = create<State & Actions>((set) => ({
         permisos,
       },
     });
-  },
-  filterMentors: (type: string, option: string) => {
-    // if (type === 'Rating') {
-    //   if (option === 'Mayor a menor') {
-    //     set((state) => ({
-    //       mentorFilter: [...state.ArrayMentors].sort(
-    //         (mentorA, mentorB) => mentorB.rating - mentorA.rating
-    //       ),
-    //     }));
-    //   } else if (option === 'Menor a mayor') {
-    //     set((state) => ({
-    //       mentorFilter: [...state.ArrayMentors].sort(
-    //         (mentorA, mentorB) => mentorA.rating - mentorB.rating
-    //       ),
-    //     }));
-    //   }
-    // }
-    // if (type === 'Lenguaje') {
-    //   set((state) => ({
-    //     mentorFilter: [...state.ArrayMentors].filter((mentor) =>
-    //       mentor.expert.some((expert) => expert.nombre === option)
-    //     ),
-    //   }));
-    // }
   },
   getDetailShowWindows: async (id: string, type: string, active?: string) => {
     const data = {

@@ -17,10 +17,17 @@ interface typeBucket {
   bucketsActive: [];
   bucketsInactive: [];
   topBuckets: [];
+  dataBuckets: {
+    nombre: string;
+    id: string;
+  };
+  showBuckets: boolean;
 }
 
 interface actionBucket {
   initialGetBuckets: () => void;
+  dataWindows: (nombre: string, id: string) => void;
+  showWindows: (value: boolean) => void;
 }
 
 interface Buckets {
@@ -37,6 +44,11 @@ const stateBucket = create<typeBucket & actionBucket>((set) => ({
   bucketsActive: [],
   bucketsInactive: [],
   topBuckets: [],
+  showBuckets: false,
+  dataBuckets: {
+    nombre: '',
+    id: '',
+  },
 
   initialGetBuckets: async () => {
     try {
@@ -67,6 +79,17 @@ const stateBucket = create<typeBucket & actionBucket>((set) => ({
     } catch (error: any) {
       alert(error.response.data.error);
     }
+  },
+  dataWindows: (nombre: string, id: string) => {
+    set({
+      dataBuckets: {
+        nombre,
+        id,
+      },
+    });
+  },
+  showWindows: (value: boolean) => {
+    set({ showBuckets: value });
   },
 }));
 
