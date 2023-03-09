@@ -6,12 +6,12 @@ import { Preview, UserApi } from '../helpers/Types/Cards';
 
 // * config axios
 const request = axios.create({
-  baseURL: 'learnify-86vs-git-development-irichardo.vercel.app',
+  baseURL: 'https://learnify-70tvp9b9q-irichardo.vercel.app',
   withCredentials: true,
 });
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': 'https://learnify-70tvp9b9q-irichardo.vercel.app/',
+    'Access-Control-Allow-Origin': 'https://learnify-86vs-git-development-irichardo.vercel.app/',
   },
 };
 
