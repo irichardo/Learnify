@@ -3,7 +3,6 @@ const PDFDocument = require('pdfkit')
 const fs = require('fs')
 
 const pdfMaker = (name, precio, igv) => {
-  console.log(name, precio, igv, 'aaaaaa')
   const doc = new PDFDocument()
   const message = 'Estimado usuario, por medio del siguiente correo le hacemos entrega de su boleta de pago con los datos de su transacción correspondiente, muchas gracias.'
   const main = 160
@@ -20,7 +19,7 @@ const pdfMaker = (name, precio, igv) => {
     four = three + 20,
     five = four + 20
   ]
-  const path = './pdf'
+  const path = './process/nodeMailler/pdf'
   const fileName = `${name}.pdf`
   const filePath = `${path}/${fileName}`
 

@@ -58,7 +58,6 @@ const executePayment = async (req, res) => {
   const mail = email.data
   const totalTokens = mail.data.price * 100
   const userName = mail.data.name.split(' ')[0]
-  console.log(userName, 'aaaaaaaa')
 
   const token = req.query.token
   request.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {

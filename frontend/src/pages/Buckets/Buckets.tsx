@@ -3,7 +3,7 @@ import './Buckets.css';
 
 // & imagenes
 import luna from '../../assets/imgs/luna.png';
-import predeterminate from '../../assets/imgsPrueba/perfil-Prueba.png';
+import predeterminate from '../../assets/imgsPrueba/predeterminateBucket.webp';
 
 // ^ Hooks
 import { useEffect, useState } from 'react';
