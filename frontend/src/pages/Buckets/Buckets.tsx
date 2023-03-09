@@ -2,10 +2,6 @@
 import './Buckets.css';
 
 // & imagenes
-import python from '../../assets/icons/iconPruebaPython.png';
-import java from '../../assets/icons/iconPruebaJava.png';
-import Go from '../../assets/icons/iconPruebaGo.png';
-import arrow from '../../assets/icons/iconArrow.png';
 import luna from '../../assets/imgs/luna.png';
 import predeterminate from '../../assets/imgsPrueba/predeterminateBucket.webp';
 
@@ -15,6 +11,10 @@ import stateBucket from '../../store/Buckets';
 
 // * ATN
 import { Tooltip } from 'antd';
+
+// * COMPONENTS
+import TableData from '../../components/TableData/TableData';
+import WindowsBucket from '../../components/windowsBucket/windowsBucket';
 
 type Usuario = {
   aportes: number;
@@ -31,16 +31,20 @@ interface Bucket {
 }
 
 export default function Buckets() {
-  const { listBuckets, topBuckets, bucketsActive, initialGetBuckets } =
+  const { topBuckets, bucketsActive, showBuckets, dataWindows, showWindows } =
     stateBucket((state) => state);
 
-  // const hanldeOptions = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setOption(event.currentTarget.value);
-  // };
+  const arrayData = bucketsActive.map((bucket: Bucket) => ({
+    img: predeterminate,
+    title: bucket.nombre,
+    points: bucket.tokensActuales,
+    userFollow: Number(bucket.usuarios.length),
+  }));
 
-  useEffect(() => {
-    initialGetBuckets();
-  }, []);
+  const actionBucket = (nombre: string, id: string) => {
+    dataWindows(nombre, id);
+    showWindows(true);
+  };
 
   return (
     <section className='containerBuckets'>
@@ -58,23 +62,9 @@ export default function Buckets() {
         ))}
       </section>
       <section className='containerStats'>
-        <section className='tableBuckets'>
-          <nav>
-            <h1 id='Points'>Points</h1>
-          </nav>
-          <div className='containerDetail2'>
-            {bucketsActive.map((element: Bucket, index: number) => (
-              <div className='cardBucket' key={index}>
-                <div className='cardImg'>
-                  <img src={predeterminate} alt={element.nombre} />
-                </div>
-                <p> Nombre: {element.nombre}</p>
-                <p>Tokens: {element.tokensActuales}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <TableData arrayData={arrayData} action={actionBucket} />
       </section>
+      {showBuckets && <WindowsBucket />}
     </section>
   );
 }

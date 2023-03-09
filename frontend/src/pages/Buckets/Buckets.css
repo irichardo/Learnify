@@ -96,37 +96,6 @@
   background-size: 20px;
 }
 
-.tableBuckets {
-  width: 95%;
-  height: 70%;
-  font-family: OverpassMono-Bold;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.tableBuckets nav {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  transform-style: preserve-3d;
-}
-
-.tableBuckets nav::after {
-  content: '';
-  inset: 0px;
-  width: 90%;
-  height: 10px;
-  position: absolute;
-  left: 10%;
-  top: 45px;
-  border-radius: 10px 0px 0px 10px;
-  background-color: #6c63ff;
-  z-index: 5;
-}
 
 #Points,
 #Price {
@@ -152,62 +121,4 @@
   box-shadow: 0px 4px 7px 9px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(36px);
   border-radius: 20px 0px 0px 20px;
-}
-
-.containerDetail2 {
-  width: 100%;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 20px;
-  overflow-y: scroll;
-}
-
-.cardBucket {
-  width: 90%;
-  height: 60px;
-  background-color: #00baaf;
-  border-radius: 30px 0px 0px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 5px;
-}
-
-.cardBucket p {
-  width: 100%;
-  height: 50px;
-  text-align: center;
-}
-
-.cardImg {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  min-width: 60px;
-  min-height: 60px;
-  transform-style: preserve-3d;
-  background-color: #6c63ff;
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.cardImg::after {
-  content: '';
-  inset: 0px;
-  border-radius: 10px;
-  position: absolute;
-  border-radius: 50%;
-  top: 0px;
-  background-color: #ffffff;
-  transform: scale(0.9);
-  z-index: -1;
-}
-
-.cardImg img {
-  width: 70%;
 }
