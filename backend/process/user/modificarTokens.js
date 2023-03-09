@@ -4,7 +4,7 @@ const {
 } = require("../../controllers/user.controller");
 
 const modificarTokens = async (email, tokens) => {
-  if (typeof tokens == "string") {
+  if (typeof tokens !== "number") {
     throw new Error(`el atributo tokens debe ser un numero entero`);
   }
 
