@@ -39,7 +39,7 @@ const Logout: React.FC<Props> = ({ handleLogout }) => {
   };
 
   return (
-    <div className='relative'>
+    <div className='z-30'>
       <button
         onClick={handleMenuToggle}
         className='flex items-center space-x-2 rounded-full text-sm text-center text-customBlue py-1'
@@ -50,24 +50,24 @@ const Logout: React.FC<Props> = ({ handleLogout }) => {
           boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.07)',
         }}
       >
-        <span className='mdi mdi-account mdi-18px mdi-inactive pl-3' />
-        <span className='mdi mdi-chevron-down mdi-18px mdi-inactive pr-3' />
+        <span className='mdi mdi-account mdi-18px mdi-inactive pl-3 z-10' />
+        <span className='mdi mdi-chevron-down mdi-18px mdi-inactive pr-3 z-10' />
       </button>
       {isMenuVisible && (
         <div
           ref={menuRef}
           className='absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg z-10'
         >
-          <div className='py-1'>
+          <div className='py-1 z-10'>
             <button
               onClick={handleProfileClick}
-              className='block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 hover:text-gray-200 w-full text-left'
+              className=' px-4 py-2 z-10 text-sm text-gray-200 hover:bg-gray-700 hover:text-gray-200 w-full text-left'
             >
               Profile
             </button>
             <button
               onClick={handleLogoutClick}
-              className='block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 hover:text-gray-200 w-full text-left'
+              className=' px-4 py-2 z-10 text-sm text-gray-200 hover:bg-gray-700 hover:text-gray-200 w-full text-left'
             >
               Logout
             </button>
