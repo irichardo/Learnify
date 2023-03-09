@@ -20,6 +20,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // ^ StateGlobal
 import stateGlobal from './store';
 import type { State, Actions } from './store/index';
+import stateBucket from './store/Buckets';
+import UserStore from './store/userStore';
+import useAuthStore from './store/authStore';
 
 /** root routes
  * version react router v6
@@ -72,11 +75,16 @@ const router = createBrowserRouter([
 function App() {
   const [loading, isLoading] = useState(true);
   const { initialApp } = stateGlobal<State & Actions>((state) => state);
+  const { initialGetBuckets } = stateBucket((state) => state);
+  const { id } = useAuthStore((state) => state);
+  const { getUser } = UserStore((state) => state);
 
   useEffect(() => {
     const initializeApp = async () => {
       try {
         await initialApp();
+        await initialGetBuckets();
+        id?.length > 0 ? await getUser(id) : null;
       } catch (error) {
         alert(
           'no se ah podido conectar con la base de datos, intente en otro momento'
