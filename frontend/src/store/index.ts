@@ -11,7 +11,7 @@ const request = axios.create({
 });
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': 'https://learnify-86vs.vercel.app/',
+    'Access-Control-Allow-Origin': 'https://learnify-86vs.vercel.app',
   },
 };
 
