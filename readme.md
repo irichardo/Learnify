@@ -1,7 +1,8 @@
 ![Learnify](https://i.imgur.com/fZiD9WE.png)
 
 # Learnify 🎓
-### To install just use npm run dev ✨
+### To install just use npm i ✨
+### For run the project use npm run DEV
 a platform used to finance courses through crowdfunding.
 - You can create users👍
 - Delete users
